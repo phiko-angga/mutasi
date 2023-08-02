@@ -71,6 +71,15 @@
               <!-- /Logo -->
               <p class="mb-4">Please sign-in</p>
 
+              @if($errors->any())
+                <div class="form-group">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{$errors->first()}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+                @endif
+
               <form id="formAuthentication" class="mb-3" action="{{url('login')}}" method="POST">
                 @csrf
                 <div class="mb-3">
@@ -88,7 +97,7 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <a href="{{url('/')}}" class="btn btn-primary d-grid w-100" type="submit">Sign in</a>
+                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                 </div>
               </form>
 

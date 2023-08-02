@@ -59,8 +59,8 @@
                 <div data-i18n="Tables">Kota</div>
               </a>
             </li>
-            <li class="menu-item {{ Request::segment(1) == 'sbu' ? 'active' : '' }}">
-              <a href="{{url('sbu')}}" class="menu-link">
+            <li class="menu-item {{ Request::segment(1) == 'sbum' ? 'active' : '' }}">
+              <a href="{{url('sbum')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">SBU/M</div>
               </a>

@@ -17,6 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = "tb_pengguna";
     protected $fillable = [
         'name',
         'email',
@@ -41,4 +42,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function get_data($request, $paginate = true){
+        
+        $users = Self::select('*');
+        
+        $search = $request->get('search');
+        if(isset($search)){
+            $users = $users->where('fullname', 'like', '%'.$search.'%');
+        }
+        
+        if($paginate){
+            $users = $users->paginate(10);
+        }else
+            $users = $users->get();
+        
+        return $users; 
+    }
 }
