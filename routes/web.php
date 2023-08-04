@@ -12,6 +12,7 @@ use App\Http\Controllers\KotaController;
 use App\Http\Controllers\SbumController;
 use App\Http\Controllers\TransportController;
 use App\Http\Controllers\UanghController;
+use App\Http\Controllers\RuteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
 
     Route::resource('/users', UsersController::class)->name('*','users');
+    Route::resource('/rute', RuteController::class)->name('*','rute');
     Route::resource('/darat', DaratController::class)->name('*','darat');
     Route::resource('/laut', LautController::class)->name('*','laut');
     Route::resource('/dephub', DephubController::class)->name('*','dephub');

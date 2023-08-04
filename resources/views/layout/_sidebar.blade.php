@@ -93,9 +93,9 @@
               </a>
             </li>
             <li class="menu-item {{ Request::segment(1) == 'uang' ? 'active' : '' }}">
-              <a href="{{url('uang')}}" class="menu-link">
+              <a href="{{url('uangh')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Tables">Uang H.</div>
+                <div data-i18n="Tables">Uang Harian</div>
               </a>
             </li>
             

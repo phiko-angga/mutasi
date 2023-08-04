@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Darat;
+use App\Models\Paraf;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Redirect;
 use Log;
 
-class DaratController extends Controller
+class ParafController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,14 +23,14 @@ class DaratController extends Controller
     public function index(Request $request)
     {
         
-        $darat = new Darat();
-        $data = $darat->get_data($request);
+        $paraf = new Paraf();
+        $data = $paraf->get_data($request);
 
-        $page = 'Darat';
+        $page = 'Paraf';
         if($request->ajax()){
-            return view('darat.list_pagination', compact('data'));
+            return view('paraf.list_pagination', compact('data'));
         }else{
-            return view('darat.list', compact('data','page'));
+            return view('paraf.list', compact('data','page'));
         }
     }
     
@@ -47,11 +47,9 @@ class DaratController extends Controller
     public function create()
     {
         $action = 'store';
-        $page = 'Darat';
+        $page = 'Paraf';
         $title = 'Tambah baru';
-        $provinsi = Provinsi::all();
-        $kota = Kota::all();
-        return view('darat.form',compact('action','title','page','provinsi','kota'));
+        return view('paraf.form',compact('action','title','page'));
     }
 
     /**
@@ -64,30 +62,31 @@ class DaratController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'provinsi_asal_id'   => 'required',
-            'provinsi_tujuan_id'   => 'required',
-            'kota_asal_id'   => 'required',
-            'kota_tujuan_id'   => 'required',
-            'jarak_km'   => 'required',
+            'kelompok'   => 'required',
+            'nourut'   => 'required',
+            'nama'   => 'required',
+            'nip'   => 'required',
+            'pangkat'   => 'required',
+            'jabatan'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['jarak_km','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
+            $data = $request->except(['_token']);
             
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
-            $darat = Darat::create($data);
+            $paraf = Paraf::create($data);
 
             DB::commit();
 
-            return redirect('/darat')->with('info', 'Darat berhasil ditambahkan');
+            return redirect('/paraf')->with('info', 'Paraf berhasil ditambahkan');
             
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Darat gagal, silahkan coba kembali.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Paraf gagal, silahkan coba kembali.']);
             // something went wrong
         }
     }
@@ -112,15 +111,13 @@ class DaratController extends Controller
     public function edit($id)
     {
 
-        $mdarat = new Darat();
-        $darat = $mdarat->get_id($id);
+        $mparaf = new Paraf();
+        $paraf = $mparaf->get_id($id);
 
         $action = 'update';
-        $title = 'Darat Update';
-        $page = 'Darat';
-        $provinsi = Provinsi::all();
-        $kota = Kota::all();
-        return view('darat.form',compact('darat','action','title','page','provinsi','kota'));
+        $title = 'Paraf Update';
+        $page = 'Paraf';
+        return view('paraf.form',compact('paraf','action','title','page'));
     }
 
     /**
@@ -134,35 +131,36 @@ class DaratController extends Controller
     {
         request()->validate([
             'id'   => 'required',
-            'provinsi_asal_id'   => 'required',
-            'provinsi_tujuan_id'   => 'required',
-            'kota_asal_id'   => 'required',
-            'kota_tujuan_id'   => 'required',
-            'jarak_km'   => 'required',
+            'kelompok'   => 'required',
+            'nourut'   => 'required',
+            'nama'   => 'required',
+            'nip'   => 'required',
+            'pangkat'   => 'required',
+            'jabatan'   => 'required',
         ]);
 
-        $darat = Darat::find($request->id);
-        if($darat){
+        $paraf = Paraf::find($request->id);
+        if($paraf){
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['jarak_km','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
+                $data = $request->except(['_token','_method']);
                 
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;
-                Darat::where('id',$darat->id)->update($data);
+                Paraf::where('id',$paraf->id)->update($data);
                 DB::commit();
 
-                return redirect('/darat')->with('info', 'Darat berhasil di update');
+                return redirect('/paraf')->with('info', 'Paraf berhasil di update');
                 
             } catch (\Exception $e) {
                 DB::rollback();
                 Log::Error($e->getMessage());
-                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Darat gagal, silahkan coba kembali.']);
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Paraf gagal, silahkan coba kembali.']);
                 // something went wrong
             }
         }else{
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Darat tidak ditemukan.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Paraf tidak ditemukan.']);
         }
     }
 
@@ -174,12 +172,12 @@ class DaratController extends Controller
      */
     public function destroy($id)
     {
-        $darat = Darat::find($id);
-        if($darat ){
-            Darat::where('id',$darat->id)->delete();
-            return redirect('/darat')->with('info', 'Darat berhasil di delete.');
+        $paraf = Paraf::find($id);
+        if($paraf ){
+            Paraf::where('id',$paraf->id)->delete();
+            return redirect('/paraf')->with('info', 'Paraf berhasil di delete.');
         }else{
-            return Redirect::back()->withErrors(['error'=> 'Data Darat tidak ditemukan.']);
+            return Redirect::back()->withErrors(['error'=> 'Data Paraf tidak ditemukan.']);
         }
     }
 

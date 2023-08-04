@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Darat;
+use App\Models\Rute;
 use App\Models\Provinsi;
 use App\Models\Kota;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Redirect;
 use Log;
 
-class DaratController extends Controller
+class RuteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,14 +23,14 @@ class DaratController extends Controller
     public function index(Request $request)
     {
         
-        $darat = new Darat();
-        $data = $darat->get_data($request);
+        $rute = new Rute();
+        $data = $rute->get_data($request);
 
-        $page = 'Darat';
+        $page = 'Rute';
         if($request->ajax()){
-            return view('darat.list_pagination', compact('data'));
+            return view('rute.list_pagination', compact('data'));
         }else{
-            return view('darat.list', compact('data','page'));
+            return view('rute.list', compact('data','page'));
         }
     }
     
@@ -47,11 +47,10 @@ class DaratController extends Controller
     public function create()
     {
         $action = 'store';
-        $page = 'Darat';
+        $page = 'Rute';
         $title = 'Tambah baru';
-        $provinsi = Provinsi::all();
         $kota = Kota::all();
-        return view('darat.form',compact('action','title','page','provinsi','kota'));
+        return view('rute.form',compact('action','title','page','kota'));
     }
 
     /**
@@ -64,30 +63,29 @@ class DaratController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'provinsi_asal_id'   => 'required',
-            'provinsi_tujuan_id'   => 'required',
-            'kota_asal_id'   => 'required',
-            'kota_tujuan_id'   => 'required',
-            'jarak_km'   => 'required',
+            'kota_id'   => 'required',
+            'bus'   => 'required',
+            'kapal'   => 'required',
+            'plane'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['jarak_km','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
+            $data = $request->except(['_token']);
             
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
-            $darat = Darat::create($data);
+            $rute = Rute::create($data);
 
             DB::commit();
 
-            return redirect('/darat')->with('info', 'Darat berhasil ditambahkan');
+            return redirect('/rute')->with('info', 'Rute berhasil ditambahkan');
             
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Darat gagal, silahkan coba kembali.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Rute gagal, silahkan coba kembali.']);
             // something went wrong
         }
     }
@@ -112,15 +110,14 @@ class DaratController extends Controller
     public function edit($id)
     {
 
-        $mdarat = new Darat();
-        $darat = $mdarat->get_id($id);
+        $mrute = new Rute();
+        $rute = $mrute->get_id($id);
 
         $action = 'update';
-        $title = 'Darat Update';
-        $page = 'Darat';
-        $provinsi = Provinsi::all();
+        $title = 'Rute Update';
+        $page = 'Rute';
         $kota = Kota::all();
-        return view('darat.form',compact('darat','action','title','page','provinsi','kota'));
+        return view('rute.form',compact('rute','action','title','page','kota'));
     }
 
     /**
@@ -134,35 +131,34 @@ class DaratController extends Controller
     {
         request()->validate([
             'id'   => 'required',
-            'provinsi_asal_id'   => 'required',
-            'provinsi_tujuan_id'   => 'required',
-            'kota_asal_id'   => 'required',
-            'kota_tujuan_id'   => 'required',
-            'jarak_km'   => 'required',
+            'kota_id'   => 'required',
+            'bus'   => 'required',
+            'kapal'   => 'required',
+            'plane'   => 'required',
         ]);
 
-        $darat = Darat::find($request->id);
-        if($darat){
+        $rute = Rute::find($request->id);
+        if($rute){
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['jarak_km','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
+                $data = $request->except(['_token','_method']);
                 
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;
-                Darat::where('id',$darat->id)->update($data);
+                Rute::where('id',$rute->id)->update($data);
                 DB::commit();
 
-                return redirect('/darat')->with('info', 'Darat berhasil di update');
+                return redirect('/rute')->with('info', 'Rute berhasil di update');
                 
             } catch (\Exception $e) {
                 DB::rollback();
                 Log::Error($e->getMessage());
-                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Darat gagal, silahkan coba kembali.']);
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Rute gagal, silahkan coba kembali.']);
                 // something went wrong
             }
         }else{
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Darat tidak ditemukan.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Rute tidak ditemukan.']);
         }
     }
 
@@ -174,12 +170,12 @@ class DaratController extends Controller
      */
     public function destroy($id)
     {
-        $darat = Darat::find($id);
-        if($darat ){
-            Darat::where('id',$darat->id)->delete();
-            return redirect('/darat')->with('info', 'Darat berhasil di delete.');
+        $rute = Rute::find($id);
+        if($rute ){
+            Rute::where('id',$rute->id)->delete();
+            return redirect('/rute')->with('info', 'Rute berhasil di delete.');
         }else{
-            return Redirect::back()->withErrors(['error'=> 'Data Darat tidak ditemukan.']);
+            return Redirect::back()->withErrors(['error'=> 'Data Rute tidak ditemukan.']);
         }
     }
 
