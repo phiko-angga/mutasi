@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class KotaController extends Controller
 {
@@ -36,6 +37,11 @@ class KotaController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR KOTA';
+        $kota = new Kota();
+        $data = $kota->get_data($request);
+    	$pdf = PDF::loadview('kota.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-KOTA.pdf');
     }
 
     /**

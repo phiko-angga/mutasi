@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class SbumController extends Controller
 {
@@ -36,7 +37,11 @@ class SbumController extends Controller
     
     public function printPdf(Request $request)
     {
-        
+        $title = 'DAFTAR SBU-M';
+        $sbum = new Sbum();
+        $data = $sbum->get_data($request);
+    	$pdf = PDF::loadview('sbum.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-SBU-M.pdf');
     }
 
     /**

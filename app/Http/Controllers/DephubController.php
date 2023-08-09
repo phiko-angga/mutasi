@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class DephubController extends Controller
 {
@@ -37,6 +38,11 @@ class DephubController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR DEP HUB';
+        $dephub = new Dephub();
+        $data = $dephub->get_data($request);
+    	$pdf = PDF::loadview('dephub.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-DEP-HUB.pdf');
     }
 
     /**

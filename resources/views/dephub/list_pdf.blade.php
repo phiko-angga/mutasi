@@ -8,36 +8,29 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Username</th>
-                        <th>Nama Lengkap</th>
-                        <th>Koordinator Wilayah</th>
+                        <th>Kota Asal</th>
+                        <th>Provinsi Asal</th>
+                        <th>Kota Tujuan</th>
+                        <th>Provinsi Tujuan</th>
+                        <th>Jarak (KM)</th>
+                        <th>harga (Rp)</th>
+                        <th>Tanggal diubah</th>
+                        <th>Nama pengubah</th>
                     </tr>
                 </thead>
                 <tbody>
-                @if(sizeof($users) !== 0)
-                    @foreach($users as $key => $row)
+                @if(sizeof($data) !== 0)
+                    @foreach($data as $key => $row)
                     <tr>
                         <td>{{ (++$key)}}</td>
-                        <td><strong>{{ $row->username }}</strong></td>
-                        <td>{{ $row->name }}</td>
-                        <td>
-                            @if($row->provinsi_id == null && $row->kota_id == null && $row->kecamatan_id == null && $row->kelurahan_id == null)
-                            <span class="badge rounded-pill bg-label-primary mb-0">ADMIN UTAMA</span>
-                            @else
-                            
-                            <span class="badge rounded-pill bg-label-primary mb-0">Provinsi :</span> 
-                            <span>{{ $row->provinsi }}</span>
-                            <br>
-                            <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Kabupaten / Kota :</span>
-                            <span>{{ $row->kota }}</span>
-                            <br>
-                            <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Kecamatan :</span>
-                            <span>{{ $row->kecamatan }}</span>
-                            <br>
-                            <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Desa / Kelurahan :</span>
-                            <span>{{ $row->kelurahan }}</span>
-                            @endif
-                        </td>
+                        <td>{{ $row->kotaa_nama }}</td>
+                        <td>{{ $row->provinsia_nama }}</td>
+                        <td>{{ $row->kotat_nama }}</td>
+                        <td>{{ $row->provinsit_nama }}</td>
+                        <td>{{ $row->jarak_km }}</td>
+                        <td>{{ number_format($row->harga_tiket) }}</td>
+                        <td>{{ $row->updated_at }}</td>
+                        <td>{{ $row->updated_name }}</td>
                     </tr>
                     @endforeach
                 @else

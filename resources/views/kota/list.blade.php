@@ -1,4 +1,4 @@
-@extends('layout._template',['title' => 'KOta'])
+@extends('layout._template',['title' => 'Kota'])
 
 @section('style')
 <style>

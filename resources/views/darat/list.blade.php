@@ -1,4 +1,4 @@
-@extends('layout._template',['title' => 'Dep Hub'])
+@extends('layout._template',['title' => 'RUTE DARAT'])
 
 @section('style')
 <style>

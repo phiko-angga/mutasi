@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class TransportController extends Controller
 {
@@ -35,6 +36,11 @@ class TransportController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR TANSPORT';
+        $transport = new Transport();
+        $data = $transport->get_data($request);
+    	$pdf = PDF::loadview('transport.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-TANSPORT.pdf');
     }
 
     /**

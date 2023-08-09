@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class UanghController extends Controller
 {
@@ -37,6 +38,11 @@ class UanghController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR UANG HARIAN';
+        $uangh = new Uangh();
+        $data = $uangh->get_data($request);
+    	$pdf = PDF::loadview('uangh.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-UANG-HARIAN.pdf');
     }
 
     /**

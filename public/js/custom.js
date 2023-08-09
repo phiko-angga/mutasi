@@ -4,16 +4,9 @@ $('.print_pdf, .print_excel').click(function(e){
   let search = $("#search").val();
   let provinsi = $("#provinsi_id").val();
   let kota = $("#kota_id").val();
-  let kecamatan = $("#kecamatan_id").val();
-  let kelurahan = $("#kelurahan_id").val();
 
-  if(url.indexOf("/surveyor") > -1){
-    let pelaporan_dpt = $("#pelaporan_dpt").val();
-    let pelaporan_suara = $("#pelaporan_suara").val();
-    link = url+"?search="+search+"&provinsi="+provinsi+"&kota="+kota+"&kecamatan="+kecamatan+"&kelurahan="+kelurahan+"&pelaporan_dpt="+pelaporan_dpt+"&pelaporan_suara="+pelaporan_suara;
-  }else{
-    link = url+"?search="+search+"&provinsi="+provinsi+"&kota="+kota+"&kecamatan="+kecamatan+"&kelurahan="+kelurahan;
-  }
+  link = url+"?search="+search+"&provinsi="+provinsi+"&kota="+kota;
+  
 
   window.open(link, '_blank');
 })
@@ -23,21 +16,10 @@ function fetch_tabledata(url) {
         
   let provinsi = $("#provinsi_id").val();
   let kota = $("#kota_id").val();
-  let kecamatan = $("#kecamatan_id").val();
-  let kelurahan = $("#kelurahan_id").val();
   let show_per_page = $("#show-per-page").val();
   let search = $("#search").val();
 
-  let payload = {provinsi:provinsi,kota:kota,kecamatan:kecamatan,kelurahan:kelurahan,show_per_page:show_per_page,search:search};
-  if(url.indexOf("/surveyor") > -1){
-    let pelaporan_dpt = $("#pelaporan_dpt").val();
-    let pelaporan_suara = $("#pelaporan_suara").val();
-    payload = {provinsi:provinsi,kota:kota,kecamatan:kecamatan,kelurahan:kelurahan,show_per_page:show_per_page,search:search,pelaporan_dpt:pelaporan_dpt,pelaporan_suara:pelaporan_suara};
-  }else
-  if(url.indexOf("/analisa-data") > -1){
-    let analisa_fraud = $("#analisa_fraud").val();
-    payload = {provinsi:provinsi,kota:kota,kecamatan:kecamatan,kelurahan:kelurahan,show_per_page:show_per_page,search:search,analisa_fraud:analisa_fraud};
-  }
+  let payload = {provinsi:provinsi,kota:kota,show_per_page:show_per_page,search:search};
 
   let params = {};
   params.url = url;
@@ -45,15 +27,6 @@ function fetch_tabledata(url) {
   params.result = function(data){
       $('tbody').html('');
       $('tbody').append(data);
-
-      // getNewUrl(window.location.href,[
-      //     {key:'provinsi',value:provinsi},
-      //     {key:'kota',value:kota},
-      //     {key:'kelurahan',value:kelurahan},
-      //     {key:'kecamatan',value:kecamatan},
-      //     {key:'show_per_page',value:show_per_page},
-      //     {key:'search',value:search},
-      // ]);
   }
   ajaxCall(params);
 }
@@ -130,16 +103,3 @@ function formatDesign(item) {
     var $returnString = $('<span>'+selectionText[0] + (typeof selectionText[1] != 'undefined' ? ' | ' +selectionText[1] : '') + '</span>');
     return $returnString;
   };
-
-
-  function templatePersentaseCapres(data){
-    let template = '<div class="col-lg-4 col-md-12 col-sm-12 mb-4 pkandidat'+data.id+'">'+
-                        '<h5>'+data.kandidat_nama+'</h5>'+
-                        '<div id="growthChart'+data.id+'"></div>'+
-                        '<div class="text-center fw-semibold pt-3 mb-2">'+
-                            '<img style="margin-right: 12px;width:40px;height:40px;border-radius:5px" src="/images/'+data.image+'" alt="">'+
-                            '<span class="suara_total">'+addCommas(data.suara_total)+' Total Suara</span> '+
-                        '</div>'+
-                    '</div>';
-    return template;
-  }

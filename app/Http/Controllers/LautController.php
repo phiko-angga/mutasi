@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class LautController extends Controller
 {
@@ -37,6 +38,11 @@ class LautController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR RUTE LAUT';
+        $laut = new Laut();
+        $data = $laut->get_data($request);
+    	$pdf = PDF::loadview('laut.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-RUTE-LAUT.pdf');
     }
 
     /**

@@ -45,5 +45,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/transport', TransportController::class)->name('*','transport');
     Route::resource('/uangh', UanghController::class)->name('*','uangh');
 
+    Route::get('/rute_print_pdf', [RuteController::class,'printPdf']);
+    Route::get('/darat_print_pdf', [DaratController::class,'printPdf']);
+    Route::get('/laut_print_pdf', [LautController::class,'printPdf']);
+    Route::get('/dephub_print_pdf', [DephubController::class,'printPdf']);
+    Route::get('/provinsi_print_pdf', [ProvinsiController::class,'printPdf']);
+    Route::get('/kota_print_pdf', [KotaController::class,'printPdf']);
+    Route::get('/paraf_print_pdf', [ParafController::class,'printPdf']);
+    Route::get('/sbum_print_pdf', [SbumController::class,'printPdf']);
+    Route::get('/transport_print_pdf', [TransportController::class,'printPdf']);
+    Route::get('/uangh_print_pdf', [UanghController::class,'printPdf']);
+
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 });

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class ProvinsiController extends Controller
 {
@@ -35,6 +36,11 @@ class ProvinsiController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR PROVINSI';
+        $provinsi = new Provinsi();
+        $data = $provinsi->get_data($request);
+    	$pdf = PDF::loadview('provinsi.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-PROVINSI.pdf');
     }
 
     /**

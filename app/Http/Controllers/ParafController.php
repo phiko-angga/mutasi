@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class ParafController extends Controller
 {
@@ -36,7 +37,11 @@ class ParafController extends Controller
     
     public function printPdf(Request $request)
     {
-        
+        $title = 'DAFTAR PARAF';
+        $paraf = new Paraf();
+        $data = $paraf->get_data($request);
+    	$pdf = PDF::loadview('paraf.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-PARAF.pdf');
     }
 
     /**

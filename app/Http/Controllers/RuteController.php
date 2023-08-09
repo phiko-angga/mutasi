@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class RuteController extends Controller
 {
@@ -37,6 +38,11 @@ class RuteController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR RUTE';
+        $rute = new Rute();
+        $data = $rute->get_data($request);
+    	$pdf = PDF::loadview('rute.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-RUTE.pdf');
     }
 
     /**

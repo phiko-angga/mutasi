@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Redirect;
 use Log;
+use PDF;
 
 class DaratController extends Controller
 {
@@ -37,6 +38,11 @@ class DaratController extends Controller
     public function printPdf(Request $request)
     {
         
+        $title = 'DAFTAR RUTE DARAT';
+        $darat = new Darat();
+        $data = $darat->get_data($request);
+    	$pdf = PDF::loadview('darat.list_pdf', compact('data','title'));
+    	return $pdf->download('DAFTAR-RUTE-DARAT.pdf');
     }
 
     /**
