@@ -15,7 +15,7 @@ class CreateTbPenggunaTable extends Migration
     {
         Schema::table('tb_pengguna', function ($table) {
             $table->string('fullname',80);
-            $table->string('depname',80);
+            $table->string('depname',80)->nullable();
             $table->string('divname',80)->nullable();
             $table->string('secname',80)->nullable();
             $table->string('jabatan',80)->nullable();
