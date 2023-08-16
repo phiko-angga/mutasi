@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Darat;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\DaratExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,11 @@ class DaratController extends Controller
         $data = $darat->get_data($request);
     	$pdf = PDF::loadview('darat.list_pdf', compact('data','title'));
     	return $pdf->download('DAFTAR-RUTE-DARAT.pdf');
+    }
+
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new daratExport($request), 'MASTER DARAT.xlsx');
     }
 
     /**

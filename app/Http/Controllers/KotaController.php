@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\KotaExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +45,10 @@ class KotaController extends Controller
     	return $pdf->download('DAFTAR-KOTA.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new kotaExport($request), 'MASTER KOTA.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -76,7 +81,7 @@ class KotaController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['nama','kode','status','provinsi_id']);
+            $data = $request->except(['_token']);
             
             $data['jawamadura'] = 0;
             $user = auth()->user();
@@ -147,7 +152,7 @@ class KotaController extends Controller
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['nama','kode','status','provinsi_id']);
+                $data = $request->except(['_token','_method']);
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;
                 $data['jawamadura'] = 0;

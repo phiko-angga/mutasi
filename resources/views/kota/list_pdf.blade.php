@@ -11,6 +11,15 @@
                         <th>Kode</th>
                         <th>Kota</th>
                         <th>Provinsi</th>
+                        <th>Kantor PN</th>
+                        <th>Ibu Kota Prov.</th>
+                        <th>Bandara</th>
+                        <th>Pelabuhan</th>
+                        <th>Stasiun</th>
+                        <th>Terminal</th>
+                        <th>Alamat</th>
+                        <th>Kode POS</th>
+                        <th>Status</th>
                         <th>Tanggal diubah</th>
                         <th>Nama pengubah</th>
                     </tr>
@@ -23,6 +32,15 @@
                         <td><strong>{{ $row->kode }}</strong></td>
                         <td>{{ $row->nama }}</td>
                         <td>{{ $row->provinsi_nama }}</td>
+                        <td class="text-center">{!! $row->kantor == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
+                        <td class="text-center">{!! $row->ibukota_prov == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
+                        <td class="text-center">{!! $row->bandara == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
+                        <td class="text-center">{!! $row->pelabuhan == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
+                        <td class="text-center">{!! $row->stasiun == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
+                        <td class="text-center">{!! $row->terminal == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>`
+                        <td>{{ $row->alamat }}</td>
+                        <td>{{ $row->kodepos }}</td>
+                        <td class="text-center">{!! $row->status == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
                         <td>{{ $row->updated_at }}</td>
                         <td>{{ $row->updated_name }}</td>
                     </tr>

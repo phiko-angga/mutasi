@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Sbum;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\SbumExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +45,10 @@ class SbumController extends Controller
     	return $pdf->download('DAFTAR-SBU-M.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new sbumExport($request), 'MASTER SBUM.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

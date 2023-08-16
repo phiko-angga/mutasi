@@ -4,7 +4,6 @@
         <tr>
             <td>{{ $data->firstItem() + $key}}</td>
             <td>{{ $row->kelompok }}</td>
-            <td>{{ $row->nourut }}</td>
             <td>{{ $row->nama }}</td>
             <td>{{ $row->nip }}</td>
             <td>{{ $row->pangkat }}</td>

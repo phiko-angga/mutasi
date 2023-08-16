@@ -1,4 +1,4 @@
-@extends('layout._template',['title' => 'Daftar Users'])
+@extends('layout._template',['title' => 'Daftar User'])
 
 @section('style')
 <style>
@@ -20,7 +20,6 @@
 
 @section('content')
 
-@include('layout._filter_wilayah',compact('search','pro','kot','kec','kel'))
 <div class="row">
 
 	<div class="col-md-12 grid-margin stretch-card">
@@ -48,7 +47,7 @@
                 <div class="row">
                     <div class="col-md-12 grid-margin">
                         <div class="d-flex justify-content-between align-items-end flex-wrap">
-                            <div class=" me-3"><a href="{{route('users.create')}}" class="btn btn-outline-primary btn-fw btn-sm">User Baru</a></div>
+                            <div class=" me-3"><a href="{{route('users.create')}}" class="btn btn-outline-primary btn-fw btn-sm">Tambah data</a></div>
                             <div class=" me-3">
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,8 +70,8 @@
                             <tr>
                                 <th width="5%"></th>
                                 <th style="width:15%">Username</th>
-                                <th style="width:20%">Nama Lengkap</th>
-                                <th style="width:40%">Koordinator wilayah</th>
+                                <th>Nama Lengkap</th>
+                                <th>Jabatan</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -92,7 +91,7 @@
 @section('script')
 <script>
     
-    $(document).on('change','#provinsi_id, #kota_id, #kecamatan_id, #kelurahan_id, #search, #show-per-page', function(){
+    $(document).on('change','#search', function(){
         fetch_tabledata('/users');
     })
 

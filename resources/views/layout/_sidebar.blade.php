@@ -23,16 +23,18 @@
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
-            <li class="menu-item {{ Request::segment(1) == 'biaya' ? 'active' : '' }}">
-              <a href="{{url('analisa-data')}}" class="menu-link">
+            
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">DASAR BIAYA</span></li>
+            <li class="menu-item {{ Request::segment(1) == 'biaya-transport' ? 'active' : '' }}">
+              <a href="{{url('biaya-transport')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Biaya</div>
+                <div data-i18n="Analytics">Biaya Transportasi</div>
               </a>
             </li>
-            <li class="menu-item {{ Request::segment(1) == 'mutasi' ? 'active' : '' }}">
-              <a href="{{url('mutasi')}}" class="menu-link">
+            <li class="menu-item {{ Request::segment(1) == 'biaya-muat' ? 'active' : '' }}">
+              <a href="{{url('biaya-muat')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Mutasi</div>
+                <div data-i18n="Analytics">Biaya Muat Barang</div>
               </a>
             </li>
             
@@ -104,6 +106,12 @@
               <a href="{{url('paraf')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Tables">Paraf</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::segment(1) == 'user' ? 'active' : '' }}">
+              <a href="{{url('user')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Tables">User</div>
               </a>
             </li>
             <li class="menu-item {{ Request::segment(1) == 'bantuan' ? 'active' : '' }}">

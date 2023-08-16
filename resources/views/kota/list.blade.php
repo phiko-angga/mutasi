@@ -55,6 +55,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
                                         <a class="dropdown-item print_pdf" data-url="{{url('kota_print_pdf')}}" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item print_excel" data-url="{{url('kota_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,13 +70,21 @@
                             <tr>
                                 <th width="5%">No.</th>
                                 <th style="width:15%">Kode</th>
-                                <th style="width:40%">kota</th>
-                                <th style="width:40%">provinsi</th>
-                                <th style="width:40%">Status</th>
-                                <th style="width:40%">Tanggal dibuat</th>
-                                <th style="width:40%">Nama pembuat</th>
-                                <th style="width:40%">Tanggal diubah</th>
-                                <th style="width:40%">Nama pengubah</th>
+                                <th>kota</th>
+                                <th>Provinsi</th>
+                                <th>Kantor PN</th>
+                                <th>Ibu Kota Prov.</th>
+                                <th>Bandara</th>
+                                <th>Pelabuhan</th>
+                                <th>Stasiun</th>
+                                <th>Terminal</th>
+                                <th>Alamat</th>
+                                <th>Kode POS</th>
+                                <th>Status</th>
+                                <th>Tanggal dibuat</th>
+                                <th>Nama pembuat</th>
+                                <th>Tanggal diubah</th>
+                                <th>Nama pengubah</th>
                                 <th></th>
                             </tr>
                         </thead>

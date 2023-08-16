@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Uangh;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\UanghExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,10 @@ class UanghController extends Controller
     	return $pdf->download('DAFTAR-UANG-HARIAN.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new uanghExport($request), 'MASTER UANG HARIAN.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

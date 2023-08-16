@@ -19,7 +19,9 @@ class User extends Authenticatable
      */
     protected $table = "tb_pengguna";
     protected $fillable = [
-        'name',
+        'username',
+        'fullname',
+        'jabatan',
         'email',
         'password',
     ];
@@ -58,5 +60,10 @@ class User extends Authenticatable
             $users = $users->get();
         
         return $users; 
+    }
+    
+    public function get_id($id){
+        $data = Self::where('id',$id)->first();
+        return $data; 
     }
 }

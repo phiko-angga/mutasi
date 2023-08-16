@@ -6,6 +6,14 @@
             <td><strong>{{ $row->kode }}</strong></td>
             <td>{{ $row->nama }}</td>
             <td>{{ $row->provinsi_nama }}</td>
+            <td>{!! $row->kantor == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
+            <td>{!! $row->ibukota_prov == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
+            <td>{!! $row->bandara == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
+            <td>{!! $row->pelabuhan == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
+            <td>{!! $row->stasiun == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
+            <td>{!! $row->terminal == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
+            <td>{{ $row->alamat }}</td>
+            <td>{{ $row->kodepos }}</td>
             <td>{!! $row->status == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{{ $row->created_at }}</td>
             <td>{{ $row->created_name }}</td>

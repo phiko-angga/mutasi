@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transport;
+use App\Exports\TransportExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,10 @@ class TransportController extends Controller
     	return $pdf->download('DAFTAR-TANSPORT.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new transportExport($request), 'MASTER TRANSPORT.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

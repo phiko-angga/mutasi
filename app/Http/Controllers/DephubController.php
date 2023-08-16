@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Dephub;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\DephubExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,10 @@ class DephubController extends Controller
     	return $pdf->download('DAFTAR-DEP-HUB.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new depHubExport($request), 'MASTER DEP HUB.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

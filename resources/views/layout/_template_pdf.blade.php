@@ -96,6 +96,11 @@
         border-bottom: 2px solid black!important;
         font-weight: 800!important;
     }
+    .checklist{
+        transform-origin: bottom left;
+        background-color: CanvasText;
+        clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      }
     /* @media (min-width: 1200px){
       .container {
           max-width: 1140px;

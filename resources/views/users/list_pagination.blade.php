@@ -4,49 +4,8 @@
         <tr>
             <td>{{ $users->firstItem() + $key}}</td>
             <td><strong>{{ $row->username }}</strong></td>
-            <td>
-                <div class="d-flex">
-                    <span>{{ $row->name }}</span>
-                </div>
-            </td>
-            <td>
-                @if($row->provinsi_id == null && $row->kota_id == null && $row->kecamatan_id == null && $row->kelurahan_id == null)
-                <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Admin Utama</span>
-                @else
-                <div class="flex-grow-1 row">
-                    <div class="col-4 mb-sm-0 mb-2">
-                        <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Provinsi</span>
-                    </div>
-                    <div class="col-8 text-end">
-                        <small>{{ $row->provinsi }}</small>
-                    </div>
-                </div>
-                <div class="flex-grow-1 row">
-                    <div class="col-4 mb-sm-0 mb-2">
-                    <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Kabupaten / Kota</span>
-                    </div>
-                    <div class="col-8 text-end">
-                        <small>{{ $row->kota }}</small>
-                    </div>
-                </div>
-                <div class="flex-grow-1 row">
-                    <div class="col-4 mb-sm-0 mb-2">
-                    <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Kecamatan</span>
-                    </div>
-                    <div class="col-8 text-end">
-                        <small>{{ $row->kecamatan }}</small>
-                    </div>
-                </div>
-                <div class="flex-grow-1 row">
-                    <div class="col-4 mb-sm-0 mb-2">
-                    <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Desa / Kelurahan</span>
-                    </div>
-                    <div class="col-8 text-end">
-                        <small>{{ $row->kelurahan }}</small>
-                    </div>
-                </div>
-                @endif
-            </td>
+            <td>{{ $row->fullname }}</td>
+            <td>{{ $row->jabatan }}</td>
             <td class="text-center">
                 <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

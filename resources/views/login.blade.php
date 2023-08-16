@@ -50,60 +50,83 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="/js/config.js"></script>
+    {!! NoCaptcha::renderJs() !!}
   </head>
 
   <body>
     <!-- Content -->
 
     <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
-          <!-- Register -->
-          <div class="card">
-            <div class="card-body">
-              <!-- Logo -->
-              <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
-                  <span class="app-brand-logo demo">
-                  </span>
-                </a>
-              </div>
-              <!-- /Logo -->
-              <p class="mb-4">Please sign-in</p>
+      <div class="row">
+        <div class="col-md-6 col-lg-6">
+          <div class="authentication-wrapper authentication-basic container-p-y">
+            <img src="{{url('img/logo.png')}}" alt="">
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
 
-              @if($errors->any())
-                <div class="form-group">
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Error!</strong> {{$errors->first()}}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          <div class="authentication-wrapper authentication-basic container-p-y">
+            <div class="authentication-inner">
+              <!-- Register -->
+              <div class="card">
+                <div class="card-body">
+                  <!-- Logo -->
+                  <div class="app-brand justify-content-center">
+                    <a href="index.html" class="app-brand-link gap-2">
+                      <span class="app-brand-logo demo">
+                      </span>
+                    </a>
+                  </div>
+                  <!-- /Logo -->
+                  <p class="mb-4">Please sign-in</p>
+
+                  @if ($errors->has('g-recaptcha-response'))
+                      <span class="help-block">
+                          <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                      </span>
+                  @endif
+
+                  @if($errors->any())
+                    <div class="form-group">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error!</strong> {{$errors->first()}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                     </div>
-                </div>
-                @endif
+                    @endif
 
-              <form id="formAuthentication" class="mb-3" action="{{url('login')}}" method="POST">
-                @csrf
-                <div class="mb-3">
-                  <label for="email" class="form-label">Username</label>
-                  <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus
-                  />
-                </div>
-                <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"/>
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
-                </div>
-                <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                </div>
-              </form>
+                  <form id="formAuthentication" class="mb-3" action="{{url('login')}}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus
+                      />
+                    </div>
+                    <div class="mb-3 form-password-toggle">
+                      <div class="d-flex justify-content-between">
+                        <label class="form-label" for="password">Password</label>
+                      </div>
+                      <div class="input-group input-group-merge">
+                        <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"/>
+                        <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="captcha" class="form-label">Captcha</label>
+                      <div class="d-flex ">
+                        {!! NoCaptcha::display() !!}
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                    </div>
+                  </form>
 
+                </div>
+              </div>
+              <!-- /Register -->
             </div>
           </div>
-          <!-- /Register -->
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Provinsi;
+use App\Exports\ProvinsiExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,10 @@ class ProvinsiController extends Controller
     	return $pdf->download('DAFTAR-PROVINSI.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new provinsiExport($request), 'MASTER PROVINSI.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

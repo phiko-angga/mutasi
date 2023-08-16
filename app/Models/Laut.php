@@ -11,18 +11,15 @@ class Laut extends Model
     
     protected $table = "tb_laut";
     protected $fillable = [
-        'provinsi_asal_id','pelabuhan_asal_id','provinsi_tujuan_id','pelabuhan_tujuan_id','jarak_mil','created_by','updated_by'
+        'provinsi_asal_id','pelabuhan_asal','provinsi_tujuan_id','pelabuhan_tujuan','jarak_mil','created_by','updated_by','nama_table'
     ];
     
     public function get_data($request, $paginate = true){
         $data = Self::select('tb_laut.*'
         ,'pa.nama as provinsia_nama','pt.nama as provinsit_nama'
-        ,'pla.nama as pela_nama','plt.nama as pelt_nama'
         ,'c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
         ->join('tb_provinsi as pa','pa.id','=','tb_laut.provinsi_asal_id')
         ->join('tb_provinsi as pt','pt.id','=','tb_laut.provinsi_tujuan_id')
-        ->join('tb_pelabuhan as pla','pla.id','=','tb_laut.pelabuhan_asal_id')
-        ->join('tb_pelabuhan as plt','plt.id','=','tb_laut.pelabuhan_tujuan_id')
         ->join('tb_pengguna as c','c.id','=','tb_laut.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_laut.updated_by');
         
@@ -43,12 +40,9 @@ class Laut extends Model
     public function get_id($id){
         $data = Self::select('tb_laut.*'
         ,'pa.nama as provinsia_nama','pt.nama as provinsit_nama'
-        ,'pla.nama as pela_nama','plt.nama as pelt_nama'
         ,'c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
         ->join('tb_provinsi as pa','pa.id','=','tb_laut.provinsi_asal_id')
         ->join('tb_provinsi as pt','pt.id','=','tb_laut.provinsi_tujuan_id')
-        ->join('tb_pelabuhan as pla','pla.id','=','tb_laut.pelabuhan_asal_id')
-        ->join('tb_pelabuhan as plt','plt.id','=','tb_laut.pelabuhan_tujuan_id')
         ->join('tb_pengguna as c','c.id','=','tb_laut.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_laut.updated_by')
         ->where('tb_laut.id',$id)->first();

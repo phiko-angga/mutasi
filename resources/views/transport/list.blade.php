@@ -55,6 +55,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
                                         <a class="dropdown-item print_pdf" data-url="{{url('transport_print_pdf')}}" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item print_excel" data-url="{{url('transport_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
                                 </div>
                             </div>

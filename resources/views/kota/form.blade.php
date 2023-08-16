@@ -46,7 +46,7 @@
 
     <div class="row">
         <!-- Basic Layout -->
-        <div class="col-12 col-md-12">
+        <div class="col-12 col-md-6">
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">{{$title}}</h5>
@@ -74,13 +74,16 @@
                             <input required type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($kota) ? $kota->nama : '')}}" />
                         </div>
                     </div>
-                    <div hidden class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="password">Jawa Madura</label>
-                        <div class="col-sm-8 d-flex">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="1" name="jawamadura" id="jawamadura" {{old('jawamadura',isset($kota) ? ($kota->jawamadura == 1 ? 'checked' : '') : '')}}>
-                            <label class="form-check-label" for="jawamadura"> Checked </label>
-                          </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="alamat">Alamat</label>
+                        <div class="col-sm-8">
+                            <input required type="text" class="form-control" id="alamat" name="alamat" value="{{old('alamat',isset($kota) ? $kota->alamat : '')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kodepos">kode POS</label>
+                        <div class="col-sm-8">
+                            <input required type="text" class="form-control" id="kodepos" name="kodepos" value="{{old('kodepos',isset($kota) ? $kota->kodepos : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -125,6 +128,70 @@
                         <div class="col-sm-8">{{$kota->updated_name}}</div>
                     </div>
                     @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Ketersediaan</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kantor">Kantor PN</label>
+                        <div class="col-sm-8 d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="kantor" id="kantor" {{old('kantor',isset($kota) ? ($kota->kantor == 1 ? 'checked' : '') : '')}}>
+                            <label class="form-check-label" for="kantor"> Checked </label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kantor">Ibu Kota Prov.</label>
+                        <div class="col-sm-8 d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="ibukota_prov" id="ibukota_prov" {{old('ibukota_prov',isset($kota) ? ($kota->ibukota_prov == 1 ? 'checked' : '') : '')}}>
+                            <label class="form-check-label" for="kantor"> Checked </label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="bandara">Bandara</label>
+                        <div class="col-sm-8 d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="bandara" id="bandara" {{old('bandara',isset($kota) ? ($kota->bandara == 1 ? 'checked' : '') : '')}}>
+                            <label class="form-check-label" for="bandara"> Checked </label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="pelabuhan">Pelabuhan</label>
+                        <div class="col-sm-8 d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="pelabuhan" id="pelabuhan" {{old('pelabuhan',isset($kota) ? ($kota->pelabuhan == 1 ? 'checked' : '') : '')}}>
+                            <label class="form-check-label" for="pelabuhan"> Checked </label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="stasiun">Stasiun</label>
+                        <div class="col-sm-8 d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="stasiun" id="stasiun" {{old('stasiun',isset($kota) ? ($kota->stasiun == 1 ? 'checked' : '') : '')}}>
+                            <label class="form-check-label" for="stasiun"> Checked </label>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="terminal">Terminal</label>
+                        <div class="col-sm-8 d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="terminal" id="terminal" {{old('terminal',isset($kota) ? ($kota->terminal == 1 ? 'checked' : '') : '')}}>
+                            <label class="form-check-label" for="terminal"> Checked </label>
+                          </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

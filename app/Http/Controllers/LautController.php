@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Laut;
 use App\Models\Provinsi;
 use App\Models\Pelabuhan;
+use App\Exports\LautExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,10 @@ class LautController extends Controller
     	return $pdf->download('DAFTAR-RUTE-LAUT.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new lautExport($request), 'MASTER LAUT.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -72,14 +77,14 @@ class LautController extends Controller
         request()->validate([
             'provinsi_asal_id'   => 'required',
             'provinsi_tujuan_id'   => 'required',
-            'pelabuhan_asal_id'   => 'required',
-            'pelabuhan_tujuan_id'   => 'required',
+            'pelabuhan_asal'   => 'required',
+            'pelabuhan_tujuan'   => 'required',
             'jarak_mil'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['jarak_mil','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal_id','pelabuhan_tujuan_id']);
+            $data = $request->only(['nama_table','jarak_mil','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal','pelabuhan_tujuan']);
             
             $user = auth()->user();
             $data['created_by'] = $user->id;
@@ -142,8 +147,8 @@ class LautController extends Controller
             'id'   => 'required',
             'provinsi_asal_id'   => 'required',
             'provinsi_tujuan_id'   => 'required',
-            'pelabuhan_asal_id'   => 'required',
-            'pelabuhan_tujuan_id'   => 'required',
+            'pelabuhan_asal'   => 'required',
+            'pelabuhan_tujuan'   => 'required',
             'jarak_mil'   => 'required',
         ]);
 
@@ -152,7 +157,7 @@ class LautController extends Controller
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['jarak_mil','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal_id','pelabuhan_tujuan_id']);
+                $data = $request->only(['nama_table','jarak_mil','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal','pelabuhan_tujuan']);
                 
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;

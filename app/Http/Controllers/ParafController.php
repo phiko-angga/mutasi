@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Paraf;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\ParafExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +45,10 @@ class ParafController extends Controller
     	return $pdf->download('DAFTAR-PARAF.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new parafExport($request), 'MASTER PARAF.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

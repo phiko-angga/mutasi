@@ -55,6 +55,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
                                         <a class="dropdown-item print_pdf" data-url="{{url('rute_print_pdf')}}" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item print_excel" data-url="{{url('rute_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +70,7 @@
                             <tr>
                                 <th width="5%">No.</th>
                                 <th style="width:15%">Kode</th>
-                                <th style="">Kabupaten /Kota</th>
+                                <th style="">Kabupaten/Kota</th>
                                 <th style="">Bus 1xPerj.</th>
                                 <th style="">kapal Laut / KA 1xPerj.</th>
                                 <th style="">Plane 1xPerj.</th>

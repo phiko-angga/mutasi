@@ -55,6 +55,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
                                         <a class="dropdown-item print_pdf" data-url="{{url('darat_print_pdf')}}" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item print_excel" data-url="{{url('darat_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +68,6 @@
                     <table class="table">
                         <thead class="header">
                             <tr>
-                                <th width="5%">No.</th>
                                 <th style="width:15%">Kota Asal</th>
                                 <th style="">Provinsi Asal</th>
                                 <th style="">Kota Tujuan</th>

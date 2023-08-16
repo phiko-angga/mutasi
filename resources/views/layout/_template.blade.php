@@ -51,6 +51,15 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{url('')}}/js/config.js"></script>
+
+    <style>
+      .table th, .table td {
+        font-size: 0.70rem;
+      }
+      .table > :not(caption) > * > * {
+        padding: 0.4rem 0.65rem;
+      }
+    </style>
   @yield('style')
 
 </head>

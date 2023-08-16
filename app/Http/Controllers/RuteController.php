@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rute;
 use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Exports\RuteExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,10 @@ class RuteController extends Controller
     	return $pdf->download('DAFTAR-RUTE.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new ruteExport($request), 'MASTER RUTE.xlsx');
+    }
     /**
      * Show the form for creating a new resource.
      *

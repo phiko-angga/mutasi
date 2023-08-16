@@ -56,11 +56,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Pelabuhan asal</label>
                         <div class="col-sm-8">
-                            <select name="pelabuhan_asal_id" id="pelabuhan_asal_id" class="form-control">
-                                @foreach($pelabuhan as $k)
-                                    <option {{isset($laut) ? ($laut->pelabuhan_asal_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" id="pelabuhan_asal" name="pelabuhan_asal" class="form-control"  value="{{old('pelabuhan_asal',isset($laut) ? $laut->pelabuhan_asal : '')}}">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -78,11 +74,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Pelabuhan tujuan</label>
                         <div class="col-sm-8">
-                            <select name="pelabuhan_tujuan_id" id="pelabuhan_tujuan_id" class="form-control">
-                                @foreach($pelabuhan as $k2)
-                                    <option {{isset($laut) ? ($laut->pelabuhan_tujuan_id == $k2->id ? 'selected' : '') : ''}} value="{{$k2->id}}">{{$k2->nama}}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" id="pelabuhan_tujuan" name="pelabuhan_tujuan" class="form-control"  value="{{old('pelabuhan_tujuan',isset($laut) ? $laut->pelabuhan_tujuan : '')}}">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -99,6 +91,12 @@
                         <label class="col-sm-4 col-form-label" for="kode">Jarak (Mil)</label>
                         <div class="col-sm-8">
                             <input required type="number" class="form-control" id="jarak_mil" name="jarak_mil" value="{{old('jarak_mil',isset($laut) ? $laut->jarak_mil : '0')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="nama_table">Nama Table</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="nama_table" name="nama_table" value="{{old('nama_table',isset($laut) ? $laut->nama_table : '')}}" />
                         </div>
                     </div>
 

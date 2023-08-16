@@ -58,7 +58,7 @@
                             <input required type="text" class="form-control" id="kelompok" name="kelompok" value="{{old('kelompok',isset($paraf) ? $paraf->kelompok : '')}}" />
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div hidden class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">No. urut</label>
                         <div class="col-sm-8">
                             <input required type="number" class="form-control" id="nourut" name="nourut" value="{{old('nourut',isset($paraf) ? $paraf->nourut : '0')}}" />

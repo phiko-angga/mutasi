@@ -13,6 +13,7 @@
                         <th>Pelabuhan Tujuan</th>
                         <th>Provinsi Tujuan</th>
                         <th>Jarak (Mil)</th>
+                        <th>Nama Table</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,11 +21,12 @@
                     @foreach($data as $key => $row)
                     <tr>
                         <td>{{ (++$key)}}</td>
-                        <td>{{ $row->pela_nama }}</td>
+                        <td>{{ $row->pelabuhan_asal }}</td>
                         <td>{{ $row->provinsia_nama }}</td>
-                        <td>{{ $row->pelt_nama }}</td>
+                        <td>{{ $row->pelabuhan_tujuan }}</td>
                         <td>{{ $row->provinsit_nama }}</td>
                         <td>{{ number_format($row->jarak_mil) }}</td>
+                        <td>{{ $row->nama_table }}</td>
                     </tr>
                     @endforeach
                 @else

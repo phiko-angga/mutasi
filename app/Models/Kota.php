@@ -10,7 +10,15 @@ class Kota extends Model
     
     protected $table = "tb_kota";
     protected $fillable = [
-        'provinsi_id','nama','kode','status','jawamadura','created_by','updated_by'
+        'provinsi_id','nama','kode','status','jawamadura','created_by','updated_by',
+        'kantor',
+        'ibukota_prov',
+        'bandara',
+        'pelabuhan',
+        'stasiun',
+        'terminal',
+        'alamat',
+        'kodepos',
     ];
     
     public function get_data($request, $paginate = true){

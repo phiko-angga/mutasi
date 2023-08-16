@@ -10,7 +10,7 @@
                         <th>No</th>
                         <th>Username</th>
                         <th>Nama Lengkap</th>
-                        <th>Koordinator Wilayah</th>
+                        <th>Jabatan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,25 +19,8 @@
                     <tr>
                         <td>{{ (++$key)}}</td>
                         <td><strong>{{ $row->username }}</strong></td>
-                        <td>{{ $row->name }}</td>
-                        <td>
-                            @if($row->provinsi_id == null && $row->kota_id == null && $row->kecamatan_id == null && $row->kelurahan_id == null)
-                            <span class="badge rounded-pill bg-label-primary mb-0">ADMIN UTAMA</span>
-                            @else
-                            
-                            <span class="badge rounded-pill bg-label-primary mb-0">Provinsi :</span> 
-                            <span>{{ $row->provinsi }}</span>
-                            <br>
-                            <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Kabupaten / Kota :</span>
-                            <span>{{ $row->kota }}</span>
-                            <br>
-                            <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Kecamatan :</span>
-                            <span>{{ $row->kecamatan }}</span>
-                            <br>
-                            <span style="font-size:10px" class="badge rounded-pill bg-label-primary mb-0">Desa / Kelurahan :</span>
-                            <span>{{ $row->kelurahan }}</span>
-                            @endif
-                        </td>
+                        <td>{{ $row->fullname }}</td>
+                        <td>{{ $row->jabatan }}</td>
                     </tr>
                     @endforeach
                 @else

@@ -2,7 +2,6 @@
 @if(sizeof($data) !== 0)
         @foreach($data as $key => $row)
         <tr>
-            <td>{{ $data->firstItem() + $key}}</td>
             <td><strong>{{ $row->kode }}</strong></td>
             <td>{{ $row->nama }}</td>
             <td>{!! $row->jawamadura == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
