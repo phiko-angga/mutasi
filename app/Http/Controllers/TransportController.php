@@ -37,11 +37,12 @@ class TransportController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR TANSPORT';
+        $title = 'DAFTAR JENIS TANSPORTASI';
         $transport = new Transport();
         $data = $transport->get_data($request);
+        // return view('transport.list_pdf', compact('data','title'));
     	$pdf = PDF::loadview('transport.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-TANSPORT.pdf');
+    	return $pdf->stream('DAFTAR-TANSPORT.pdf');
     }
 
     public function printExcel(Request $request)

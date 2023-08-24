@@ -68,9 +68,9 @@
                     <table class="table">
                         <thead class="header">
                             <tr>
-                                <th style="width:15%">Kota Asal</th>
+                                <th style="width:15%">Dari</th>
                                 <th style="width:40%">Provinsi Asal</th>
-                                <th style="width:40%">Kota Tujuan</th>
+                                <th style="width:40%">Ke</th>
                                 <th style="width:40%">Provinsi Tujuan</th>
                                 <th style="width:40%">harga (Rp)</th>
                                 <th style="width:40%">Tanggal dibuat</th>

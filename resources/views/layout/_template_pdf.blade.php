@@ -6,13 +6,13 @@
   <meta charset="utf-8">
   <title>
     @if(isset($title)){{$title}}
-    @else 'Print to PDF - Quickcount'
+    @else 'Print to PDF'
     @endif
   </title>
 
   <style>
     @page {
-      size: A4;
+      size:"A4";
       margin: 2rem;
       font-size: 10px;
     }
@@ -33,7 +33,7 @@
     }
 
     .row {
-        display: flex;
+        display: inline;
         flex-wrap: wrap;
         margin-right: -10px;
         margin-left: -10px;
@@ -54,6 +54,15 @@
         flex: 0 0 100%;
         max-width: 25%;
     }
+    .col-10 {
+        flex: 0 0 auto;
+        width: 83.33333333%;
+    }
+    .col-2 {
+        flex: 0 0 auto;
+        width: 16.66666667%;
+    }
+    
     .text-center {
         text-align: center !important;
     }
@@ -171,11 +180,25 @@
 
   <div class="container my-4">
   
-    <div class="row">
-        <div class="col-12 text-center">
-            <h5><strong>{{$title}}</strong></h5>
-        </div>
+    <table style="width:100%">
+        <tbody>
+            <tr>
+                <td>
+                    <div style="width:20%">
+                        <img style="width:60px;height:auto" src="{{asset('img/logo.png')}}" alt="">
+                    </div>
+                </td>
+                <td>
+                    <div style="width:80%;text-align:center">
+                        <h5>MAHKAMAH AGUNG REPUBLIK INDONESIA<br>DIREKTORAT JENDERAL BADAN PERADILAN UMUM JAKARTA PUSAT</h5>
+                        <h5><strong>{{$title}}</strong></h5>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
     </div>
+    <hr style="border-bottom:2px solid black;margin:0 0 1px 0">
+    <hr style="margin:0">
 
     @yield('content')
 

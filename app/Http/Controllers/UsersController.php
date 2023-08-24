@@ -39,7 +39,7 @@ class UsersController extends Controller
         $user = new User();
         $users = $user->get_data($request);
     	$pdf = PDF::loadview('users.list_pdf', compact('users','title'));
-    	return $pdf->download('DAFTAR-users.pdf');
+    	return $pdf->stream('DAFTAR-users.pdf');
     }
 
     public function printExcel(Request $request)

@@ -6,13 +6,13 @@
 
 @section('content')
 
-<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('transport.store') : route('transport.update',$transport->id)}}">
+<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('biaya-pengepakan.store') : route('biaya-pengepakan.update',$biaya->id)}}">
     
     @csrf   
     @if($action == 'update')
     <input name="_method" type="hidden" value="PUT">
     @endif
-    <input type="hidden" name="id" value="{{isset($transport) ? $transport->id : ''}}">
+    <input type="hidden" name="id" value="{{isset($biaya) ? $biaya->id : ''}}">
 
     @if($errors->any() || (\Session::has('success')) )
     <div class="row">
@@ -53,52 +53,22 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Kode</label>
-                        <div class="col-sm-8 d-flex">
-                            <div class="form-check me-3">
-                                <input name="kode" class="form-check-input" type="radio" value="LAUT" id="kodel" {{isset($transport) ? ($transport->kode == 'LAUT' ? 'checked' : '') : ''}}>
-                                <label class="form-check-label" for="kodel"> LAUT </label>
-                            </div>
-                            <div class="form-check me-3">
-                                <input name="kode" class="form-check-input" type="radio" value="DARAT" id="koded"  {{isset($transport) ? ($transport->kode == 'DARAT' ? 'checked' : '') : ''}}>
-                                <label class="form-check-label" for="kodel"> DARAT </label>
-                            </div>
-                            <div class="form-check me-3">
-                                <input name="kode" class="form-check-input" type="radio" value="UDARA" id="kodeu"  {{isset($transport) ? ($transport->kode == 'UDARA' ? 'checked' : '') : ''}}>
-                                <label class="form-check-label" for="kodel"> UDARA </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Jenis transport</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Transport Darat : (Biaya Per Kg Rp.)</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($transport) ? $transport->nama : '')}}" />
+                            <input required type="number" class="form-control" id="transport_darat" name="transport_darat" value="{{old('transport_darat',isset($biaya->transport_darat) ? $biaya->transport_darat : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="alias">Kategori</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Transport Laut : (Biaya Per Kg Rp.)</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="alias" name="alias" value="{{old('alias',isset($transport) ? $transport->alias : '')}}"/>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="password">Status</label>
-                        <div class="col-sm-8 d-flex">
-                            <div class="form-check me-3">
-                                <input name="status" class="form-check-input" type="radio" value="0" id="status0">
-                                <label class="form-check-label" for="defaultRadio1"> Tidak aktif </label>
-                            </div>
-                            <div class="form-check">
-                                <input name="status" class="form-check-input" type="radio" value="1" id="status1" checked="">
-                                <label class="form-check-label" for="defaultRadio2"> Aktif </label>
-                            </div>
+                            <input required type="number" class="form-control" id="transport_laut" name="transport_laut" value="{{old('transport_laut',isset($biaya->transport_laut) ? $biaya->transport_laut : '')}}" />
                         </div>
                     </div>
 
                     <div class="row justify-content-end">
                         <div class="col-sm-8">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{{url('transport')}}" class="btn btn-secondary">back</a>
+                            <a href="{{url('biaya-pengepakan')}}" class="btn btn-secondary">back</a>
                             
                         </div>
                     </div>
@@ -108,19 +78,19 @@
 
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Tanggal dibuat</label>
-                        <div class="col-sm-8">{{$transport->created_at}}</div>
+                        <div class="col-sm-8">{{$biaya->created_at}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Nama pembuat</label>
-                        <div class="col-sm-8">{{$transport->created_name}}</div>
+                        <div class="col-sm-8">{{$biaya->created_name}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Tanggal diubah</label>
-                        <div class="col-sm-8">{{$transport->updated_at}}</div>
+                        <div class="col-sm-8">{{$biaya->updated_at}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Nama pengubah</label>
-                        <div class="col-sm-8">{{$transport->updated_name}}</div>
+                        <div class="col-sm-8">{{$biaya->updated_name}}</div>
                     </div>
                     @endif
                 </div>
@@ -133,5 +103,5 @@
 @endsection
 
 @section('script')
-    @include('transport/form_js')
+    @include('biaya_transport/form_js')
 @endsection

@@ -71,7 +71,6 @@
                                 <th style="width:15%">Kode</th>
                                 <th style="width:40%">Provinsi</th>
                                 <th style="width:40%">Jawa - Madura</th>
-                                <th style="width:40%">Status</th>
                                 <th style="width:40%">Tanggal dibuat</th>
                                 <th style="width:40%">Nama pembuat</th>
                                 <th style="width:40%">Tanggal diubah</th>

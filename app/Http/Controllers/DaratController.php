@@ -39,16 +39,16 @@ class DaratController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR RUTE DARAT';
+        $title = 'JARAK DARAT ANTAR KOTA (Dalam KM)';
         $darat = new Darat();
         $data = $darat->get_data($request);
     	$pdf = PDF::loadview('darat.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-RUTE-DARAT.pdf');
+    	return $pdf->stream('JARAK DARAT ANTAR KOTA.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new daratExport($request), 'MASTER DARAT.xlsx');
+        return \Excel::download(new daratExport($request), 'JARAK DARAT ANTAR KOTA (Dalam KM).xlsx');
     }
 
     /**

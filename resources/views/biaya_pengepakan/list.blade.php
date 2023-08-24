@@ -1,4 +1,4 @@
-@extends('layout._template',['title' => 'Paraf'])
+@extends('layout._template',['title' => 'Biaya Pengepakan Barang'])
 
 @section('style')
 <style>
@@ -47,15 +47,15 @@
                 <div class="row">
                     <div class="col-md-12 grid-margin">
                         <div class="d-flex justify-content-between align-items-end flex-wrap">
-                            <div class=" me-3"><a href="{{route('paraf.create')}}" class="btn btn-outline-primary btn-fw btn-sm">Tambah data</a></div>
+                            <div class=" me-3"><a href="{{route('biaya-pengepakan.create')}}" class="btn btn-outline-primary btn-fw btn-sm">Tambah data</a></div>
                             <div class=" me-3">
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="menu-icon tf-icons bx bx-printer"></i> Print
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                        <a class="dropdown-item print_pdf" data-url="{{url('paraf_print_pdf')}}" href="javascript:void(0);">PDF</a>
-                                        <a class="dropdown-item print_excel" data-url="{{url('paraf_print_excel')}}" href="javascript:void(0);">EXCEL</a>
+                                        <a class="dropdown-item print_pdf" data-url="{{url('biaya_pengepakan_print_pdf')}}" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item print_excel" data-url="{{url('biaya_pengepakan_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,11 +69,8 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:15%">Penandatangan</th>
-                                <th style="">Nama tertulis</th>
-                                <th style="">NIP tertulis</th>
-                                <th style="">Kepangkatan</th>
-                                <th style="">Nama jabatan</th>
+                                <th style="">Transport Darat (Biaya Per Kg Rp.)</th>
+                                <th style="">Transport Laut (Biaya Per Kg Rp.)</th>
                                 <th style="">Tanggal dibuat</th>
                                 <th style="">Nama pembuat</th>
                                 <th style="">Tanggal diubah</th>
@@ -81,7 +78,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        @include('paraf.list_pagination')
+                        @include('biaya_pengepakan.list_pagination')
                     </table>
                 </div>
             </div><!-- /.box-body -->
@@ -98,13 +95,13 @@
 <script>
     
     $(document).on('change','#search', function(){
-        fetch_tabledata('/paraf');
+        fetch_tabledata('/biaya_pengepakan');
     })
 
     $('.delete_btn').click(function(e){
         e.preventDefault();
         var modalConfirm = $('#modal_confirm');
-        modalConfirm.find('form').attr('action','{{url('')}}/paraf/'+$(this).data('id'));
+        modalConfirm.find('form').attr('action','{{url('')}}/biaya-pengepakan/'+$(this).data('id'));
         modalConfirm.find('#confirm_title').html('Delete data ');
         modalConfirm.find('#confirm_titlecaption').html('Apakah anda ingin delete ');
         modalConfirm.find('#confirm_titlename').html($(this).data('name'));

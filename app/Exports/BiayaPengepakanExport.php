@@ -2,13 +2,13 @@
 
 namespace App\Exports;
 
-use App\Models\Provinsi;
+use App\Models\BiayaPengepakan;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\DB;
 
-class ProvinsiExport implements FromCollection, WithHeadings, WithMapping
+class BiayaPengepakanExport implements FromCollection, WithHeadings, WithMapping
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -24,9 +24,8 @@ class ProvinsiExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
-            'Kode',
-            'Provinsi',
-            'Jawa - Madura',
+            'Transport Darat',
+            'Transport Laut',
         ];
         
         return $data;
@@ -35,9 +34,8 @@ class ProvinsiExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
-            $row->kode,
-            $row->nama,
-            $row->jawamadura == 1 ? 'Y' : 'N',
+            $row->transport_darat,
+            $row->transport_laut,
         ];
 
         return $data;
@@ -45,8 +43,8 @@ class ProvinsiExport implements FromCollection, WithHeadings, WithMapping
     
     public function collection()
     {
-        $provinsi = new Provinsi();
-        $data = $provinsi->get_data($this->request,false);
+        $biaya = new BiayaPengepakan();
+        $data = $biaya->get_data($this->request,false);
         return $data;
         
     }

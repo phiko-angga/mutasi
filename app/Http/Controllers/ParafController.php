@@ -38,16 +38,16 @@ class ParafController extends Controller
     
     public function printPdf(Request $request)
     {
-        $title = 'DAFTAR PARAF';
+        $title = 'DAFTAR NAMA PEJABAT PENANDATANGANAN';
         $paraf = new Paraf();
         $data = $paraf->get_data($request);
     	$pdf = PDF::loadview('paraf.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-PARAF.pdf');
+    	return $pdf->stream('DAFTAR NAMA PEJABAT PENANDATANGANAN.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new parafExport($request), 'MASTER PARAF.xlsx');
+        return \Excel::download(new parafExport($request), 'DAFTAR NAMA PEJABAT PENANDATANGANAN.xlsx');
     }
     /**
      * Show the form for creating a new resource.

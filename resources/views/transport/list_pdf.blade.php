@@ -10,8 +10,8 @@
                         <th>No</th>
                         <th>Kode</th>
                         <th>Jenis Transport</th>
-                        <th>Tanggal diubah</th>
                         <th>Nama pengubah</th>
+                        <th>Tanggal diubah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,8 +21,8 @@
                         <td>{{ (++$key)}}</td>
                         <td><strong>{{ $row->kode }}</strong></td>
                         <td>{{ $row->nama }}</td>
-                        <td>{{ $row->updated_at }}</td>
                         <td>{{ $row->updated_name }}</td>
+                        <td>{{ $row->updated_at }}</td>
                     </tr>
                     @endforeach
                 @else

@@ -73,19 +73,6 @@
                           </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="password">Status</label>
-                        <div class="col-sm-8 d-flex">
-                            <div class="form-check me-3">
-                                <input name="status" class="form-check-input" type="radio" value="0" id="status0"  {{old('status',isset($provinsi) ? ($provinsi->status == 0 ? 'checked' : '') : '')}}>
-                                <label class="form-check-label" for="defaultRadio1"> Tidak aktif </label>
-                            </div>
-                            <div class="form-check">
-                                <input name="status" class="form-check-input" type="radio" value="1" id="status1"  {{old('status',isset($provinsi) ? ($provinsi->status == 1 ? 'checked' : '') : '')}}>
-                                <label class="form-check-label" for="defaultRadio2"> Aktif </label>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="row justify-content-end">
                         <div class="col-sm-8">

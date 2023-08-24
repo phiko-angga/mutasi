@@ -39,16 +39,16 @@ class LautController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR RUTE LAUT';
+        $title = 'JARAK LAUT ANTAR PELABUHAN (Dalam Mil)';
         $laut = new Laut();
         $data = $laut->get_data($request);
     	$pdf = PDF::loadview('laut.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-RUTE-LAUT.pdf');
+    	return $pdf->stream('JARAK LAUT ANTAR PELABUHAN.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new lautExport($request), 'MASTER LAUT.xlsx');
+        return \Excel::download(new lautExport($request), 'JARAK LAUT ANTAR PELABUHAN.xlsx');
     }
     /**
      * Show the form for creating a new resource.

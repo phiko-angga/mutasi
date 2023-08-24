@@ -15,6 +15,7 @@ use App\Http\Controllers\UanghController;
 use App\Http\Controllers\RuteController;
 use App\Http\Controllers\BiayaTransportController;
 use App\Http\Controllers\BiayaMuatController;
+use App\Http\Controllers\BiayaPengepakanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/user', UsersController::class)->name('*','user');
     Route::resource('/biaya-transport', BiayaTransportController::class)->name('*','biaya_transport');
     Route::resource('/biaya-muat', BiayaMuatController::class)->name('*','biaya_muat');
+    Route::resource('/biaya-pengepakan', BiayaPengepakanController::class)->name('*','biaya_pengepakan');
 
     Route::get('/rute_print_pdf', [RuteController::class,'printPdf']);
     Route::get('/darat_print_pdf', [DaratController::class,'printPdf']);
@@ -63,6 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users_print_pdf', [UsersController::class,'printPdf']);
     Route::get('/biaya_transport_print_pdf', [BiayaTransportController::class,'printPdf']);
     Route::get('/biaya_muat_print_pdf', [BiayaMuatController::class,'printPdf']);
+    Route::get('/biaya_pengepakan_print_pdf', [BiayaPengepakanController::class,'printPdf']);
 
     Route::get('/rute_print_excel', [RuteController::class,'printExcel']);
     Route::get('/darat_print_excel', [DaratController::class,'printExcel']);
@@ -77,6 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users_print_excel', [UsersController::class,'printExcel']);
     Route::get('/biaya_transport_print_excel', [BiayaTransportController::class,'printExcel']);
     Route::get('/biaya_muat_print_excel', [BiayaMuatController::class,'printExcel']);
+    Route::get('/biaya_pengepakan_print_excel', [BiayaPengepakanController::class,'printExcel']);
 
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 });

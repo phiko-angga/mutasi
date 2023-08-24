@@ -38,16 +38,16 @@ class SbumController extends Controller
     
     public function printPdf(Request $request)
     {
-        $title = 'DAFTAR SBU-M';
+        $title = 'HARGA TARIF TIKET - SBU/M (Sekali Perjalanan Dalam Rupiah)';
         $sbum = new Sbum();
         $data = $sbum->get_data($request);
     	$pdf = PDF::loadview('sbum.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-SBU-M.pdf');
+    	return $pdf->stream('HARGA TARIF TIKET.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new sbumExport($request), 'MASTER SBUM.xlsx');
+        return \Excel::download(new sbumExport($request), 'HARGA TARIF TIKET.xlsx');
     }
     /**
      * Show the form for creating a new resource.

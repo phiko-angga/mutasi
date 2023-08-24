@@ -24,10 +24,8 @@ class DaratExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
-            'Kota Asal',
-            'Provinsi Asal',
-            'Kota Tujuan',
-            'Provinsi Tujuan',
+            'Dari',
+            'Ke',
             'Jarak (KM)',
         ];
         
@@ -38,9 +36,7 @@ class DaratExport implements FromCollection, WithHeadings, WithMapping
     {
         $data = [
             $row->kotaa_nama,
-            $row->provinsia_nama,
             $row->kotat_nama,
-            $row->provinsit_nama,
             $row->jarak_km,
         ];
 

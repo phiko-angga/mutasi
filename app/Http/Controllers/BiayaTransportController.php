@@ -37,16 +37,16 @@ class BiayaTransportController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR BIAYA TRANSPORTASI';
+        $title = 'BIAYA TRANSPORT ORANG DARAT/LAUT';
         $biaya = new BiayaTransport();
         $data = $biaya->get_data($request);
     	$pdf = PDF::loadview('biaya_transport.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-BIAYA-TRANSPORTASI.pdf');
+    	return $pdf->stream('BIAYA TRANSPORT ORANG DARAT LAUT.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new biayaTransportExport($request), 'MASTER BIAYA TRANSPORTASI.xlsx');
+        return \Excel::download(new biayaTransportExport($request), 'BIAYA TRANSPORT ORANG DARAT/LAUT.xlsx');
     }
 
     /**

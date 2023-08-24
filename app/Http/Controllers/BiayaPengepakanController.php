@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Provinsi;
-use App\Exports\ProvinsiExport;
+use App\Models\BiayaPengepakan;
+use App\Exports\BiayaPengepakanExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ use Redirect;
 use Log;
 use PDF;
 
-class ProvinsiController extends Controller
+class BiayaPengepakanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,31 +23,32 @@ class ProvinsiController extends Controller
     public function index(Request $request)
     {
         
-        $provinsi = new Provinsi();
-        $data = $provinsi->get_data($request);
+        $biaya = new BiayaPengepakan();
+        $data = $biaya->get_data($request);
 
-        $page = 'PROVINSI';
+        $page = 'Biaya Pengepakan';
         if($request->ajax()){
-            return view('provinsi.list_pagination', compact('data'));
+            return view('biaya_pengepakan.list_pagination', compact('data'));
         }else{
-            return view('provinsi.list', compact('data','page'));
+            return view('biaya_pengepakan.list', compact('data','page'));
         }
     }
     
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA';
-        $provinsi = new Provinsi();
-        $data = $provinsi->get_data($request);
-    	$pdf = PDF::loadview('provinsi.list_pdf', compact('data','title'));
-    	return $pdf->stream('DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA.pdf');
+        $title = 'BIAYA PENGEPAKAN BARANG';
+        $biaya = new BiayaPengepakan();
+        $data = $biaya->get_data($request);
+    	$pdf = PDF::loadview('biaya_pengepakan.list_pdf', compact('data','title'));
+    	return $pdf->stream('BIAYA PENGEPAKAN BARANG.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new provinsiExport($request), 'DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA.xlsx');
+        return \Excel::download(new BiayaPengepakanExport($request), 'BIAYA PENGEPAKAN BARANG.xlsx');
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,9 +57,9 @@ class ProvinsiController extends Controller
     public function create()
     {
         $action = 'store';
-        $page = 'PROVINSI';
+        $page = 'Biaya Pengepakan Barang';
         $title = 'Tambah baru';
-        return view('provinsi.form',compact('action','title','page'));
+        return view('biaya_pengepakan.form',compact('action','title','page'));
     }
 
     /**
@@ -71,29 +72,27 @@ class ProvinsiController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'nama'   => 'required',
-            'kode'   => 'required',
-            'status'   => 'required',
+            'transport_darat'   => 'required',
+            'transport_laut'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['nama','kode','status']);
+            $data = $request->only(['transport_darat','transport_laut']);
             
-            $data['jawamadura'] = $request->has('jawamadura') ? $request->jawamadura : 0;
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
-            $provinsi = Provinsi::create($data);
+            $biaya = BiayaPengepakan::create($data);
 
             DB::commit();
 
-            return redirect('/provinsi')->with('info', 'Provinsi berhasil ditambahkan');
+            return redirect('/biaya-pengepakan')->with('info', 'Biaya Pengepakan Barang berhasil ditambahkan');
             
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Provinsi gagal, silahkan coba kembali.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Biaya Pengepakan Barang gagal, silahkan coba kembali.']);
             // something went wrong
         }
     }
@@ -118,13 +117,13 @@ class ProvinsiController extends Controller
     public function edit($id)
     {
 
-        $mprovinsi = new Provinsi();
-        $provinsi = $mprovinsi->get_id($id);
+        $mdarat = new BiayaPengepakan();
+        $biaya = $mdarat->get_id($id);
 
         $action = 'update';
-        $title = 'Provinsi Update';
-        $page = 'PROVINSI';
-        return view('provinsi.form',compact('provinsi','action','title','page'));
+        $title = 'Biaya Pengepakan Barang Update';
+        $page = 'Biaya Pengepakan Barang';
+        return view('biaya_pengepakan.form',compact('biaya','action','title'));
     }
 
     /**
@@ -138,32 +137,32 @@ class ProvinsiController extends Controller
     {
         request()->validate([
             'id'   => 'required',
-            'nama'   => 'required',
-            'kode'   => 'required',
+            'transport_darat'   => 'required',
+            'transport_laut'   => 'required',
         ]);
 
-        $provinsi = Provinsi::find($request->id);
-        if($provinsi){
+        $biaya = BiayaPengepakan::find($request->id);
+        if($biaya){
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['nama','kode','status']);
-                $data['jawamadura'] = $request->has('jawamadura') ? $request->jawamadura : 0;
+                $data = $request->only(['transport_darat','transport_laut']);
+                
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;
-                Provinsi::where('id',$provinsi->id)->update($data);
+                BiayaPengepakan::where('id',$biaya->id)->update($data);
                 DB::commit();
 
-                return redirect('/provinsi')->with('info', 'Provinsi berhasil di update');
+                return redirect('/biaya-pengepakan')->with('info', 'Biaya Pengepakan Barang berhasil di update');
                 
             } catch (\Exception $e) {
                 DB::rollback();
                 Log::Error($e->getMessage());
-                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Provinsi gagal, silahkan coba kembali.']);
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Biaya Pengepakan Barang gagal, silahkan coba kembali.']);
                 // something went wrong
             }
         }else{
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Provinsi tidak ditemukan.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Biaya Pengepakan Barang tidak ditemukan.']);
         }
     }
 
@@ -175,12 +174,12 @@ class ProvinsiController extends Controller
      */
     public function destroy($id)
     {
-        $provinsi = Provinsi::find($id);
-        if($provinsi ){
-            Provinsi::where('id',$provinsi->id)->delete();
-            return redirect('/provinsi')->with('info', 'Provinsi berhasil di delete.');
+        $biaya = BiayaPengepakan::find($id);
+        if($biaya ){
+            BiayaPengepakan::where('id',$biaya->id)->delete();
+            return redirect('/biaya-pengepakan')->with('info', 'Biaya Pengepakan Barang berhasil di delete.');
         }else{
-            return Redirect::back()->withErrors(['error'=> 'Data Provinsi tidak ditemukan.']);
+            return Redirect::back()->withErrors(['error'=> 'Data Biaya Pengepakan Barang tidak ditemukan.']);
         }
     }
 

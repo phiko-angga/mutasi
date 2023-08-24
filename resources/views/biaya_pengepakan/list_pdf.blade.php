@@ -8,8 +8,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode</th>
-                        <th>Nama provinsi</th>
+                        <th>Transport Darat (Biaya Per Kg Rp.)</th>
+                        <th>Transport Laut (Biaya Per Kg Rp.)</th>
                         <th>Nama pengubah</th>
                         <th>Tanggal diubah</th>
                     </tr>
@@ -19,8 +19,8 @@
                     @foreach($data as $key => $row)
                     <tr>
                         <td>{{ (++$key)}}</td>
-                        <td><strong>{{ $row->kode }}</strong></td>
-                        <td>{{ $row->nama }}</td>
+                        <td>{{ number_format($row->transport_darat) }}</td>
+                        <td>{{ number_format($row->transport_laut) }}</td>
                         <td>{{ $row->updated_name }}</td>
                         <td>{{ $row->updated_at }}</td>
                     </tr>

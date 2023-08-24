@@ -55,7 +55,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Kota</label>
                         <div class="col-sm-8">
-                            <select name="kota_id" id="kota_id" class="form-control">
+                            <select name="kota_id" id="kota_id" class="form-select">
                                 @foreach($kota as $k)
                                     <option {{isset($rute) ? ($rute->kota_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
                                 @endforeach
@@ -65,7 +65,11 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Kode</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="kode" name="kode" value="{{old('kode',isset($rute) ? $rute->kode : '')}}" />
+                            <select name="kode" id="kode" class="form-select">
+                                @foreach($provinsi as $k)
+                                    <option {{isset($rute) ? ($rute->kode == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->kode.' - '.$k->nama}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">

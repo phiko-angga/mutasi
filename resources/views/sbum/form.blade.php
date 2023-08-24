@@ -54,21 +54,21 @@
                 <div class="card-body">
                     <h5 class="mb-0">Daerah Asal</h5>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Kota asal</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Provinsi asal</label>
                         <div class="col-sm-8">
-                            <select name="kota_asal_id" id="kota_asal_id" class="form-control">
-                                @foreach($kota as $k)
-                                    <option {{isset($sbum) ? ($sbum->kota_asal_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
+                            <select name="provinsi_asal_id" id="provinsi_asal_id" class="form-select">
+                                @foreach($provinsi as $p)
+                                    <option {{isset($sbum) ? ($sbum->provinsi_asal_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Provinsi asal</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Kota asal</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_asal_id" id="provinsi_asal_id" class="form-control">
-                                @foreach($provinsi as $p)
-                                    <option {{isset($sbum) ? ($sbum->provinsi_asal_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
+                            <select name="kota_asal_id" id="kota_asal_id" class="form-select">
+                                @foreach($kota as $k)
+                                    <option {{isset($sbum) ? ($sbum->kota_asal_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -76,21 +76,21 @@
                     
                     <h5 class="mb-0">Daerah Tujuan</h5>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Kota tujuan</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
                         <div class="col-sm-8">
-                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-control">
-                                @foreach($kota as $k2)
-                                    <option {{isset($sbum) ? ($sbum->kota_tujuan_id == $k2->id ? 'selected' : '') : ''}} value="{{$k2->id}}">{{$k2->nama}}</option>
+                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select">
+                                @foreach($provinsi as $p2)
+                                    <option {{isset($sbum) ? ($sbum->provinsi_tujuan_id == $p2->id ? 'selected' : '') : ''}} value="{{$p2->id}}">{{$p2->nama}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Kota tujuan</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-control">
-                                @foreach($provinsi as $p2)
-                                    <option {{isset($sbum) ? ($sbum->provinsi_tujuan_id == $p2->id ? 'selected' : '') : ''}} value="{{$p2->id}}">{{$p2->nama}}</option>
+                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-select">
+                                @foreach($kota as $k2)
+                                    <option {{isset($sbum) ? ($sbum->kota_tujuan_id == $k2->id ? 'selected' : '') : ''}} value="{{$k2->id}}">{{$k2->nama}}</option>
                                 @endforeach
                             </select>
                         </div>

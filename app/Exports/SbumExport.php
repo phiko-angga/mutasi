@@ -24,11 +24,11 @@ class SbumExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
-            'Kota Asal',
-            'Provinsi Asal',
-            'Kota Tujuan',
-            'Provinsi Tujuan',
-            'harga (Rp)',
+            'Dari',
+            'Ke',
+            'Harga (Rp)',
+            'Nama Pengubah',
+            'tanggal Pengubah',
         ];
         
         return $data;
@@ -38,10 +38,10 @@ class SbumExport implements FromCollection, WithHeadings, WithMapping
     {
         $data = [
             $row->kotaa_nama,
-            $row->provinsia_nama,
             $row->kotat_nama,
-            $row->provinsit_nama,
             $row->harga_tiket,
+            $row->updated_name,
+            $row->updated_at,
         ];
 
         return $data;

@@ -39,16 +39,16 @@ class RuteController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR RUTE';
+        $title = 'DAFTAR BIAYA TIKET KOTA PROVINSI REPUBLIK INDONESIA';
         $rute = new Rute();
         $data = $rute->get_data($request);
     	$pdf = PDF::loadview('rute.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-RUTE.pdf');
+    	return $pdf->stream('DAFTAR BIAYA TIKET KOTA PROVINSI REPUBLIK INDONESIA.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new ruteExport($request), 'MASTER RUTE.xlsx');
+        return \Excel::download(new ruteExport($request), 'DAFTAR BIAYA TIKET KOTA PROVINSI REPUBLIK INDONESIA.xlsx');
     }
     /**
      * Show the form for creating a new resource.
@@ -61,7 +61,9 @@ class RuteController extends Controller
         $page = 'Rute';
         $title = 'Tambah baru';
         $kota = Kota::all();
-        return view('rute.form',compact('action','title','page','kota'));
+        $title = 'Tambah baru';
+        $provinsi = Provinsi::all();
+        return view('rute.form',compact('action','title','page','kota','provinsi'));
     }
 
     /**
@@ -128,7 +130,8 @@ class RuteController extends Controller
         $title = 'Rute Update';
         $page = 'Rute';
         $kota = Kota::all();
-        return view('rute.form',compact('rute','action','title','page','kota'));
+        $provinsi = Provinsi::all();
+        return view('rute.form',compact('rute','action','title','page','kota','provinsi'));
     }
 
     /**

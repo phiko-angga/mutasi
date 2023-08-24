@@ -38,16 +38,16 @@ class KotaController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR KOTA';
+        $title = 'DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA';
         $kota = new Kota();
         $data = $kota->get_data($request);
     	$pdf = PDF::loadview('kota.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-KOTA.pdf');
+    	return $pdf->stream('DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new kotaExport($request), 'MASTER KOTA.xlsx');
+        return \Excel::download(new kotaExport($request), 'DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA.xlsx');
     }
     /**
      * Show the form for creating a new resource.

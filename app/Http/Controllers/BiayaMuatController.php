@@ -37,16 +37,16 @@ class BiayaMuatController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR BIAYA MUAT BARANG';
+        $title = 'BIAYA MUAT BARANG DARART/LAUT';
         $biaya = new BiayaMuat();
         $data = $biaya->get_data($request);
     	$pdf = PDF::loadview('biaya_muat.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR BIAYA MUAT BARANG.pdf');
+    	return $pdf->stream('BIAYA MUAT BARANG DARART LAUT.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new BiayaMuatExport($request), 'MASTER BIAYA MUAT BARANG.xlsx');
+        return \Excel::download(new BiayaMuatExport($request), 'BIAYA MUAT BARANG DARART LAUT.xlsx');
     }
 
     /**

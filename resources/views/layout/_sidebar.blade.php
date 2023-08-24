@@ -28,13 +28,19 @@
             <li class="menu-item {{ Request::segment(1) == 'biaya-transport' ? 'active' : '' }}">
               <a href="{{url('biaya-transport')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Biaya Transportasi</div>
+                <div data-i18n="Analytics">Biaya Transport Orang Darat/Laut</div>
               </a>
             </li>
             <li class="menu-item {{ Request::segment(1) == 'biaya-muat' ? 'active' : '' }}">
               <a href="{{url('biaya-muat')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Biaya Muat Barang</div>
+                <div data-i18n="Analytics">Biaya Muat Barang Darat/Laut</div>
+              </a>
+            </li>
+            <li class="menu-item {{ Request::segment(1) == 'biaya-pengepakan' ? 'active' : '' }}">
+              <a href="{{url('biaya-pengepakan')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Biaya Pengepakan Barang</div>
               </a>
             </li>
             

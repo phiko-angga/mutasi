@@ -71,16 +71,15 @@
                                 <th width="5%">No.</th>
                                 <th style="width:15%">Kode</th>
                                 <th>kota</th>
-                                <th>Provinsi</th>
                                 <th>Kantor PN</th>
                                 <th>Ibu Kota Prov.</th>
                                 <th>Bandara</th>
                                 <th>Pelabuhan</th>
                                 <th>Stasiun</th>
                                 <th>Terminal</th>
+                                <th>Status</th>
                                 <th>Alamat</th>
                                 <th>Kode POS</th>
-                                <th>Status</th>
                                 <th>Tanggal dibuat</th>
                                 <th>Nama pembuat</th>
                                 <th>Tanggal diubah</th>

@@ -39,16 +39,16 @@ class DephubController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR DEP HUB';
+        $title = 'HARGA TARIF TIKET - DEPARTEMEN PERHUBUNGAN (Dalam Rupiah)';
         $dephub = new Dephub();
         $data = $dephub->get_data($request);
     	$pdf = PDF::loadview('dephub.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-DEP-HUB.pdf');
+    	return $pdf->stream('HARGA TARIF TIKET - DEPARTEMEN PERHUBUNGAN.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new depHubExport($request), 'MASTER DEP HUB.xlsx');
+        return \Excel::download(new depHubExport($request), 'HARGA TARIF TIKET - DEPARTEMEN PERHUBUNGAN.xlsx');
     }
     /**
      * Show the form for creating a new resource.

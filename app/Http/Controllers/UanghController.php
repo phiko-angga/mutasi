@@ -39,16 +39,16 @@ class UanghController extends Controller
     public function printPdf(Request $request)
     {
         
-        $title = 'DAFTAR UANG HARIAN';
+        $title = 'SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM NEGERI (Dalam Rupiah)';
         $uangh = new Uangh();
         $data = $uangh->get_data($request);
     	$pdf = PDF::loadview('uangh.list_pdf', compact('data','title'));
-    	return $pdf->download('DAFTAR-UANG-HARIAN.pdf');
+    	return $pdf->stream('SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM NEGERI.pdf');
     }
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new uanghExport($request), 'MASTER UANG HARIAN.xlsx');
+        return \Excel::download(new uanghExport($request), 'SATUAN BIAYA UANG HARIAN PERJALANAN DINAS DALAM NEGERI.xlsx');
     }
     /**
      * Show the form for creating a new resource.

@@ -26,7 +26,6 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
         $data = [
             'Kode',
             'kota',
-            'Provinsi',
             'Kantor PN',
             'Ibu Kota Prov.',
             'Bandara',
@@ -47,16 +46,15 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
         $data = [
             $row->kode,
             $row->nama,
-            $row->provinsi_nama,
             $row->kantor == 1 ? 'Y' : 'N',
             $row->ibukota_prov == 1 ? 'Y' : 'N',
             $row->bandara == 1 ? 'Y' : 'N',
             $row->pelabuhan == 1 ? 'Y' : 'N',
             $row->stasiun == 1 ? 'Y' : 'N',
             $row->terminal == 1 ? 'Y' : 'N',
+            $row->status == 1 ? 'Active' : 'Disable',
             $row->alamat,
             $row->kodepos,
-            $row->status == 1 ? 'Active' : 'Disable',
         ];
 
         return $data;
