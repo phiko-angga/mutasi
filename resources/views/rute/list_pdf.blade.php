@@ -13,6 +13,10 @@
                         <th>Bus</th>
                         <th>Kapal Laut / KA</th>
                         <th>Plane</th>
+                        <th>Nama pembuat</th>
+                        <th>Tanggal dibuat</th>
+                        <th>Nama pengubah</th>
+                        <th>Tanggal diubah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +29,10 @@
                         <td>{{ number_format($row->bus) }}</td>
                         <td>{{ number_format($row->kapal) }}</td>
                         <td>{{ number_format($row->plane) }}</td>
+                        <td>{{ $row->created_name }}</td>
+                        <td>{{ $row->created_at }}</td>
+                        <td>{{ $row->updated_name }}</td>
+                        <td>{{ $row->updated_at }}</td>
                     </tr>
                     @endforeach
                 @else

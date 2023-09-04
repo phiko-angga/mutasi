@@ -14,6 +14,7 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
     * @return \Illuminate\Support\Collection
     */
     protected $request;
+    private $row;
     
     public function __construct($request)
     {
@@ -24,6 +25,7 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
+            'Nomor',
             'Kode',
             'kota',
             'Kantor PN',
@@ -36,6 +38,10 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
             'Alamat',
             'Kode POS',
             'Status',
+            'Nama pembuat',
+            'Tanggal dibuat',
+            'Nama pengubah',
+            'Tanggal diubah',
         ];
         
         return $data;
@@ -44,6 +50,7 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
+            ++$this->row,
             $row->kode,
             $row->nama,
             $row->kantor == 1 ? 'Y' : 'N',
@@ -55,6 +62,10 @@ class KotaExport implements FromCollection, WithHeadings, WithMapping
             $row->status == 1 ? 'Active' : 'Disable',
             $row->alamat,
             $row->kodepos,
+            $row->created_name,
+            $row->created_at,
+            $row->updated_name,
+            $row->updated_at,
         ];
 
         return $data;

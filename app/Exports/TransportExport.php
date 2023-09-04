@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 
 class TransportExport implements FromCollection, WithHeadings, WithMapping
 {
+    private $row = 0;
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -24,6 +26,7 @@ class TransportExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
+            'Nomor',
             'Kode',
             'Jenis Transport',
             'Kategori',
@@ -35,7 +38,9 @@ class TransportExport implements FromCollection, WithHeadings, WithMapping
 
     public function map($row): array
     {
+
         $data = [
+            ++$this->row,
             $row->kode,
             $row->nama,
             $row->alias,

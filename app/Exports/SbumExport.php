@@ -14,6 +14,7 @@ class SbumExport implements FromCollection, WithHeadings, WithMapping
     * @return \Illuminate\Support\Collection
     */
     protected $request;
+    private $row;
     
     public function __construct($request)
     {
@@ -24,11 +25,16 @@ class SbumExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
+            'Nomor',
+            'Provinsi Asal',
             'Dari',
+            'Pronvinsi Tujuan',
             'Ke',
             'Harga (Rp)',
+            'Nama Pembuat',
+            'Tanggal Dibuat',
             'Nama Pengubah',
-            'tanggal Pengubah',
+            'Tanggal Pengubah',
         ];
         
         return $data;
@@ -37,9 +43,14 @@ class SbumExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
+            ++$this->row,
+            $row->provinsia_nama,
             $row->kotaa_nama,
+            $row->provinsit_nama,
             $row->kotat_nama,
             $row->harga_tiket,
+            $row->created_name,
+            $row->created_at,
             $row->updated_name,
             $row->updated_at,
         ];

@@ -19,6 +19,8 @@
                         <th>Status</th>
                         <th>Alamat</th>
                         <th>Kode POS</th>
+                        <th>Nama pembuat</th>
+                        <th>Tanggal dibuat</th>
                         <th>Nama pengubah</th>
                         <th>Tanggal diubah</th>
                     </tr>
@@ -39,6 +41,8 @@
                         <td class="text-center">{!! $row->status == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
                         <td>{{ $row->alamat }}</td>
                         <td>{{ $row->kodepos }}</td>
+                        <td>{{ $row->created_name }}</td>
+                        <td>{{ $row->created_at }}</td>
                         <td>{{ $row->updated_name }}</td>
                         <td>{{ $row->updated_at }}</td>
                     </tr>

@@ -73,14 +73,14 @@ class ProvinsiController extends Controller
         request()->validate([
             'nama'   => 'required',
             'kode'   => 'required',
-            'status'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['nama','kode','status']);
+            $data = $request->only(['nama','kode']);
             
             $data['jawamadura'] = $request->has('jawamadura') ? $request->jawamadura : 0;
+            $data['status'] = 1;
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
@@ -147,7 +147,7 @@ class ProvinsiController extends Controller
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['nama','kode','status']);
+                $data = $request->only(['nama','kode']);
                 $data['jawamadura'] = $request->has('jawamadura') ? $request->jawamadura : 0;
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;

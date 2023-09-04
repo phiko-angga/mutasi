@@ -147,7 +147,7 @@ class UsersController extends Controller
 
             DB::beginTransaction();
             try {
-                $data = $request->except(['_token']);
+                $data = $request->except(['_token','_method','password','id']);
                 if(isset($request->password)){
                     $data['password'] = Hash::make($request->password);
                 }

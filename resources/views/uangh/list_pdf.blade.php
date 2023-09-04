@@ -13,6 +13,9 @@
                         <th>Luar Kota</th>
                         <th>Dalam Kota</th>
                         <th>Diklat</th>
+                        <th>Nama pembuat</th>
+                        <th>Tanggal dibuat</th>
+                        <th>Nama pengubah</th>
                         <th>Tanggal diubah</th>
                     </tr>
                 </thead>
@@ -26,6 +29,9 @@
                         <td>{{ number_format($row->luar_kota) }}</td>
                         <td>{{ number_format($row->dalam_kota) }}</td>
                         <td>{{ number_format($row->diklat) }}</td>
+                        <td>{{ $row->created_name }}</td>
+                        <td>{{ $row->created_at }}</td>
+                        <td>{{ $row->updated_name }}</td>
                         <td>{{ $row->updated_at }}</td>
                     </tr>
                     @endforeach

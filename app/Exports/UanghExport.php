@@ -14,6 +14,7 @@ class UanghExport implements FromCollection, WithHeadings, WithMapping
     * @return \Illuminate\Support\Collection
     */
     protected $request;
+    private $row;
     
     public function __construct($request)
     {
@@ -24,11 +25,16 @@ class UanghExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
+            'Nomor',
             'Provinsi',
             'Satuan',
             'Luar Kota',
             'Dalam Kota',
             'Diklat',
+            'Nama Pembuat',
+            'Tanggal Dibuat',
+            'Nama Pengubah',
+            'Tanggal Pengubah',
         ];
         
         return $data;
@@ -37,11 +43,16 @@ class UanghExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
+            ++$this->row,
             $row->provinsi_nama,
             $row->satuan,
             $row->luar_kota,
             $row->dalam_kota,
             $row->diklat,
+            $row->created_name,
+            $row->created_at,
+            $row->updated_name,
+            $row->updated_at,
         ];
 
         return $data;

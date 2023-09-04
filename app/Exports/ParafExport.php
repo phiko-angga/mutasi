@@ -14,6 +14,7 @@ class ParafExport implements FromCollection, WithHeadings, WithMapping
     * @return \Illuminate\Support\Collection
     */
     protected $request;
+    private $row;
     
     public function __construct($request)
     {
@@ -24,12 +25,17 @@ class ParafExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
+            'Nomor',
             'Penandatangan',
             'No. urut',
             'Nama tertulis',
             'NIP tertulis',
             'Kepangkatan',
             'Nama jabatan',
+            'Nama Pembuat',
+            'Tanggal Dibuat',
+            'Nama Pengubah',
+            'Tanggal Pengubah',
         ];
         
         return $data;
@@ -38,12 +44,17 @@ class ParafExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
+            ++$this->row,
             $row->kelompok,
             $row->nourut,
             $row->nama,
             $row->nip,
             $row->pangkat,
             $row->jabatan,
+            $row->created_name,
+            $row->created_at,
+            $row->updated_name,
+            $row->updated_at,
         ];
 
         return $data;

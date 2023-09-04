@@ -41,7 +41,7 @@ class KotaController extends Controller
         $title = 'DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA';
         $kota = new Kota();
         $data = $kota->get_data($request);
-    	$pdf = PDF::loadview('kota.list_pdf', compact('data','title'));
+    	$pdf = PDF::loadview('kota.list_pdf', compact('data','title'))->setPaper('a4', 'landscape');
     	return $pdf->stream('DAFTAR IBUKOTA PROVINSI REPUBLIK INDONESIA.pdf');
     }
 

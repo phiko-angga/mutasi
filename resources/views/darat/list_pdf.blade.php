@@ -8,9 +8,13 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Provinsi Asal</th>
                         <th>Dari</th>
+                        <th>Provinsi Tujuan</th>
                         <th>Ke</th>
                         <th>Jarak (KM)</th>
+                        <th>Nama pembuat</th>
+                        <th>Tanggal dibuat</th>
                         <th>Nama pengubah</th>
                         <th>Tanggal diubah</th>
                     </tr>
@@ -20,9 +24,13 @@
                     @foreach($data as $key => $row)
                     <tr>
                         <td>{{ (++$key)}}</td>
+                        <td>{{ $row->provinsia_nama }}</td>
                         <td>{{ $row->kotaa_nama }}</td>
+                        <td>{{ $row->provinsit_nama }}</td>
                         <td>{{ $row->kotat_nama }}</td>
                         <td>{{ number_format($row->jarak_km) }}</td>
+                        <td>{{ $row->created_name }}</td>
+                        <td>{{ $row->created_at }}</td>
                         <td>{{ $row->updated_name }}</td>
                         <td>{{ $row->updated_at }}</td>
                     </tr>

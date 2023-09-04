@@ -8,10 +8,16 @@
                 <thead>
                     <tr>
                         <th>No</th>
+                        <th>Provinsi Asal</th>
                         <th>Dari</th>
+                        <th>Provinsi Tujuan</th>
                         <th>Ke</th>
                         <th>Jarak (Mil)</th>
                         <th>Nama Table Jalur</th>
+                        <th>Nama pembuat</th>
+                        <th>Tanggal dibuat</th>
+                        <th>Nama pengubah</th>
+                        <th>Tanggal diubah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,9 +26,15 @@
                     <tr>
                         <td>{{ (++$key)}}</td>
                         <td>{{ $row->provinsia_nama }}</td>
+                        <td>{{ $row->pelabuhan_asal }}</td>
+                        <td>{{ $row->provinsit_nama }}</td>
                         <td>{{ $row->pelabuhan_tujuan }}</td>
                         <td>{{ number_format($row->jarak_mil) }}</td>
                         <td>{{ $row->nama_table }}</td>
+                        <td>{{ $row->created_name }}</td>
+                        <td>{{ $row->created_at }}</td>
+                        <td>{{ $row->updated_name }}</td>
+                        <td>{{ $row->updated_at }}</td>
                     </tr>
                     @endforeach
                 @else

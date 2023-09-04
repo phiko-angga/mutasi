@@ -14,6 +14,7 @@ class LautExport implements FromCollection, WithHeadings, WithMapping
     * @return \Illuminate\Support\Collection
     */
     protected $request;
+    private $row;
     
     public function __construct($request)
     {
@@ -24,12 +25,17 @@ class LautExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
-            'Pelabuhan Asal',
+            'Nomor',
             'Provinsi Asal',
-            'Pelabuhan Tujuan',
+            'Pelabuhan Asal',
             'Provinsi Tujuan',
+            'Pelabuhan Tujuan',
             'Jarak (Mil)',
             'Nama Table',
+            'Nama Pembuat',
+            'Tanggal Dibuat',
+            'Nama Pengubah',
+            'Tanggal Pengubah',
         ];
         
         return $data;
@@ -38,12 +44,17 @@ class LautExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
-            $row->pelabuhan_asal,
+            ++$this->row,
             $row->provinsia_nama,
-            $row->pelabuhan_tujuan,
+            $row->pelabuhan_asal,
             $row->provinsit_nama,
+            $row->pelabuhan_tujuan,
             $row->jarak_mil,
             $row->nama_table,
+            $row->created_name,
+            $row->created_at,
+            $row->updated_name,
+            $row->updated_at,
         ];
 
         return $data;

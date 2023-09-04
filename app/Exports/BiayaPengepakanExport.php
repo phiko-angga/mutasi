@@ -14,6 +14,7 @@ class BiayaPengepakanExport implements FromCollection, WithHeadings, WithMapping
     * @return \Illuminate\Support\Collection
     */
     protected $request;
+    private $row;
     
     public function __construct($request)
     {
@@ -24,8 +25,13 @@ class BiayaPengepakanExport implements FromCollection, WithHeadings, WithMapping
     {
         
         $data = [
+            'Nomor',
             'Transport Darat',
             'Transport Laut',
+            'Nama Pembuat',
+            'Tanggal Dibuat',
+            'Nama Pengubah',
+            'Tanggal Pengubah',
         ];
         
         return $data;
@@ -34,8 +40,13 @@ class BiayaPengepakanExport implements FromCollection, WithHeadings, WithMapping
     public function map($row): array
     {
         $data = [
+            ++$this->row,
             $row->transport_darat,
             $row->transport_laut,
+            $row->created_name,
+            $row->created_at,
+            $row->updated_name,
+            $row->updated_at,
         ];
 
         return $data;

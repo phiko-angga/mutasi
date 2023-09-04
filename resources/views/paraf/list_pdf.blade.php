@@ -8,10 +8,15 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Pegawai</th>
+                        <th>Penandatanganan</th>
+                        <th>Nama Tertulis</th>
                         <th>NIP</th>
                         <th>Kepangkatan</th>
                         <th>Nama jabatan</th>
+                        <th>Nama pembuat</th>
+                        <th>Tanggal dibuat</th>
+                        <th>Nama pengubah</th>
+                        <th>Tanggal diubah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,10 +24,15 @@
                     @foreach($data as $key => $row)
                     <tr>
                         <td>{{ (++$key)}}</td>
+                        <td>{{ $row->kelompok }}</td>
                         <td>{{ $row->nama }}</td>
                         <td>{{ $row->nip }}</td>
                         <td>{{ $row->pangkat }}</td>
                         <td>{{ $row->jabatan }}</td>
+                        <td>{{ $row->created_name }}</td>
+                        <td>{{ $row->created_at }}</td>
+                        <td>{{ $row->updated_name }}</td>
+                        <td>{{ $row->updated_at }}</td>
                     </tr>
                     @endforeach
                 @else
