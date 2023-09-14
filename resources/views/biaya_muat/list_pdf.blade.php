@@ -25,10 +25,10 @@
                         <td>{{ number_format($row->biaya_darat) }}</td>
                         <td>{{ number_format($row->biaya_laut) }}</td>
                         <td class="text-center">{!! $row->jawamadura == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
-                        <td>{{ $row->created_at }}</td>
                         <td>{{ $row->created_name }}</td>
-                        <td>{{ $row->updated_at }}</td>
+                        <td>{{ $row->created_at }}</td>
                         <td>{{ $row->updated_name }}</td>
+                        <td>{{ $row->updated_at }}</td>
                     </tr>
                     @endforeach
                 @else

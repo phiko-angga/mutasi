@@ -69,10 +69,10 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:15%">Pelabuhan Asal</th>
-                                <th style="">Provinsi Asal</th>
-                                <th style="">Pelabuhan Tujuan</th>
-                                <th style="">Provinsi Tujuan</th>
+                                <th style="width:10%">Provinsi Asal</th>
+                                <th style="width:10%">Pelabuhan Asal</th>
+                                <th style="width:10%">Provinsi Tujuan</th>
+                                <th style="width:10%">Pelabuhan Tujuan</th>
                                 <th style="">Jarak (Mil)</th>
                                 <th style="">Nama Table</th>
                                 <th style="">Tanggal dibuat</th>

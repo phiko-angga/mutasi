@@ -68,10 +68,11 @@
                     <table class="table">
                         <thead class="header">
                             <tr>
-                                <th style="width:15%">Dari</th>
-                                <th style="">Provinsi Asal</th>
-                                <th style="">Ke</th>
-                                <th style="">Provinsi Tujuan</th>
+                                <th width="5%">No.</th>
+                                <th style="width:10%">Provinsi Asal</th>
+                                <th style="width:10%">Dari</th>
+                                <th style="width:10%">Provinsi Tujuan</th>
+                                <th style="width:10%">Ke</th>
                                 <th style="">Jarak (KM)</th>
                                 <th style="">Tanggal dibuat</th>
                                 <th style="">Nama pembuat</th>

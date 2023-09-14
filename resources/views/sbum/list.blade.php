@@ -68,15 +68,16 @@
                     <table class="table">
                         <thead class="header">
                             <tr>
-                                <th style="width:40%">Provinsi Asal</th>
-                                <th style="width:15%">Dari</th>
-                                <th style="width:40%">Provinsi Tujuan</th>
-                                <th style="width:40%">Ke</th>
-                                <th style="width:40%">harga (Rp)</th>
-                                <th style="width:40%">Tanggal dibuat</th>
-                                <th style="width:40%">Nama pembuat</th>
-                                <th style="width:40%">Tanggal diubah</th>
-                                <th style="width:40%">Nama pengubah</th>
+                                <th width="5%">No.</th>
+                                <th style="width:10%">Provinsi Asal</th>
+                                <th style="width:10%">Dari</th>
+                                <th style="width:10%">Provinsi Tujuan</th>
+                                <th style="width:10%">Ke</th>
+                                <th>harga (Rp)</th>
+                                <th>Tanggal dibuat</th>
+                                <th>Nama pembuat</th>
+                                <th>Tanggal diubah</th>
+                                <th>Nama pengubah</th>
                                 <th></th>
                             </tr>
                         </thead>

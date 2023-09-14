@@ -69,11 +69,11 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:15%">Provinsi</th>
-                                <th style="">Satuan</th>
-                                <th style="">Luar Kota</th>
-                                <th style="">Dalam Kota</th>
-                                <th style="">Diklat</th>
+                                <th style="width:10%">Provinsi</th>
+                                <th style="width:10%">Satuan</th>
+                                <th style="width:10%">Luar Kota</th>
+                                <th style="width:10%">Dalam Kota</th>
+                                <th style="width:10%">Diklat</th>
                                 <th style="">Tanggal dibuat</th>
                                 <th style="">Nama pembuat</th>
                                 <th style="">Tanggal diubah</th>

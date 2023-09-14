@@ -2,6 +2,7 @@
 @if(sizeof($data) !== 0)
         @foreach($data as $key => $row)
         <tr>
+            <td>{{ $data->firstItem() + $key}}</td>
             <td>{{ $row->provinsia_nama }}</td>
             <td>{{ $row->kotaa_nama }}</td>
             <td>{{ $row->provinsit_nama }}</td>

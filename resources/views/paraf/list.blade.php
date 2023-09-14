@@ -69,11 +69,11 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:15%">Penandatangan</th>
-                                <th style="">Nama tertulis</th>
-                                <th style="">NIP tertulis</th>
-                                <th style="">Kepangkatan</th>
-                                <th style="">Nama jabatan</th>
+                                <th style="width:10%">Penandatangan</th>
+                                <th style="width:10%">Nama tertulis</th>
+                                <th style="width:10%">NIP tertulis</th>
+                                <th style="width:10%">Kepangkatan</th>
+                                <th style="width:10%">Nama jabatan</th>
                                 <th style="">Tanggal dibuat</th>
                                 <th style="">Nama pembuat</th>
                                 <th style="">Tanggal diubah</th>

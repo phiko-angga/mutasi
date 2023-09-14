@@ -68,6 +68,7 @@
                     <table class="table">
                         <thead class="header">
                             <tr>
+                                <th width="5%">No.</th>
                                 <th style="width:15%">Kode</th>
                                 <th style="width:40%">Provinsi</th>
                                 <th style="width:40%">Jawa - Madura</th>

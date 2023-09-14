@@ -2,10 +2,11 @@
 @if(sizeof($data) !== 0)
         @foreach($data as $key => $row)
         <tr>
-            <td>{{ $row->kotaa_nama }}</td>
+            <td>{{ $data->firstItem() + $key}}</td>
             <td>{{ $row->provinsia_nama }}</td>
-            <td>{{ $row->kotat_nama }}</td>
+            <td>{{ $row->kotaa_nama }}</td>
             <td>{{ $row->provinsit_nama }}</td>
+            <td>{{ $row->kotat_nama }}</td>
             <td>{{ number_format($row->jarak_km) }}</td>
             <td>{{ $row->created_at }}</td>
             <td>{{ $row->created_name }}</td>

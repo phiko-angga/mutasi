@@ -53,7 +53,7 @@
                                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="menu-icon tf-icons bx bx-printer"></i> Print
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         <a class="dropdown-item print_pdf" data-url="{{url('dephub_print_pdf')}}" href="javascript:void(0);">PDF</a>
                                         <a class="dropdown-item print_excel" data-url="{{url('dephub_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
@@ -68,17 +68,18 @@
                     <table class="table">
                         <thead class="header">
                             <tr>
-                                <th style="width:15%">Dari</th>
-                                <th style="">Provinsi Asal</th>
-                                <th style="">Ke</th>
-                                <th style="">Provinsi Tujuan</th>
-                                <th style="">Jarak (KM)</th>
-                                <th style="">harga (Rp)</th>
-                                <th style="">Tanggal dibuat</th>
-                                <th style="">Nama pembuat</th>
-                                <th style="">Tanggal diubah</th>
-                                <th style="">Nama pengubah</th>
-                                <th></th>
+                                <th width="5%">No.</th>
+                                <th width="10%">Provinsi Asal</th>
+                                <th width="10%">Dari</th>
+                                <th width="10%">Provinsi Tujuan</th>
+                                <th width="10%">Ke</th>
+                                <th>Jarak (KM)</th>
+                                <th>harga (Rp)</th>
+                                <th>Tanggal dibuat</th>
+                                <th>Nama pembuat</th>
+                                <th>Tanggal diubah</th>
+                                <th>Nama pengubah</th>
+                                <th width="5%"></th>
                             </tr>
                         </thead>
                         @include('dephub.list_pagination')
