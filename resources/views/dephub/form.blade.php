@@ -66,10 +66,10 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Kota asal</label>
                         <div class="col-sm-8">
-                            <select name="kota_asal_id" id="kota_asal_id" class="form-select">
-                                @foreach($kota as $k)
-                                    <option {{isset($dephub) ? ($dephub->kota_asal_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
-                                @endforeach
+                            <select name="kota_asal_id" id="kota_asal_id" class="form-select select2advance"  data-select2-placeholder="Kota asal" data-select2-url="{{url('get-select/kota'.(isset($dephub) ? '?provinsi='.$dephub->provinsi_asal_id : ''))}}">
+                                @isset($dephub)
+                                    <option value="{{$dephub->kota_asal_id}}">{{$dephub->kotaa_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
@@ -78,33 +78,38 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select">
-                                @foreach($provinsi as $p2)
-                                    <option {{isset($dephub) ? ($dephub->provinsi_tujuan_id == $p2->id ? 'selected' : '') : ''}} value="{{$p2->id}}">{{$p2->nama}}</option>
-                                @endforeach
+                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select select2advance"  data-select2-placeholder="Provinsi tujuan" data-select2-url="{{url('get-select/provinsi'.(isset($dephub) ? '?exclude='.$dephub->provinsi_asal_id : ''))}}">
+                                @isset($dephub)
+                                    <option value="{{$dephub->provinsi_tujuan_id}}">{{$dephub->provinsit_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Kota tujuan</label>
                         <div class="col-sm-8">
-                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-select">
-                                @foreach($kota as $k2)
-                                    <option {{isset($dephub) ? ($dephub->kota_tujuan_id == $k2->id ? 'selected' : '') : ''}} value="{{$k2->id}}">{{$k2->nama}}</option>
-                                @endforeach
+                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-select select2advance"  data-select2-placeholder="Kota tujuan" data-select2-url="{{url('get-select/kota'.(isset($dephub) ? '?provinsi='.$dephub->provinsi_tujuan_id : ''))}}">
+                                
+                                @isset($dephub)
+                                    <option value="{{$dephub->kota_tujuan_id}}">{{$dephub->kotat_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Jarak (KM)</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="jarak_km" name="jarak_km" value="{{old('jarak_km',isset($dephub) ? $dephub->jarak_km : '0')}}" />
+                            <input required type="number" min="1" max="9999999999" class="form-control" id="jarak_km" name="jarak_km" value="{{old('jarak_km',isset($dephub) ? $dephub->jarak_km : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Harga tiket (Rp)</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="harga_tiket" name="harga_tiket" value="{{old('harga_tiket',isset($dephub) ? $dephub->harga_tiket : '0')}}" />
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input required type="text" maxLength="12" class="form-control numeric" id="harga_tiket" name="harga_tiket" value="{{old('harga_tiket',isset($dephub) ? number_format($dephub->harga_tiket) : '0')}}" />
+                            </div>
+                            <small class="text-warning">1x Perjalanan</small>
                         </div>
                     </div>
 

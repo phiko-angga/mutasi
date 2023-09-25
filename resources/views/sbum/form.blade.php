@@ -66,10 +66,10 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Kota asal</label>
                         <div class="col-sm-8">
-                            <select name="kota_asal_id" id="kota_asal_id" class="form-select">
-                                @foreach($kota as $k)
-                                    <option {{isset($sbum) ? ($sbum->kota_asal_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
-                                @endforeach
+                            <select name="kota_asal_id" id="kota_asal_id" class="form-select select2advance" data-select2-placeholder="Kota asal" data-select2-url="{{url('get-select/kota'.(isset($sbum) ? '?provinsi='.$sbum->provinsi_asal_id : ''))}}">
+                                @isset($sbum)
+                                    <option value="{{$sbum->kota_asal_id}}">{{$sbum->kotaa_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
@@ -78,27 +78,31 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select">
-                                @foreach($provinsi as $p2)
-                                    <option {{isset($sbum) ? ($sbum->provinsi_tujuan_id == $p2->id ? 'selected' : '') : ''}} value="{{$p2->id}}">{{$p2->nama}}</option>
-                                @endforeach
+                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select select2advance" data-select2-placeholder="Provinsi tujuan" data-select2-url="{{url('get-select/provinsi'.(isset($sbum) ? '?exclude='.$sbum->provinsi_asal_id : ''))}}">
+                                @isset($sbum)
+                                    <option value="{{$sbum->provinsi_tujuan_id}}">{{$sbum->provinsit_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Kota tujuan</label>
                         <div class="col-sm-8">
-                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-select">
-                                @foreach($kota as $k2)
-                                    <option {{isset($sbum) ? ($sbum->kota_tujuan_id == $k2->id ? 'selected' : '') : ''}} value="{{$k2->id}}">{{$k2->nama}}</option>
-                                @endforeach
+                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-select select2advance" data-select2-placeholder="Kota tujuan" data-select2-url="{{url('get-select/kota'.(isset($sbum) ? '?provinsi='.$sbum->provinsi_tujuan_id : ''))}}">
+                                @isset($sbum)
+                                    <option value="{{$sbum->kota_tujuan_id}}">{{$sbum->kotat_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Harga tiket (Rp)</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="harga_tiket" name="harga_tiket" value="{{old('harga_tiket',isset($sbum) ? $sbum->harga_tiket : '')}}" />
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input required type="text" maxLength="12" class="form-control numeric" id="harga_tiket" name="harga_tiket" value="{{old('harga_tiket',isset($sbum) ? number_format($sbum->harga_tiket) : '0')}}" />
+                                
+                            </div>
                         </div>
                     </div>
 

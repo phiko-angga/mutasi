@@ -70,19 +70,41 @@ class KotaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+     private function formatedKode($kode,$prefix,$length){
+        $result = "";
+        $kodeLen = strlen($kode);
+        if($kodeLen < $length){
+            for ($i=0; $i < ($length - $kodeLen); $i++) { 
+                $result .= $prefix.$kode; 
+            }
+        }
+        return $result;
+    }
+
     public function store(Request $request)
     {
         request()->validate([
             'provinsi_id'   => 'required',
             'nama'   => 'required',
-            'kode'   => 'required',
+            // 'kode'   => 'required',
             'status'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
+            
+            $getLast = Kota::orderBy('kode','desc')->first();
+            $kodeBaru = "KOT01";
+            if($getLast){
+                $getLastNo = $getLast->kode;
+                $lastNo = (int)substr($getLastNo,3,2);
+                ++$lastNo;
+                $kodeBaru = 'KOT'.$this->formatedKode($lastNo, '0',2);
+            }
+
             $data = $request->except(['_token']);
             
+            $data['kode'] = $kodeBaru;
             $data['jawamadura'] = 0;
             $user = auth()->user();
             $data['created_by'] = $user->id;

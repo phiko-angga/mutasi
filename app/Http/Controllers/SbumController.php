@@ -86,6 +86,7 @@ class SbumController extends Controller
             $data = $request->only(['harga_tiket','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
             
             $user = auth()->user();
+            $data['harga_tiket'] = str_replace(",","",$data['harga_tiket']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $sbum = Sbum::create($data);
@@ -159,6 +160,7 @@ class SbumController extends Controller
                 $data = $request->only(['harga_tiket','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
                 
                 $user = auth()->user();
+                $data['harga_tiket'] = str_replace(",","",$data['harga_tiket']);
                 $data['updated_by'] = $user->id;
                 Sbum::where('id',$sbum->id)->update($data);
                 DB::commit();

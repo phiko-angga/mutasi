@@ -53,37 +53,38 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kode">Kode</label>
+                        <div class="col-sm-8">
+                            <input maxlength="5" readonly type="text" class="form-control" id="kode" name="kode" value="{{old('kode',isset($kota) ? $kota->kode : '')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Provinsi</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_id" id="provinsi_id" class="form-control">
+                            <select name="provinsi_id" id="provinsi_id" class="form-select">
                                 @foreach($provinsi as $p)
-                                    <option {{isset($kota) ? ($kota->provinsi_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
+                                    <option {{isset($kota) ? ($kota->provinsi_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}} - {{$p->kode}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Kode</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Kabupaten / Kota</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="kode" name="kode" value="{{old('kode',isset($kota) ? $kota->kode : '')}}" />
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Nama</label>
-                        <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($kota) ? $kota->nama : '')}}" />
+                            <input required  style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()" onkeydown="return /[^0-9]/i.test(event.key)" type="text" maxlength="50" class="form-control" id="nama" name="nama" value="{{old('nama',isset($kota) ? $kota->nama : '')}}" />
+                            <small class="text-info">Max 50</small>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="alamat">Alamat</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="alamat" name="alamat" value="{{old('alamat',isset($kota) ? $kota->alamat : '')}}" />
+                            <textarea name="alamat" id="alamat" class="form-control" cols="30" rows="3">{{old('alamat',isset($kota) ? $kota->alamat : '')}}</textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kodepos">kode POS</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="kodepos" name="kodepos" value="{{old('kodepos',isset($kota) ? $kota->kodepos : '')}}" />
+                            <input required type="text" maxLength="10" onkeydown="return /[^a-zA-Z]/i.test(event.key)" class="form-control" id="kodepos" name="kodepos" maxlength="10" value="{{old('kodepos',isset($kota) ? $kota->kodepos : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -94,7 +95,7 @@
                                 <label class="form-check-label" for="defaultRadio1"> Tidak aktif </label>
                             </div>
                             <div class="form-check">
-                                <input name="status" class="form-check-input" type="radio" value="1" id="status1"  {{old('status',isset($kota) ? ($kota->status == 1 ? 'checked' : '') : '')}}>
+                                <input name="status" class="form-check-input" type="radio" value="1" id="status1"  {{old('status',isset($kota) ? ($kota->status == 1 ? 'checked' : '') : 'checked')}}>
                                 <label class="form-check-label" for="defaultRadio2"> Aktif </label>
                             </div>
                         </div>

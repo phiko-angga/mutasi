@@ -11,12 +11,13 @@ class Rute extends Model
     
     protected $table = "tb_rute";
     protected $fillable = [
-        'kode','kota_id','bus','kapal','plane','created_by','updated_by'
+        'kode','kota_id','provinsi_id','bus','kapal','plane','created_by','updated_by'
     ];
     
     public function get_data($request, $paginate = true){
-        $data = Self::select('tb_rute.*','ka.nama as kota_nama'
+        $data = Self::select('tb_rute.*','ka.nama as kota_nama','pr.nama as provinsi_nama'
         ,'c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
+        ->join('tb_provinsi as pr','pr.id','=','tb_rute.provinsi_id')
         ->join('tb_kota as ka','ka.id','=','tb_rute.kota_id')
         ->join('tb_pengguna as c','c.id','=','tb_rute.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_rute.updated_by');
@@ -36,8 +37,9 @@ class Rute extends Model
     }
     
     public function get_id($id){
-        $data = Self::select('tb_rute.*','ka.nama as kota_nama'
+        $data = Self::select('tb_rute.*','ka.nama as kota_nama','pr.nama as provinsi_nama'
         ,'c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
+        ->join('tb_provinsi as pr','pr.id','=','tb_rute.provinsi_id')
         ->join('tb_kota as ka','ka.id','=','tb_rute.kota_id')
         ->join('tb_pengguna as c','c.id','=','tb_rute.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_rute.updated_by')

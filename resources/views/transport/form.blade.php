@@ -72,13 +72,14 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Jenis transport</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($transport) ? $transport->nama : '')}}" />
+                            <input required maxlength="50" onkeydown="return /[^0-9]/i.test(event.key)" type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($transport) ? $transport->nama : '')}}" />
+                            <small class="text-info">Max 50</small>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="alias">Kategori</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="alias" name="alias" value="{{old('alias',isset($transport) ? $transport->alias : '')}}"/>
+                            <input readonly type="text" class="form-control" id="alias" name="alias" value="{{old('alias',isset($transport) ? $transport->alias : '')}}"/>
                         </div>
                     </div>
                     <div class="row mb-3">

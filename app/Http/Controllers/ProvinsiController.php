@@ -68,18 +68,38 @@ class ProvinsiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    private function formatedKode($kode,$prefix,$length){
+        $result = "";
+        $kodeLen = strlen($kode);
+        if($kodeLen < $length){
+            for ($i=0; $i < ($length - $kodeLen); $i++) { 
+                $result .= $prefix.$kode; 
+            }
+        }
+        return $result;
+    }
+
     public function store(Request $request)
     {
         request()->validate([
-            'nama'   => 'required',
-            'kode'   => 'required',
+            'nama'   => 'required|unique:tb_provinsi,nama',
+            // 'kode'   => 'required|unique:tb_provinsi,kode',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['nama','kode']);
-            
+            $getLast = Provinsi::orderBy('kode','desc')->first();
+            $kodeBaru = "PRV01";
+            if($getLast){
+                $getLastNo = $getLast->kode;
+                $lastNo = (int)substr($getLastNo,3,2);
+                ++$lastNo;
+                $kodeBaru = 'PRV'.$this->formatedKode($lastNo, '0',2);
+            }
+
+            $data = $request->only(['nama']);
             $data['jawamadura'] = $request->has('jawamadura') ? $request->jawamadura : 0;
+            $data['kode'] = $kodeBaru;
             $data['status'] = 1;
             $user = auth()->user();
             $data['created_by'] = $user->id;
@@ -138,8 +158,8 @@ class ProvinsiController extends Controller
     {
         request()->validate([
             'id'   => 'required',
-            'nama'   => 'required',
-            'kode'   => 'required',
+            'nama'   => 'required|unique:tb_provinsi,nama,'.$id,
+            // 'kode'   => 'required|unique:tb_provinsi,kode,'.$id,
         ]);
 
         $provinsi = Provinsi::find($request->id);

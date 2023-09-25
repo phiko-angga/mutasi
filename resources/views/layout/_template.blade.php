@@ -116,14 +116,14 @@
     <!-- Main JS -->
     <script src="{{url('')}}/js/main.js"></script>
     <script src="{{url('')}}/js/custom.js"></script>
-    <script src="{{url('')}}/js/filter_wilayah.js"></script>
+    <script src="{{url('')}}/js/jquery.masknumber.min.js"></script>
     <script>
       var base_url = '{{url('')}}';
     </script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-messaging.js"></script> -->
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->

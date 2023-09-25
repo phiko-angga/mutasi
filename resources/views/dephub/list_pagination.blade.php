@@ -3,10 +3,10 @@
         @foreach($data as $key => $row)
         <tr>
             <td>{{ $data->firstItem() + $key}}</td>
-            <td>{{ $row->kotaa_nama }}</td>
             <td>{{ $row->provinsia_nama }}</td>
-            <td>{{ $row->kotat_nama }}</td>
+            <td>{{ $row->kotaa_nama }}</td>
             <td>{{ $row->provinsit_nama }}</td>
+            <td>{{ $row->kotat_nama }}</td>
             <td>{{ $row->jarak_km }}</td>
             <td>{{ number_format($row->harga_tiket) }}</td>
             <td>{{ $row->created_at }}</td>

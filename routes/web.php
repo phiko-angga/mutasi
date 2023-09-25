@@ -16,6 +16,7 @@ use App\Http\Controllers\RuteController;
 use App\Http\Controllers\BiayaTransportController;
 use App\Http\Controllers\BiayaMuatController;
 use App\Http\Controllers\BiayaPengepakanController;
+use App\Http\Controllers\GetSelectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,8 @@ Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('/get-select/kota', [GetSelectController::class,'getKota']);
+    Route::get('/get-select/provinsi', [GetSelectController::class,'getProvinsi']);
 
     Route::resource('/users', UsersController::class)->name('*','users');
     Route::resource('/rute', RuteController::class)->name('*','rute');

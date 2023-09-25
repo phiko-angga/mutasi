@@ -88,6 +88,7 @@ class DephubController extends Controller
             $data = $request->only(['jarak_km','harga_tiket','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
             
             $user = auth()->user();
+            $data['harga_tiket'] = str_replace(",","",$data['harga_tiket']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $dephub = Dephub::create($data);
@@ -162,6 +163,7 @@ class DephubController extends Controller
                 $data = $request->only(['jarak_km','harga_tiket','provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id']);
                 
                 $user = auth()->user();
+                $data['harga_tiket'] = str_replace(",","",$data['harga_tiket']);
                 $data['updated_by'] = $user->id;
                 Dephub::where('id',$dephub->id)->update($data);
                 DB::commit();

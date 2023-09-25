@@ -55,13 +55,14 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Kode</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="kode" name="kode" value="{{old('kode',isset($provinsi) ? $provinsi->kode : '')}}" />
+                            <input placeholder="Digenerate oleh sistem" maxlength="5" readonly required type="text" class="form-control" id="kode" name="kode" value="{{old('kode',isset($provinsi) ? $provinsi->kode : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Provinsi</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($provinsi) ? $provinsi->nama : '')}}" />
+                            <input autofocus required style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()" onkeydown="return /[^0-9]/i.test(event.key)" type="text" maxlength="50" class="form-control" id="nama" name="nama" value="{{old('nama',isset($provinsi) ? $provinsi->nama : '')}}" />
+                            <small class="text-info">Max 50</small>
                         </div>
                     </div>
                     <div class="row mb-3">

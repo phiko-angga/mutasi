@@ -103,3 +103,38 @@ function formatDesign(item) {
     var $returnString = $('<span>'+selectionText[0] + (typeof selectionText[1] != 'undefined' ? ' | ' +selectionText[1] : '') + '</span>');
     return $returnString;
   };
+
+  function initSelect2(){
+        
+    if ( $('.select2advance').length > 0 ){
+        $('.select2advance').each(function(index, el) {
+            var limit_rows = 10;
+            var url = $(this).data('select2-url');
+            var placeholder = $(this).data('select2-placeholder');
+
+            $(this).select2({
+                placeholder: placeholder,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page,
+                            page_limit: limit_rows,
+                        };
+                    },
+                    processResults: function (data, params) {
+                    return {
+                        results: data.items,
+                        pagination: {
+                            more: (params.page * limit_rows) < data.total           
+                        }
+                    };
+                    },
+                    cache: true
+                }
+            });
+        })
+    }
+  }

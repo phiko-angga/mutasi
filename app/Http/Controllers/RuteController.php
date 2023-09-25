@@ -87,6 +87,9 @@ class RuteController extends Controller
             $data = $request->except(['_token']);
             
             $user = auth()->user();
+            $data['bus'] = str_replace(",","",$data['bus']);
+            $data['kapal'] = str_replace(",","",$data['kapal']);
+            $data['plane'] = str_replace(",","",$data['plane']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $rute = Rute::create($data);

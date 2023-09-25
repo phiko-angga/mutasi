@@ -52,17 +52,8 @@
                     <h5 class="mb-0">{{$title}}</h5>
                 </div>
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Kota</label>
-                        <div class="col-sm-8">
-                            <select name="kota_id" id="kota_id" class="form-select">
-                                @foreach($kota as $k)
-                                    <option {{isset($rute) ? ($rute->kota_id == $k->id ? 'selected' : '') : ''}} value="{{$k->id}}">{{$k->nama}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
+                    
+                <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Kode</label>
                         <div class="col-sm-8">
                             <select name="kode" id="kode" class="form-select">
@@ -73,21 +64,53 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Bus 1x Perj.</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Provinsi</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="bus" name="bus" value="{{old('bus',isset($rute) ? $rute->bus : '0')}}" />
+                            <select name="provinsi_id" id="provinsi_id" class="form-select">
+                                @foreach($provinsi as $p)
+                                    <option {{isset($sbum) ? ($sbum->provinsi_asal_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Kapal Laut / KA 1x Perj.</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Kota</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="kapal" name="kapal" value="{{old('kapal',isset($rute) ? $rute->kapal : '0')}}" />
+                            <select name="kota_id" id="kota_id" class="form-select select2advance" data-select2-placeholder="Kota" data-select2-url="{{url('get-select/kota'.(isset($rute) ? '?provinsi='.$rute->provinsi_id : ''))}}">
+                                @isset($rute)
+                                    <option value="{{$rute->kota_id}}">{{$rute->kota_nama}}</option>
+                                @endisset
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Plane 1x Perj.</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Bus</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="plane" name="plane" value="{{old('plane',isset($rute) ? $rute->plane : '0')}}" />
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input required type="text" maxLength="12" class="form-control numeric" id="bus" name="bus" value="{{old('bus',isset($rute) ? number_format($rute->bus) : '0')}}" />
+                            </div>
+                            <small class="text-warning">1x Perjalanan</small>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kode">Laut</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input required type="text" maxLength="12" class="form-control numeric" id="kapal" name="kapal" value="{{old('kapal',isset($rute) ? number_format($rute->kapal) : '0')}}" />
+                            </div>
+                            <small class="text-warning">1x Perjalanan</small>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kode">Pesawat Udara</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-text">Rp</span>
+                                <input required type="text" maxLength="12" class="form-control numeric" id="plane" name="plane" value="{{old('plane',isset($rute) ? number_format($rute->plane) : '0')}}" />
+                            </div>
+                            <small class="text-warning">1x Perjalanan</small>
                         </div>
                     </div>
 
