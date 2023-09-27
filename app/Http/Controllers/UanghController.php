@@ -86,6 +86,9 @@ class UanghController extends Controller
             $data = $request->except(['_token']);
             
             $user = auth()->user();
+            $data['luar_kota'] = str_replace(",","",$data['luar_kota']);
+            $data['dalam_kota'] = str_replace(",","",$data['dalam_kota']);
+            $data['diklat'] = str_replace(",","",$data['diklat']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $uangh = Uangh::create($data);
@@ -158,6 +161,9 @@ class UanghController extends Controller
                 $data = $request->except(['_token','_method']);
                 
                 $user = auth()->user();
+                $data['luar_kota'] = str_replace(",","",$data['luar_kota']);
+                $data['dalam_kota'] = str_replace(",","",$data['dalam_kota']);
+                $data['diklat'] = str_replace(",","",$data['diklat']);
                 $data['updated_by'] = $user->id;
                 Uangh::where('id',$uangh->id)->update($data);
                 DB::commit();

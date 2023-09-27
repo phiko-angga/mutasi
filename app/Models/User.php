@@ -24,6 +24,11 @@ class User extends Authenticatable
         'jabatan',
         'email',
         'password',
+        'divname',
+        'secname',
+        'jabatan',
+        'catatan',
+        'depname',
     ];
 
     /**

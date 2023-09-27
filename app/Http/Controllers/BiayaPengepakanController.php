@@ -81,6 +81,8 @@ class BiayaPengepakanController extends Controller
             $data = $request->only(['transport_darat','transport_laut']);
             
             $user = auth()->user();
+            $data['transport_darat'] = str_replace(",","",$data['transport_darat']);
+            $data['transport_laut'] = str_replace(",","",$data['transport_laut']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $biaya = BiayaPengepakan::create($data);
@@ -149,6 +151,8 @@ class BiayaPengepakanController extends Controller
                 $data = $request->only(['transport_darat','transport_laut']);
                 
                 $user = auth()->user();
+                $data['transport_darat'] = str_replace(",","",$data['transport_darat']);
+                $data['transport_laut'] = str_replace(",","",$data['transport_laut']);
                 $data['updated_by'] = $user->id;
                 BiayaPengepakan::where('id',$biaya->id)->update($data);
                 DB::commit();

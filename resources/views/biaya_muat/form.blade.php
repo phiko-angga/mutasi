@@ -53,15 +53,15 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Biaya Darat : Kubikasi x Jarak (KM)</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Biaya Darat : Kubikasi x Jarak (KM) x</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="biaya_darat" name="biaya_darat" value="{{old('biaya_darat',isset($biaya->biaya_darat) ? $biaya->biaya_darat : '')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="biaya_darat" name="biaya_darat" value="{{old('biaya_darat',isset($biaya->biaya_darat) ? number_format($biaya->biaya_darat) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Biaya Laut : Kubikasi x Jarak (Mil)</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Biaya Laut : Kubikasi x Jarak (KM) x</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="biaya_laut" name="biaya_laut" value="{{old('biaya_laut',isset($biaya->biaya_laut) ? $biaya->biaya_laut : '')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="biaya_laut" name="biaya_laut" value="{{old('biaya_laut',isset($biaya->biaya_laut) ? number_format($biaya->biaya_laut) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">

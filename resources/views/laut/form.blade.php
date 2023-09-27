@@ -91,13 +91,14 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Pelabuhan tujuan</label>
                         <div class="col-sm-8">
-                            <input type="text" id="pelabuhan_tujuan" name="pelabuhan_tujuan" class="form-control"  value="{{old('pelabuhan_tujuan',isset($laut) ? $laut->pelabuhan_tujuan : '')}}">
+                            <input type="text" maxLength="50" id="pelabuhan_tujuan" name="pelabuhan_tujuan" class="form-control"  value="{{old('pelabuhan_tujuan',isset($laut) ? $laut->pelabuhan_tujuan : '')}}">
+                            <small class="text-info">Max 50</small>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Jarak (Mil)</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="jarak_mil" name="jarak_mil" value="{{old('jarak_mil',isset($laut) ? $laut->jarak_mil : '0')}}" />
+                            <input required type="number" min="1" max="9999999999" class="form-control" id="jarak_mil" name="jarak_mil" value="{{old('jarak_mil',isset($laut) ? $laut->jarak_mil : '0')}}" />
                         </div>
                     </div>
 

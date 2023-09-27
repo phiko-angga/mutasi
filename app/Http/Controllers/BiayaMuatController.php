@@ -81,6 +81,8 @@ class BiayaMuatController extends Controller
             $data = $request->only(['biaya_darat','biaya_laut','jawamadura']);
             
             $user = auth()->user();
+            $data['biaya_darat'] = str_replace(",","",$data['biaya_darat']);
+            $data['biaya_laut'] = str_replace(",","",$data['biaya_laut']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $biaya = BiayaMuat::create($data);
@@ -149,6 +151,8 @@ class BiayaMuatController extends Controller
                 $data = $request->only(['biaya_darat','biaya_laut','jawamadura']);
                 
                 $user = auth()->user();
+                $data['biaya_darat'] = str_replace(",","",$data['biaya_darat']);
+                $data['biaya_laut'] = str_replace(",","",$data['biaya_laut']);
                 $data['updated_by'] = $user->id;
                 BiayaMuat::where('id',$biaya->id)->update($data);
                 DB::commit();

@@ -138,3 +138,17 @@ function formatDesign(item) {
         })
     }
   }
+
+  $(document).on('change','#provinsi_asal_id',function(e){
+    $("#kota_asal_id").data("select2-url",base_url+'/get-select/kota?provinsi='+$(this).val());
+    $("#kota_asal_id").val("");
+    
+    $("#provinsi_tujuan_id").data("select2-url",base_url+'/get-select/provinsi?exclude='+$(this).val());
+    $("#provinsi_tujuan_id").val("");
+    initSelect2();
+})
+$(document).on('change','#provinsi_tujuan_id',function(e){
+    $("#kota_tujuan_id").data("select2-url",base_url+'/get-select/kota?provinsi='+$(this).val());
+    $("#kota_tujuan_id").val("");
+    initSelect2();
+})

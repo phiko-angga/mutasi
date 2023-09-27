@@ -55,13 +55,13 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Transport Darat : (Biaya Per Kg Rp.)</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="transport_darat" name="transport_darat" value="{{old('transport_darat',isset($biaya->transport_darat) ? $biaya->transport_darat : '')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="transport_darat" name="transport_darat" value="{{old('transport_darat',isset($biaya->transport_darat) ? number_format($biaya->transport_darat) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Transport Laut : (Biaya Per Kg Rp.)</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="transport_laut" name="transport_laut" value="{{old('transport_laut',isset($biaya->transport_laut) ? $biaya->transport_laut : '')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="transport_laut" name="transport_laut" value="{{old('transport_laut',isset($biaya->transport_laut) ? number_format($biaya->transport_laut) : '0')}}" />
                         </div>
                     </div>
 

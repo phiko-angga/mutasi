@@ -65,25 +65,25 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Satuan</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="satuan" name="satuan" value="{{old('satuan',isset($uangh) ? $uangh->satuan : '')}}" />
+                            <input required type="text" maxLength="5" class="form-control" id="satuan" name="satuan" value="{{old('satuan',isset($uangh) ? $uangh->satuan : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Luar Kota</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="luar_kota" name="luar_kota" value="{{old('luar_kota',isset($uangh) ? $uangh->luar_kota : '0')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="luar_kota" name="luar_kota" value="{{old('luar_kota',isset($uangh) ? number_format($uangh->luar_kota) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Dalam Kota</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="dalam_kota" name="dalam_kota" value="{{old('dalam_kota',isset($uangh) ? $uangh->dalam_kota : '0')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="dalam_kota" name="dalam_kota" value="{{old('dalam_kota',isset($uangh) ? number_format($uangh->dalam_kota) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Diklat</label>
                         <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="diklat" name="diklat" value="{{old('diklat',isset($uangh) ? $uangh->diklat : '0')}}" />
+                            <input required type="text" maxLength="12" class="form-control numeric" id="diklat" name="diklat" value="{{old('diklat',isset($uangh) ? number_format($uangh->diklat) : '0')}}" />
                         </div>
                     </div>
 

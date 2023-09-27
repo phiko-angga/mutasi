@@ -46,37 +46,68 @@
 
     <div class="row">
         <!-- Basic Layout -->
-        <div class="col-7 col-md-7">
+        <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">{{$title}}</h5>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Nama Lengkap</label>
+                        <label class="col-sm-4 col-form-label" for="nama">Username</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="fullname" name="fullname" value="{{old('fullname',isset($users) ? $users->fullname : '')}}" />
+                            <input required type="text" class="form-control" minLength="6" onkeydown="return /[^0-9]/i.test(event.key)" id="username" name="username" value="{{old('username',isset($users) ? $users->username : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Username</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Nama Lengkap</label>
                         <div class="col-sm-8">
-                            <input required type="text" class="form-control" id="username" name="username" value="{{old('username',isset($users) ? $users->username : '')}}" />
+                            <input required type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="fullname" name="fullname" value="{{old('fullname',isset($users) ? $users->fullname : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Jabatan</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{old('jabatan',isset($users) ? $users->jabatan : '')}}" />
+                            <input type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="jabatan" name="jabatan" value="{{old('jabatan',isset($users) ? $users->jabatan : '')}}" />
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="nama">Catatan</label>
+                        <div class="col-sm-8">
+                            <input type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="catatan" name="catatan" value="{{old('catatan',isset($users) ? $users->catatan : '')}}" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="nama">Departemen</label>
+                        <div class="col-sm-8">
+                            <input type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="depname" name="depname" value="{{old('depname',isset($users) ? $users->depname : '')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="nama">Divisi</label>
+                        <div class="col-sm-8">
+                            <input type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="divname" name="divname" value="{{old('divname',isset($users) ? $users->divname : '')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="nama">Seksi</label>
+                        <div class="col-sm-8">
+                            <input type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="secname" name="secname" value="{{old('secname',isset($users) ? $users->secname : '')}}" />
+                        </div>
+                    </div>
+
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="password">Password</label>
                         <div class="col-sm-8">
                             <input  {{$action == 'store' ? 'required' : ''}} type="password" class="form-control" id="password" name="password"/>
                         </div>
                     </div>
-
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="password">Verifikasi Password</label>
+                        <div class="col-sm-8">
+                            <input  {{$action == 'store' ? 'required' : ''}} type="password" class="form-control" id="password_ver" name="password_ver"/>
+                        </div>
+                    </div>
                     <div class="row justify-content-end">
                         <div class="col-sm-8">
                             <button type="submit" class="btn btn-primary">Submit</button>
