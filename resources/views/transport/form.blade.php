@@ -72,7 +72,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Jenis transport</label>
                         <div class="col-sm-8">
-                            <input required maxlength="50" onkeydown="return /[^0-9]/i.test(event.key)" type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($transport) ? $transport->nama : '')}}" />
+                            <input required maxlength="50" style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()" onkeydown="return /[^0-9]/i.test(event.key)" type="text" class="form-control" id="nama" name="nama" value="{{old('nama',isset($transport) ? $transport->nama : '')}}" />
                             <small class="text-info">Max 50</small>
                         </div>
                     </div>
