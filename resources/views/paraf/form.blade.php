@@ -81,7 +81,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Kepangkatan</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="50" class="form-control" id="pangkat" name="pangkat" value="{{old('pangkat',isset($paraf) ? $paraf->pangkat : '')}}" />
+                            <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="pangkat" name="pangkat" value="{{old('pangkat',isset($paraf) ? $paraf->pangkat : '')}}" />
                             <small class="text-info">Max 50</small>
                         </div>
                     </div>

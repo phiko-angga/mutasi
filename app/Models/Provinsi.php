@@ -15,7 +15,7 @@ class Provinsi extends Model
     ];
     
     public function get_data($request, $paginate = true){
-        $data = Self::select('tb_provinsi.*')->selectRaw("coalesce(u.fullname,'') as updated_name")
+        $data = Self::select('tb_provinsi.*','c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
         ->join('tb_pengguna as c','c.id','=','tb_provinsi.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_provinsi.updated_by');
         

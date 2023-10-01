@@ -53,7 +53,7 @@
                 </div>
                 <div class="card-body">
                     
-                <div class="row mb-3">
+                <div style="display:none" class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Kode</label>
                         <div class="col-sm-8">
                             <select name="kode" id="kode" class="form-select">

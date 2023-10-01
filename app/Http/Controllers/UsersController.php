@@ -70,7 +70,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'username'   => 'required',
+            'username'   => 'required|unique:tb_pengguna,username',
             'fullname'   => 'required',
             'password'   => ['required','min:8','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
         ]);
@@ -137,7 +137,7 @@ class UsersController extends Controller
     {
         request()->validate([
             'id'   => 'required',
-            'username'   => 'required',
+            'username'   => 'required|unique:tb_pengguna,username,'.$id,
             'fullname'   => 'required',
             'password'   => ['nullable','min:8','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
         ]);

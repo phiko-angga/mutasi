@@ -7,7 +7,7 @@
             <td>{{ $row->kotaa_nama }}</td>
             <td>{{ $row->provinsit_nama }}</td>
             <td>{{ $row->kotat_nama }}</td>
-            <td>{{ $row->jarak_km }}</td>
+            <td>{{ number_format($row->jarak_km) }}</td>
             <td>{{ number_format($row->harga_tiket) }}</td>
             <td>{{ $row->created_at }}</td>
             <td>{{ $row->created_name }}</td>

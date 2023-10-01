@@ -26,7 +26,7 @@ class RuteExport implements FromCollection, WithHeadings, WithMapping
         
         $data = [
             'Nomor',
-            'Kode',
+            'Provinsi',
             'Kabupaten/Kota',
             'Jawa - Madura',
             'kapal Laut/KA 1xPerj.',
@@ -44,7 +44,7 @@ class RuteExport implements FromCollection, WithHeadings, WithMapping
     {
         $data = [
             ++$this->row,
-            $row->kode,
+            $row->provinsi_nama,
             $row->kota_nama,
             $row->bus,
             $row->kapal,

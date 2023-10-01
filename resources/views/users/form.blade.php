@@ -61,7 +61,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Nama Lengkap</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="fullname" name="fullname" value="{{old('fullname',isset($users) ? $users->fullname : '')}}" />
+                            <input type="text" maxLength="60" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="fullname" name="fullname" value="{{old('fullname',isset($users) ? $users->fullname : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">

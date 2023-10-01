@@ -8,7 +8,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode</th>
+                        <th>Provinsi</th>
                         <th>Nama Kota</th>
                         <th>Bus</th>
                         <th>Kapal Laut / KA</th>
@@ -24,7 +24,7 @@
                     @foreach($data as $key => $row)
                     <tr>
                         <td>{{ (++$key)}}</td>
-                        <td>{{ $row->kode }}</td>
+                        <td>{{ $row->provinsi_nama }}</td>
                         <td>{{ $row->kota_nama }}</td>
                         <td>{{ number_format($row->bus) }}</td>
                         <td>{{ number_format($row->kapal) }}</td>

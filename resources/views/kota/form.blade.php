@@ -90,7 +90,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kodepos">kode POS</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="10" onkeydown="return /[^a-zA-Z]/i.test(event.key)" class="form-control" id="kodepos" name="kodepos" maxlength="10" value="{{old('kodepos',isset($kota) ? $kota->kodepos : '')}}" />
+                            <input type="text" maxLength="10" onkeydown="return /[^a-zA-Z]/i.test(event.key)" class="form-control" id="kodepos" name="kodepos" maxlength="10" value="{{old('kodepos',isset($kota) ? $kota->kodepos : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">

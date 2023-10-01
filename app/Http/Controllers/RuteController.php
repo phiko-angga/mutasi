@@ -162,6 +162,9 @@ class RuteController extends Controller
                 $data = $request->except(['_token','_method']);
                 
                 $user = auth()->user();
+                $data['bus'] = str_replace(",","",$data['bus']);
+                $data['kapal'] = str_replace(",","",$data['kapal']);
+                $data['plane'] = str_replace(",","",$data['plane']);
                 $data['updated_by'] = $user->id;
                 Rute::where('id',$rute->id)->update($data);
                 DB::commit();

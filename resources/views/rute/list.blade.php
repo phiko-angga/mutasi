@@ -69,7 +69,7 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:10%">Kode</th>
+                                <th style="width:10%">Provinsi</th>
                                 <th style="width:10%">Kabupaten/Kota</th>
                                 <th style="">Bus 1xPerj.</th>
                                 <th style="">kapal Laut / KA 1xPerj.</th>
