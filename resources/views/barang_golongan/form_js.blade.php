@@ -2,4 +2,9 @@
 <script>
     var base_url = '{{url('')}}';
 
+    $(document).ready(function(){
+        $('.numeric').maskNumber({integer: true});
+        initSelect2();
+    })
+
 </script>

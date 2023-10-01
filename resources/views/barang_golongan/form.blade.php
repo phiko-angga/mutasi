@@ -6,13 +6,13 @@
 
 @section('content')
 
-<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('laut.store') : route('laut.update',$laut->id)}}">
+<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('barang-golongan.store') : route('barang-golongan.update',$barang->id)}}">
     
     @csrf   
     @if($action == 'update')
     <input name="_method" type="hidden" value="PUT">
     @endif
-    <input type="hidden" name="id" value="{{isset($laut) ? $laut->id : ''}}">
+    <input type="hidden" name="id" value="{{isset($barang) ? $barang->id : ''}}">
 
     @if($errors->any() || (\Session::has('success')) )
     <div class="row">
@@ -53,63 +53,46 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama_table">Nama Table Jalur</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Golongan</label>
                         <div class="col-sm-8">
-                            <select name="nama_table" id="nama_table" class="form-select">
-                                @foreach($table as $t)
-                                    <option {{isset($laut) ? ($laut->nama_table == $t->deskripsi ? 'selected' : '') : ''}} value="{{$t->deskripsi}}">{{$t->kode.' - '.$t->deskripsi}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <h5 class="mb-0">Lokasi Pelabuhan Asal</h5>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Provinsi asal</label>
-                        <div class="col-sm-8">
-                            <select name="provinsi_asal_id" id="provinsi_asal_id" class="form-select">
-                                @foreach($provinsi as $p)
-                                    <option {{isset($laut) ? ($laut->provinsi_asal_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
-                                @endforeach
-                            </select>
+                            <input required type="text" maxLength="10" class="form-control" id="golongan" name="golongan" value="{{old('golongan',isset($barang->golongan) ? $barang->golongan : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Pelabuhan asal</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Bujangan</label>
                         <div class="col-sm-8">
-                            <input type="text" id="pelabuhan_asal" name="pelabuhan_asal" class="form-control"  value="{{old('pelabuhan_asal',isset($laut) ? $laut->pelabuhan_asal : '')}}">
-                        </div>
-                    </div>
-                    
-                    <h5 class="mb-0">Lokasi Pelabuhan Tujuan</h5>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
-                        <div class="col-sm-8">
-                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select">
-                                @foreach($provinsi as $p2)
-                                    <option {{isset($laut) ? ($laut->provinsi_tujuan_id == $p2->id ? 'selected' : '') : ''}} value="{{$p2->id}}">{{$p2->nama}}</option>
-                                @endforeach
-                            </select>
+                            <input required type="text" maxLength="3" class="form-control numeric" id="bujangan" name="bujangan" value="{{old('bujangan',isset($barang->bujangan) ? number_format($barang->bujangan) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="nama">Pelabuhan tujuan</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Keluarga</label>
                         <div class="col-sm-8">
-                            <input type="text" maxLength="50" id="pelabuhan_tujuan" name="pelabuhan_tujuan" class="form-control"  value="{{old('pelabuhan_tujuan',isset($laut) ? $laut->pelabuhan_tujuan : '')}}">
-                            <small class="text-info">Max 50</small>
+                            <input required type="text" maxLength="3" class="form-control numeric" id="keluarga" name="keluarga" value="{{old('keluarga',isset($barang->keluarga) ? number_format($barang->keluarga) : '0')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Jarak (Mil)</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Anak 1</label>
                         <div class="col-sm-8">
-                            <input required type="number" min="1" max="9999999999" class="form-control" id="jarak_mil" name="jarak_mil" value="{{old('jarak_mil',isset($laut) ? $laut->jarak_mil : '0')}}" />
+                            <input required type="text" maxLength="3" class="form-control numeric" id="anak1" name="anak1" value="{{old('anak1',isset($barang->anak1) ? number_format($barang->anak1) : '0')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kode">Anak 2</label>
+                        <div class="col-sm-8">
+                            <input required type="text" maxLength="3" class="form-control numeric" id="anak2" name="anak2" value="{{old('anak2',isset($barang->anak2) ? number_format($barang->anak2) : '0')}}" />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="kode">Anak 3+</label>
+                        <div class="col-sm-8">
+                            <input required type="text" maxLength="3" class="form-control numeric" id="anak3" name="anak3" value="{{old('anak3',isset($barang->anak3) ? number_format($barang->anak3) : '0')}}" />
                         </div>
                     </div>
 
                     <div class="row justify-content-end">
                         <div class="col-sm-8">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{{url('laut')}}" class="btn btn-secondary">back</a>
+                            <a href="{{url('barang-golongan')}}" class="btn btn-secondary">back</a>
                             
                         </div>
                     </div>
@@ -119,19 +102,19 @@
 
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Tanggal dibuat</label>
-                        <div class="col-sm-8">{{$laut->created_at}}</div>
+                        <div class="col-sm-8">{{$barang->created_at}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Nama pembuat</label>
-                        <div class="col-sm-8">{{$laut->created_name}}</div>
+                        <div class="col-sm-8">{{$barang->created_name}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Tanggal diubah</label>
-                        <div class="col-sm-8">{{$laut->updated_at}}</div>
+                        <div class="col-sm-8">{{$barang->updated_at}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Nama pengubah</label>
-                        <div class="col-sm-8">{{$laut->updated_name}}</div>
+                        <div class="col-sm-8">{{$barang->updated_name}}</div>
                     </div>
                     @endif
                 </div>
@@ -144,5 +127,5 @@
 @endsection
 
 @section('script')
-    @include('laut/form_js')
+    @include('biaya_transport/form_js')
 @endsection

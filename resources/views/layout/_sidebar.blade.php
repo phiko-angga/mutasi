@@ -76,8 +76,8 @@
                 <div data-i18n="Analytics">Biaya Pengepakan Barang</div>
               </a>
             </li>
-            <li class="menu-item {{ Request::segment(1) == 'biaya-pengepakan' ? 'active' : '' }}">
-              <a href="{{url('biaya-pengepakan')}}" class="menu-link">
+            <li class="menu-item {{ Request::segment(1) == 'barang-golongan' ? 'active' : '' }}">
+              <a href="{{url('barang-golongan')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Max Barang Kilogram Per Golongan</div>
               </a>
@@ -153,14 +153,14 @@
                 <div data-i18n="Tables">Paraf</div>
               </a>
             </li>
-            <li class="menu-item {{ Request::segment(1) == 'bantuan' ? 'active' : '' }}">
-              <a href="{{url('bantuan')}}" class="menu-link">
+            <li class="menu-item {{ Request::segment(1) == 'pejabat_komitmen' ? 'active' : '' }}">
+              <a href="{{url('pejabat_komitmen')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Tables">Pejabat Pembuat Komitmen</div>
               </a>
             </li>
-            <li class="menu-item {{ Request::segment(1) == 'bantuan' ? 'active' : '' }}">
-              <a href="{{url('bantuan')}}" class="menu-link">
+            <li class="menu-item {{ Request::segment(1) == 'kelompok_jabatan' ? 'active' : '' }}">
+              <a href="{{url('kelompok_jabatan')}}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div data-i18n="Tables">Master Kelompok Jabatan</div>
               </a>

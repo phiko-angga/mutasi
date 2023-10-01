@@ -6,13 +6,13 @@
 
 @section('content')
 
-<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('paraf.store') : route('paraf.update',$paraf->id)}}">
+<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('pejabat_komitmen.store') : route('pejabat_komitmen.update',$pejabat_komitmen->id)}}">
     
     @csrf   
     @if($action == 'update')
     <input name="_method" type="hidden" value="PUT">
     @endif
-    <input type="hidden" name="id" value="{{isset($paraf) ? $paraf->id : ''}}">
+    <input type="hidden" name="id" value="{{isset($pejabat_komitmen) ? $pejabat_komitmen->id : ''}}">
 
     @if($errors->any() || (\Session::has('success')) )
     <div class="row">
@@ -53,50 +53,23 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Penandatangan</label>
+                        <label class="col-sm-4 col-form-label" for="kode">Nama</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="kelompok" name="kelompok" value="{{old('kelompok',isset($paraf) ? $paraf->kelompok : '')}}" />
-                            <small class="text-info">Max 50</small>
-                        </div>
-                    </div>
-                    <div hidden class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">No. urut</label>
-                        <div class="col-sm-8">
-                            <input required type="number" class="form-control" id="nourut" name="nourut" value="{{old('nourut',isset($paraf) ? $paraf->nourut : '0')}}" />
+                            <input required type="text" maxLength="30" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="nama" name="nama" value="{{old('nama',isset($pejabat_komitmen) ? $pejabat_komitmen->nama : '')}}" />
+                            <small class="text-info">Max 30</small>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Nama tertulis</label>
+                        <label class="col-sm-4 col-form-label" for="kode">NIP</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="nama" name="nama" value="{{old('nama',isset($paraf) ? $paraf->nama : '')}}" />
-                            <small class="text-info">Max 50</small>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">NIP tertulis</label>
-                        <div class="col-sm-8">
-                            <input required type="number" max="999999999999999999999999999999" class="form-control" id="nip" name="nip" value="{{old('nip',isset($paraf) ? $paraf->nip : '')}}" />
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Kepangkatan</label>
-                        <div class="col-sm-8">
-                            <input required type="text" maxLength="50" class="form-control" id="pangkat" name="pangkat" value="{{old('pangkat',isset($paraf) ? $paraf->pangkat : '')}}" />
-                            <small class="text-info">Max 50</small>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-4 col-form-label" for="kode">Nama jabatan</label>
-                        <div class="col-sm-8">
-                            <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="jabatan" name="jabatan" value="{{old('jabatan',isset($paraf) ? $paraf->jabatan : '')}}" />
-                            <small class="text-info">Max 50</small>
+                            <input required type="number" max="999999999999999999999999999999" class="form-control" id="nip" name="nip" value="{{old('nip',isset($pejabat_komitmen) ? $pejabat_komitmen->nip : '')}}" />
                         </div>
                     </div>
 
                     <div class="row justify-content-end">
                         <div class="col-sm-8">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <a href="{{url('paraf')}}" class="btn btn-secondary">back</a>
+                            <a href="{{url('pejabat_komitmen')}}" class="btn btn-secondary">back</a>
                             
                         </div>
                     </div>
@@ -106,19 +79,19 @@
 
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Tanggal dibuat</label>
-                        <div class="col-sm-8">{{$paraf->created_at}}</div>
+                        <div class="col-sm-8">{{$pejabat_komitmen->created_at}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Nama pembuat</label>
-                        <div class="col-sm-8">{{$paraf->created_name}}</div>
+                        <div class="col-sm-8">{{$pejabat_komitmen->created_name}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Tanggal diubah</label>
-                        <div class="col-sm-8">{{$paraf->updated_at}}</div>
+                        <div class="col-sm-8">{{$pejabat_komitmen->updated_at}}</div>
                     </div>
                     <div class="row">
                         <label class="col-sm-4 col-form-label" for="alias">Nama pengubah</label>
-                        <div class="col-sm-8">{{$paraf->updated_name}}</div>
+                        <div class="col-sm-8">{{$pejabat_komitmen->updated_name}}</div>
                     </div>
                     @endif
                 </div>
@@ -131,5 +104,5 @@
 @endsection
 
 @section('script')
-    @include('paraf/form_js')
+    @include('pejabat_komitmen/form_js')
 @endsection

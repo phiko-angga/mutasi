@@ -57,6 +57,7 @@ class GetSelectController extends Controller
     }
     
      public function getKota(Request $request){
+        $exclude = $request->exclude;
         $provinsi = $request->provinsi;
         $search = $request->q;
         $limit = $request->page_limit;
@@ -64,6 +65,10 @@ class GetSelectController extends Controller
 
         $kota = Kota::select('id','nama')->where('provinsi_id',$provinsi);
         
+        if($exclude != null){
+            $kota = $kota->where('id','<>',$exclude);
+        }
+
         if($search != null){
             $kota = $kota->where(function($query) use ($search){
                 $query->where('nama','like','%'.$search.'%');

@@ -13,6 +13,7 @@
             <td>{!! $row->terminal == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{!! $row->status == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{{ $row->alamat }}</td>
+            <td>{{ $row->telepon }}</td>
             <td>{{ $row->kodepos }}</td>
             <td>{{ $row->created_at }}</td>
             <td>{{ $row->created_name }}</td>

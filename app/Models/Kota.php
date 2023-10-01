@@ -19,6 +19,7 @@ class Kota extends Model
         'terminal',
         'alamat',
         'kodepos',
+        'telepon',
     ];
     
     public function get_data($request, $paginate = true){

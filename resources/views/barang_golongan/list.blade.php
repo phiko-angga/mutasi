@@ -1,4 +1,4 @@
-@extends('layout._template',['title' => 'Kota'])
+@extends('layout._template',['title' => 'Maks. Barang (Kg) Per Gol.'])
 
 @section('style')
 <style>
@@ -47,15 +47,15 @@
                 <div class="row">
                     <div class="col-md-12 grid-margin">
                         <div class="d-flex justify-content-between align-items-end flex-wrap">
-                            <div class=" me-3"><a href="{{route('kota.create')}}" class="btn btn-outline-primary btn-fw btn-sm">Tambah data</a></div>
+                            <div class=" me-3"><a href="{{route('barang-golongan.create')}}" class="btn btn-outline-primary btn-fw btn-sm">Tambah data</a></div>
                             <div class=" me-3">
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="menu-icon tf-icons bx bx-printer"></i> Print
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                        <a class="dropdown-item print_pdf" data-url="{{url('kota_print_pdf')}}" href="javascript:void(0);">PDF</a>
-                                        <a class="dropdown-item print_excel" data-url="{{url('kota_print_excel')}}" href="javascript:void(0);">EXCEL</a>
+                                        <a class="dropdown-item print_pdf" data-url="{{url('barang_golongan_print_pdf')}}" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item print_excel" data-url="{{url('barang_golongan_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,26 +69,20 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:15%">Kode</th>
-                                <th>kota</th>
-                                <th>Kantor PN</th>
-                                <th>Ibu Kota Prov.</th>
-                                <th>Bandara</th>
-                                <th>Pelabuhan</th>
-                                <th>Stasiun</th>
-                                <th>Terminal</th>
-                                <th>Status</th>
-                                <th>Alamat</th>
-                                <th>Telepon</th>
-                                <th>Kode POS</th>
-                                <th>Tanggal dibuat</th>
-                                <th>Nama pembuat</th>
-                                <th>Tanggal diubah</th>
-                                <th>Nama pengubah</th>
+                                <th style="">Golongan</th>
+                                <th style="">Bujangan</th>
+                                <th style="">Keluarga</th>
+                                <th style="">Anak 1</th>
+                                <th style="">Anak 2</th>
+                                <th style="">Anak 3+</th>
+                                <th style="">Tanggal dibuat</th>
+                                <th style="">Nama pembuat</th>
+                                <th style="">Tanggal diubah</th>
+                                <th style="">Nama pengubah</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        @include('kota.list_pagination')
+                        @include('barang_golongan.list_pagination')
                     </table>
                 </div>
             </div><!-- /.box-body -->
@@ -105,13 +99,13 @@
 <script>
     
     $(document).on('change','#search', function(){
-        fetch_tabledata('/kota');
+        fetch_tabledata('/barang-golongan');
     })
 
     $('.delete_btn').click(function(e){
         e.preventDefault();
         var modalConfirm = $('#modal_confirm');
-        modalConfirm.find('form').attr('action','{{url('')}}/kota/'+$(this).data('id'));
+        modalConfirm.find('form').attr('action','{{url('')}}/barang-golongan/'+$(this).data('id'));
         modalConfirm.find('#confirm_title').html('Delete data ');
         modalConfirm.find('#confirm_titlecaption').html('Apakah anda ingin delete ');
         modalConfirm.find('#confirm_titlename').html($(this).data('name'));

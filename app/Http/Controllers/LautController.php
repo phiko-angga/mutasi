@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Table;
 use App\Models\Laut;
 use App\Models\Provinsi;
 use App\Models\Pelabuhan;
@@ -62,7 +63,8 @@ class LautController extends Controller
         $title = 'Tambah baru';
         $provinsi = Provinsi::all();
         $pelabuhan = Pelabuhan::all();
-        return view('laut.form',compact('action','title','page','provinsi','pelabuhan'));
+        $table = Table::all();
+        return view('laut.form',compact('action','title','page','provinsi','pelabuhan','table'));
     }
 
     /**
@@ -131,7 +133,8 @@ class LautController extends Controller
         $page = 'Laut';
         $provinsi = Provinsi::all();
         $pelabuhan = Pelabuhan::all();
-        return view('laut.form',compact('laut','action','title','page','provinsi','pelabuhan'));
+        $table = Table::all();
+        return view('laut.form',compact('laut','action','title','page','provinsi','pelabuhan','table'));
     }
 
     /**

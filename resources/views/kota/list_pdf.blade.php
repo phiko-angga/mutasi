@@ -18,6 +18,7 @@
                         <th>Terminal</th>
                         <th>Status</th>
                         <th>Alamat</th>
+                        <th>Telepon</th>
                         <th>Kode POS</th>
                         <th>Nama pembuat</th>
                         <th>Tanggal dibuat</th>
@@ -40,6 +41,7 @@
                         <td class="text-center">{!! $row->terminal == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
                         <td class="text-center">{!! $row->status == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
                         <td>{{ $row->alamat }}</td>
+                        <td>{{ $row->telepon }}</td>
                         <td>{{ $row->kodepos }}</td>
                         <td>{{ $row->created_name }}</td>
                         <td>{{ $row->created_at }}</td>

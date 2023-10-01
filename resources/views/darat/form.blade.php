@@ -69,7 +69,7 @@
                             <select name="kota_asal_id" id="kota_asal_id" class="form-select select2advance" data-select2-placeholder="Kota asal" data-select2-url="{{url('get-select/kota'.(isset($darat) ? '?provinsi='.$darat->provinsi_asal_id : ''))}}">
                                 
                                 @isset($darat)
-                                    <option value="{{$kota->kota_asal_id}}">{{$darat->kotaa_nama}}</option>
+                                    <option value="{{$darat->kota_asal_id}}">{{$darat->kotaa_nama}}</option>
                                 @endisset
                             </select>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select select2advance" data-select2-placeholder="Provinsi tujuan" data-select2-url="{{url('get-select/provinsi')}}">
+                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" data-kota_exclude="1" class="form-select select2advance" data-select2-placeholder="Provinsi tujuan" data-select2-url="{{url('get-select/provinsi')}}">
                                 
                                 @isset($darat)
                                     <option value="{{$darat->provinsi_tujuan_id}}">{{$darat->provinsit_nama}}</option>
