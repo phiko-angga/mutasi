@@ -19,6 +19,7 @@ use App\Http\Controllers\BiayaTransportController;
 use App\Http\Controllers\BiayaMuatController;
 use App\Http\Controllers\BiayaPengepakanController;
 use App\Http\Controllers\BarangGolonganController;
+use App\Http\Controllers\TransaksiBiayaController;
 use App\Http\Controllers\GetSelectController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-select/kota', [GetSelectController::class,'getKota']);
     Route::get('/get-select/provinsi', [GetSelectController::class,'getProvinsi']);
 
+    Route::resource('/transaksi-biaya', TransaksiBiayaController::class)->name('*','transaksi-biaya');
     Route::resource('/users', UsersController::class)->name('*','users');
     Route::resource('/rute', RuteController::class)->name('*','rute');
     Route::resource('/darat', DaratController::class)->name('*','darat');

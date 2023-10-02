@@ -73,10 +73,10 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="password">Jawa Madura</label>
                         <div class="col-sm-8 d-flex">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="1" name="jawamadura" id="jawamadura" {{old('jawamadura',isset($biaya) ? ($biaya->jawamadura == 1 ? 'checked' : '') : '')}}>
-                            <label class="form-check-label" for="jawamadura"> Checked </label>
-                          </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" name="jawamadura" id="jawamadura" {{old('jawamadura',isset($biaya) ? ($biaya->jawamadura == 1 ? 'checked' : '') : '')}}>
+                                <label class="form-check-label" for="jawamadura"> Checked </label>
+                            </div>
                         </div>
                     </div>
 
