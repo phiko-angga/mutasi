@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
+use App\Models\MenuUser;
 use App\Models\User;
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
@@ -57,7 +59,12 @@ class UsersController extends Controller
         $action = 'store';
         $page = 'User';
         $title = 'Tambah baru';
-        return view('users.form',compact('action','title','page'));
+
+        $menu = Menu::all();
+        $mMenu = new Menu; 
+        $menu_grup = $mMenu->get_grup();
+
+        return view('users.form',compact('action','title','page','menu','menu_grup'));
     }
 
     /**
@@ -77,13 +84,23 @@ class UsersController extends Controller
 
         DB::beginTransaction();
         try {
-            $data = $request->except(['_token']);
+            $data = $request->except(['_token','menu']);
             
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
             $data['password'] = Hash::make($request->password);
             $user = User::create($data);
+
+            $menu = $request->menu;
+            $akses = [];
+            foreach($menu as $m){
+                $akses[]= [
+                    'pengguna_id' => $user->id,
+                    'menu_id' => $m,
+                ];
+            }
+            $userAkses = MenuUser::insert($akses);
 
             DB::commit();
 
@@ -123,7 +140,15 @@ class UsersController extends Controller
         $action = 'update';
         $title = 'User Update';
         $page = 'User';
-        return view('users.form',compact('users','action','title','page'));
+
+        $user = auth()->user();
+
+        $mMenu = new Menu; 
+        $menu = $mMenu->get_menu_akses2($user->id);
+        $menu_grup = $mMenu->get_grup();
+        
+
+        return view('users.form',compact('users','action','title','page','menu','menu_grup'));
     }
 
     /**
@@ -147,7 +172,7 @@ class UsersController extends Controller
 
             DB::beginTransaction();
             try {
-                $data = $request->except(['_token','_method','password','id']);
+                $data = $request->except(['_token','_method','password','id','menu']);
                 if(isset($request->password)){
                     $data['password'] = Hash::make($request->password);
                 }
@@ -155,6 +180,19 @@ class UsersController extends Controller
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;
                 User::where('id',$user->id)->update($data);
+                
+                $menu = $request->menu;
+                $deleteOldMenu = MenuUser::whereNotin('menu_id',$menu)->where('pengguna_id',$user->id)->delete();
+                
+                $akses = [];
+                foreach($menu as $m){
+                    $akses[]= [
+                        'pengguna_id' => $user->id,
+                        'menu_id' => $m,
+                    ];
+                }
+                $userAkses = MenuUser::insert($akses);
+                
                 DB::commit();
 
                 return redirect('/user')->with('info', 'User berhasil di update');

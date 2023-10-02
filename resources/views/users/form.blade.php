@@ -117,6 +117,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h5 class="mb-0">Menu Akses</h5>
+                </div>
+                <div class="card-body">
+                    @foreach($menu_grup as $key => $grup)
+                        <div class="row mb-3">
+                            <h6 class="col-sm-4">{{$grup->grup}}</h6>
+                            @php
+                                $menu2 = clone $menu;
+                                $menuPerGrup = $menu2->where('grup',$grup->grup);
+                            @endphp
+                            @if($menuPerGrup)
+                                @foreach($menuPerGrup as $m)
+                                <label class="col-sm-4 col-form-label" for="password"></label>
+                                <div class="col-sm-8 d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" {{$m->curmenu != 0 ? 'checked' : ''}} value="{{$m->id}}" name="menu[]" id="menu_{{$m->id}}">
+                                        <label class="form-check-label" for="menu_{{$m->id}}"> {{$m->nama}} </label>
+                                    
+                                    </div>
+                                </div>
+                                @endforeach
+                            @endif
+                        </div>
+                        <hr>
+                    @endforeach
+                    
+                </div>
+            </div>
+        </div>
     </div>
         
 </form>
