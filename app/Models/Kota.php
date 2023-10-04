@@ -23,7 +23,8 @@ class Kota extends Model
     ];
     
     public function get_data($request, $paginate = true){
-        $data = Self::select('tb_kota.*','p.nama as provinsi_nama','c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
+        $data = Self::select('tb_kota.*','p.nama as provinsi_nama','c.fullname as created_name')
+        ->selectRaw("coalesce(u.fullname,'') as updated_name")
         ->join('tb_provinsi as p','p.id','=','tb_kota.provinsi_id')
         ->join('tb_pengguna as c','c.id','=','tb_kota.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_kota.updated_by');
@@ -31,7 +32,12 @@ class Kota extends Model
         $search = $request->get('search');
         if(isset($search)){
             $data = $data->where('tb_kota.nama', 'like', '%'.$search.'%')
-            ->orWhere('tb_kota.kode', 'like', '%'.$search.'%');
+            ->orWhere('tb_kota.kode', 'like', '%'.$search.'%')
+            ->orWhere('p.nama', 'like', '%'.$search.'%')
+            ->orWhere('alamat', 'like', '%'.$search.'%')
+            ->orWhere('kodepos', 'like', '%'.$search.'%')
+            ->orWhere('telepon', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
         }
         
         if($paginate){

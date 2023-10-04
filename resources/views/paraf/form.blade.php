@@ -75,7 +75,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">NIP tertulis</label>
                         <div class="col-sm-8">
-                            <input required type="number" max="999999999999999999999999999999" class="form-control" id="nip" name="nip" value="{{old('nip',isset($paraf) ? $paraf->nip : '')}}" />
+                            <input required type="text" maxLength="30" onkeydown="return /[0-9,Backspace]/i.test(event.key)" class="form-control" id="nip" name="nip" value="{{old('nip',isset($paraf) ? $paraf->nip : '')}}" />
                         </div>
                     </div>
                     <div class="row mb-3">

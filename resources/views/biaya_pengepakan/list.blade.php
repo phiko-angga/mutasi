@@ -95,7 +95,7 @@
 <script>
     
     $(document).on('change','#search', function(){
-        fetch_tabledata('/biaya_pengepakan');
+        fetch_tabledata('/biaya-pengepakan');
     })
 
     $('.delete_btn').click(function(e){

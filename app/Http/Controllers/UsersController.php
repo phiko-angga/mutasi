@@ -78,7 +78,7 @@ class UsersController extends Controller
     {
         request()->validate([
             'username'   => 'required|unique:tb_pengguna,username',
-            'fullname'   => 'required',
+            // 'fullname'   => 'required',
             'password'   => ['required','min:8','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
         ]);
 
@@ -89,6 +89,7 @@ class UsersController extends Controller
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
+            $data['fullname'] = isset($request->fullname) ? $request->fullname : "";
             $data['password'] = Hash::make($request->password);
             $user = User::create($data);
 

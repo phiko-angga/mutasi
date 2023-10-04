@@ -26,11 +26,13 @@ class Darat extends Model
         ->join('tb_pengguna as c','c.id','=','tb_darat.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_darat.updated_by');
         
-        // $search = $request->get('search');
-        // if(isset($search)){
-        //     $data = $data->where('tb_darat.nama', 'like', '%'.$search.'%')
-        //     ->orWhere('tb_darat.kode', 'like', '%'.$search.'%');
-        // }
+        $search = $request->get('search');
+        if(isset($search)){
+            $data = $data->where('jarak_km', 'like', '%'.$search.'%')
+            ->orWhere('pa.nama', 'like', '%'.$search.'%')
+            ->orWhere('ka.nama', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
+        }
         
         if($paginate){
             $data = $data->paginate(10);

@@ -20,8 +20,13 @@ class BarangGolongan extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('tb_barang_golongan.golongan', 'like', '%'.$search.'%')
-            ->orWhere('tb_barang_golongan.kode', 'like', '%'.$search.'%');
+            $data = $data->where('golongan', 'like', '%'.$search.'%')
+            ->orWhere('bujangan', 'like', '%'.$search.'%')
+            ->orWhere('keluarga', 'like', '%'.$search.'%')
+            ->orWhere('anak1', 'like', '%'.$search.'%')
+            ->orWhere('anak2', 'like', '%'.$search.'%')
+            ->orWhere('anak3', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
         }
         
         if($paginate){

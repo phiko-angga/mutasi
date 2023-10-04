@@ -96,7 +96,7 @@
 <script>
     
     $(document).on('change','#search', function(){
-        fetch_tabledata('/biaya_muat');
+        fetch_tabledata('/biaya-muat');
     })
 
     $('.delete_btn').click(function(e){

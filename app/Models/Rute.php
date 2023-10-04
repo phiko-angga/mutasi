@@ -22,11 +22,14 @@ class Rute extends Model
         ->join('tb_pengguna as c','c.id','=','tb_rute.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_rute.updated_by');
         
-        // $search = $request->get('search');
-        // if(isset($search)){
-        //     $data = $data->where('tb_rute.nama', 'like', '%'.$search.'%')
-        //     ->orWhere('tb_rute.kode', 'like', '%'.$search.'%');
-        // }
+        $search = $request->get('search');
+        if(isset($search)){
+            $data = $data->where('ka.nama', 'like', '%'.$search.'%')
+            ->orWhere('pr.nama', 'like', '%'.$search.'%')
+            ->orWhere('pr.nama', 'like', '%'.$search.'%')
+            ->orWhere('tb_rute.kode', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
+        }
         
         if($paginate){
             $data = $data->paginate(10);

@@ -4,7 +4,7 @@
 
     $(document).ready(function () {
         var stepper = new Stepper($('.bs-stepper')[0])
-        $("#kota_asal_id,#kota_tujuan_id").select2();
+        $("#kota_asal_id,#kota_tujuan_id").select2({width: 'resolve'});
         $("#pejabat_komitmen_nama").trigger('change');
     })
 

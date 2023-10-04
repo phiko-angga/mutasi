@@ -19,6 +19,13 @@ class PejabatKomitmen extends Model
         ->join('tb_pengguna as c','c.id','=','tb_pejabat_komitmen.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_pejabat_komitmen.updated_by');
         
+        $search = $request->get('search');
+        if(isset($search)){
+            $data = $data->where('nama', 'like', '%'.$search.'%')
+            ->orWhere('nip', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
+        }
+
         if($paginate){
             $data = $data->paginate(10);
         }else

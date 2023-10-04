@@ -32,7 +32,7 @@ function fetch_tabledata(url) {
 }
 
 function ajaxCall(params = null){
-  let baseUrl = window.location.origin;
+  let baseUrl = base_url;
   let url = '';
   let type = 'get';
   let data = '';

@@ -21,6 +21,13 @@ class BiayaMuat extends Model
         ->join('tb_pengguna as c','c.id','=','tb_biaya_muatbarang.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_biaya_muatbarang.updated_by');
         
+        $search = $request->get('search');
+        if(isset($search)){
+            $data = $data->where('biaya_darat', 'like', '%'.$search.'%')
+            ->orWhere('biaya_laut', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
+        }
+        
         if($paginate){
             $data = $data->paginate(10);
         }else

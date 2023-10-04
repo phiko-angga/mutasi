@@ -103,7 +103,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tanggal dikeluarkan</label>
                                             <div class="col-sm-8">
-                                                <input required type="date" class="form-control" id="tanggal" name="tanggal" value="{{old('tanggal',isset($biaya) ? $biaya->tanggal : '')}}" />
+                                                <input required type="date" class="form-control" id="tanggal" name="tanggal" value="{{old('tanggal',isset($biaya) ? $biaya->tanggal : date('Y-m-d'))}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -149,11 +149,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Jabatan / Instansi</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="tingkat_perj_dinas" id="tingkat_perj_dinas">
-                                                    @foreach($pangkat_golongan as $pg)
-                                                        <option value="{{$pg->id}}">{{$pg->golongan != "" ? $pg->golongan.' - '.$pg->pangkat : $pg->pangkat}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" maxLength="50" style="text-transform:uppercase" oninput="this.value = this.value.toUpperCase()" class="form-control" id="jabatan_instansi" name="jabatan_instansi" value="{{old('jabatan_instansi',isset($biaya) ? $biaya->jabatan_instansi : '')}}" />
                                             </div>
                                         </div>
 
@@ -180,9 +176,9 @@
                                             <label class="col-sm-4 col-form-label" for="password">Tingkat Perj. dinas</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="tingkat_perj_dinas" id="tingkat_perj_dinas">
-                                                    <option value="Tergolong Tingkat A">Tergolong Tingkat A</option>
-                                                    <option value="Tergolong Tingkat B">Tergolong Tingkat B</option>
-                                                    <option value="Tergolong Tingkat C">Tergolong Tingkat C</option>
+                                                    <option {{isset($biaya) ? ($biaya->tingkat_perj_dinas == 'Tergolong Tingkat A' ? 'selected' : '') : ''}} value="Tergolong Tingkat A">Tergolong Tingkat A</option>
+                                                    <option {{isset($biaya) ? ($biaya->tingkat_perj_dinas == 'Tergolong Tingkat B' ? 'selected' : '') : 'selected'}} value="Tergolong Tingkat B">Tergolong Tingkat B</option>
+                                                    <option {{isset($biaya) ? ($biaya->tingkat_perj_dinas == 'Tergolong Tingkat C' ? 'selected' : '') : ''}} value="Tergolong Tingkat C">Tergolong Tingkat C</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -217,7 +213,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tanggal Keberangkatan</label>
                                             <div class="col-sm-8">
-                                                <input type="date" class="form-control" id="tanggal_berangkat" name="v"/>
+                                                <input type="date" class="form-control" id="tanggal_berangkat" name="tanggal_berangkat" value="{{old('tanggal_berangkat',isset($biaya) ? $biaya->tanggal_berangkat : date('Y-m-d'))}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -229,7 +225,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Lama perjalanan dinas</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" class="form-control" id="lama_perj_dinas" name="lama_perj_dinas"/>
+                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" class="form-control" id="lama_perj_dinas" name="lama_perj_dinas" value="{{old('lama_perj_dinas',isset($biaya) ? $biaya->lama_perj_dinas : '3')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

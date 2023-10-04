@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Table;
 use App\Models\Laut;
 use App\Models\Provinsi;
+use App\Models\Kota;
 use App\Models\Pelabuhan;
 use App\Exports\LautExport;
 use App\Http\Controllers\Controller;
@@ -62,9 +63,10 @@ class LautController extends Controller
         $page = 'Laut';
         $title = 'Tambah baru';
         $provinsi = Provinsi::all();
+        $kota = Kota::all();
         $pelabuhan = Pelabuhan::all();
         $table = Table::all();
-        return view('laut.form',compact('action','title','page','provinsi','pelabuhan','table'));
+        return view('laut.form',compact('action','title','page','provinsi','kota','pelabuhan','table'));
     }
 
     /**
@@ -79,14 +81,14 @@ class LautController extends Controller
         request()->validate([
             'provinsi_asal_id'   => 'required',
             'provinsi_tujuan_id'   => 'required',
-            'pelabuhan_asal'   => 'required',
-            'pelabuhan_tujuan'   => 'required',
+            'kota_asal_id'   => 'required',
+            'kota_tujuan_id'   => 'required',
             'jarak_mil'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['nama_table','jarak_mil','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal','pelabuhan_tujuan']);
+            $data = $request->only(['nama_table','jarak_mil','kota_asal_id','kota_tujuan_id','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal','pelabuhan_tujuan']);
             
             $user = auth()->user();
             $data['created_by'] = $user->id;
@@ -150,8 +152,8 @@ class LautController extends Controller
             'id'   => 'required',
             'provinsi_asal_id'   => 'required',
             'provinsi_tujuan_id'   => 'required',
-            'pelabuhan_asal'   => 'required',
-            'pelabuhan_tujuan'   => 'required',
+            'kota_asal_id'   => 'required',
+            'kota_tujuan_id'   => 'required',
             'jarak_mil'   => 'required',
         ]);
 
@@ -160,7 +162,7 @@ class LautController extends Controller
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['nama_table','jarak_mil','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal','pelabuhan_tujuan']);
+                $data = $request->only(['nama_table','jarak_mil','kota_asal_id','kota_tujuan_id','provinsi_asal_id','provinsi_tujuan_id','pelabuhan_asal','pelabuhan_tujuan']);
                 
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;

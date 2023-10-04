@@ -46,9 +46,9 @@ class LautExport implements FromCollection, WithHeadings, WithMapping
         $data = [
             ++$this->row,
             $row->provinsia_nama,
-            $row->pelabuhan_asal,
+            $row->kotaa_nama,
             $row->provinsit_nama,
-            $row->pelabuhan_tujuan,
+            $row->kotat_nama,
             $row->jarak_mil,
             $row->nama_table,
             $row->created_name,

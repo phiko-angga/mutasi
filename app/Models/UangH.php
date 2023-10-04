@@ -15,15 +15,21 @@ class Uangh extends Model
     ];
     
     public function get_data($request, $paginate = true){
-        $data = Self::select('tb_uangh.*','p.nama as provinsi_nama','c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
+        $data = Self::select('tb_uangh.*','p.nama as provinsi_nama','c.fullname as created_name')
+        ->selectRaw("coalesce(u.fullname,'') as updated_name")
         ->join('tb_provinsi as p','p.id','=','tb_uangh.provinsi_id')
         ->join('tb_pengguna as c','c.id','=','tb_uangh.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_uangh.updated_by');
         
-        // $search = $request->get('search');
-        // if(isset($search)){
-        //     $data = $data->where('nama', 'like', '%'.$search.'%');
-        // }
+        $search = $request->get('search');
+        if(isset($search)){
+            $data = $data->where('satuan', 'like', '%'.$search.'%')
+            ->orWhere('p.nama', 'like', '%'.$search.'%')
+            ->orWhere('luar_kota', 'like', '%'.$search.'%')
+            ->orWhere('dalam_kota', 'like', '%'.$search.'%')
+            ->orWhere('diklat', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
+        }
         
         if($paginate){
             $data = $data->paginate(10);

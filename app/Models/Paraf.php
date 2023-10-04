@@ -19,10 +19,14 @@ class Paraf extends Model
         ->join('tb_pengguna as c','c.id','=','tb_tandatangan.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_tandatangan.updated_by');
         
-        // $search = $request->get('search');
-        // if(isset($search)){
-        //     $data = $data->where('nama', 'like', '%'.$search.'%');
-        // }
+        $search = $request->get('search');
+        if(isset($search)){
+            $data = $data->where('tb_tandatangan.nama', 'like', '%'.$search.'%')
+            ->orWhere('tb_tandatangan.nip', 'like', '%'.$search.'%')
+            ->orWhere('tb_tandatangan.pangkat', 'like', '%'.$search.'%')
+            ->orWhere('tb_tandatangan.jabatan', 'like', '%'.$search.'%')
+            ->orWhere('c.username', 'like', '%'.$search.'%');
+        }
         
         if($paginate){
             $data = $data->paginate(10);

@@ -26,9 +26,9 @@
                     <tr>
                         <td>{{ (++$key)}}</td>
                         <td>{{ $row->provinsia_nama }}</td>
-                        <td>{{ $row->pelabuhan_asal }}</td>
+                        <td>{{ $row->kotaa_nama }}</td>
                         <td>{{ $row->provinsit_nama }}</td>
-                        <td>{{ $row->pelabuhan_tujuan }}</td>
+                        <td>{{ $row->kotat_nama }}</td>
                         <td>{{ number_format($row->jarak_mil) }}</td>
                         <td>{{ $row->nama_table }}</td>
                         <td>{{ $row->created_name }}</td>

@@ -77,7 +77,11 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Pelabuhan asal</label>
                         <div class="col-sm-8">
-                            <input type="text" id="pelabuhan_asal" name="pelabuhan_asal" class="form-control"  value="{{old('pelabuhan_asal',isset($laut) ? $laut->pelabuhan_asal : '')}}">
+                            <select name="kota_asal_id" id="kota_asal_id" class="form-select select2advance" data-select2-placeholder="Pelabuhan asal" data-select2-url="{{url('get-select/kota').(isset($sbum) ? '?provinsi='.$sbum->provinsi_asal_id : '')}}">
+                                @isset($laut)
+                                    <option value="{{$laut->kota_asal_id}}">{{$laut->kotaa_nama}}</option>
+                                @endisset
+                            </select>
                         </div>
                     </div>
                     
@@ -85,24 +89,27 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Provinsi tujuan</label>
                         <div class="col-sm-8">
-                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" class="form-select">
-                                @foreach($provinsi as $p2)
-                                    <option {{isset($laut) ? ($laut->provinsi_tujuan_id == $p2->id ? 'selected' : '') : ''}} value="{{$p2->id}}">{{$p2->nama}}</option>
-                                @endforeach
+                            <select name="provinsi_tujuan_id" id="provinsi_tujuan_id" data-kota_exclude="1" class="form-select select2advance" data-select2-placeholder="Provinsi tujuan" data-select2-url="{{url('get-select/provinsi')}}">
+                                @isset($laut)
+                                    <option value="{{$laut->provinsi_tujuan_id}}">{{$laut->provinsit_nama}}</option>
+                                @endisset
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="nama">Pelabuhan tujuan</label>
                         <div class="col-sm-8">
-                            <input type="text" maxLength="50" id="pelabuhan_tujuan" name="pelabuhan_tujuan" class="form-control"  value="{{old('pelabuhan_tujuan',isset($laut) ? $laut->pelabuhan_tujuan : '')}}">
-                            <small class="text-info">Max 50</small>
+                            <select name="kota_tujuan_id" id="kota_tujuan_id" class="form-select select2advance" data-select2-placeholder="Pelabuhan tujuan" data-select2-url="{{url('get-select/kota').(isset($laut) ? '?provinsi='.$laut->provinsi_tujuan_id : '')}}">
+                                @isset($laut)
+                                    <option value="{{$laut->kota_tujuan_id}}">{{$laut->kotat_nama}}</option>
+                                @endisset
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Jarak (Mil)</label>
                         <div class="col-sm-8">
-                            <input required type="number" min="1" max="9999999999" class="form-control" id="jarak_mil" name="jarak_mil" value="{{old('jarak_mil',isset($laut) ? $laut->jarak_mil : '0')}}" />
+                            <input required type="text" maxLength="10" onkeydown="return /[0-9,Backspace]/i.test(event.key)" class="form-control" id="jarak_mil" name="jarak_mil" value="{{old('jarak_mil',isset($laut) ? $laut->jarak_mil : '0')}}" />
                         </div>
                     </div>
 

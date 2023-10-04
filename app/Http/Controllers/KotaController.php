@@ -87,7 +87,7 @@ class KotaController extends Controller
             'provinsi_id'   => 'required',
             'nama'   => 'required',
             // 'kode'   => 'required',
-            'status'   => 'required',
+            // 'status'   => 'required',
         ]);
 
         DB::beginTransaction();
@@ -106,6 +106,9 @@ class KotaController extends Controller
             
             $data['kode'] = $kodeBaru;
             $data['jawamadura'] = 0;
+            $data['alamat'] = isset($request->alamat) ? $request->alamat : "";
+            $data['status'] = isset($request->status) ? $request->status : 1;
+            $data['kodepos'] = isset($request->kodepos) ? $request->kodepos : "";
             $user = auth()->user();
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
@@ -178,6 +181,9 @@ class KotaController extends Controller
                 $user = auth()->user();
                 $data['updated_by'] = $user->id;
                 $data['jawamadura'] = 0;
+                $data['alamat'] = isset($request->alamat) ? $request->alamat : "";
+                $data['status'] = isset($request->status) ? $request->status : 1;
+                $data['kodepos'] = isset($request->kodepos) ? $request->kodepos : "";
                 Kota::where('id',$kota->id)->update($data);
                 DB::commit();
 
