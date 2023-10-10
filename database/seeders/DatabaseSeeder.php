@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call(MenuSeeder::class);
         $this->call(PangkatGolonganSeeder::class);
+        $this->call(TableSeeder::class);
     }
 }

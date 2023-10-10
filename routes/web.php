@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
     Route::get('/get-select/kota', [GetSelectController::class,'getKota']);
     Route::get('/get-select/provinsi', [GetSelectController::class,'getProvinsi']);
+    Route::get('/get-select/jenis-transport', [GetSelectController::class,'getTransport']);
 
     Route::resource('/transaksi-biaya', TransaksiBiayaController::class)->name('*','transaksi-biaya');
     Route::resource('/users', UsersController::class)->name('*','users');
