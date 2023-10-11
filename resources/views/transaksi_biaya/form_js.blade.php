@@ -1,16 +1,25 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 <script>
+    var stepperEl = $('.bs-stepper');
     var stepper = new Stepper($('.bs-stepper')[0]);
     var incKel = 0;
     var incKelTrans = 0;
     var incKelTransPembantu = 0;
     var incMuat = 0;
+    var curdate = 0;
 
     $(document).ready(function () {
         $("#kota_asal_id,#kota_tujuan_id").select2({width: 'resolve'});
         $("#pejabat_komitmen_nama").trigger('change');
         $('.numeric').maskNumber({integer: true});
+    })
+
+    $(".bs-stepper")[0].addEventListener('shown.bs-stepper', function (event) {
+        curStep = event.detail.indexStep;
+        if(curStep == 1){
+            initiateBiayaTransport();
+        }
     })
 
     $(document).on("change","#pejabat_komitmen_nama",function(){
@@ -32,6 +41,16 @@
         }
     })
 
+    $(document).on("change",".kel_dob",function(){
+        let id = $(this).closest('tr').data('id');
+        let dob = $(this).val();
+        dob = new Date(dob);
+
+        var today = new Date();
+        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+        $('#kel_umur'+id).val(age);
+    })
+
     $(document).on("click",".kel_add",function(){
         let item = $("#item-keluarga");
         newkel = template_keluarga();
@@ -49,7 +68,7 @@
     function template_keluarga(){
         ++incKel;
         let template = 
-                    '<tr id="item'+incKel+'">'+
+                    '<tr id="item'+incKel+'" data-id="'+incKel+'">'+
                 '<td>'+
                     '<div class="form-check">'+
                         '<input class="form-check-input cb_perj_dinas" id="cb_perj_dinas'+incKel+'" name="kel_perj_dinas[]" type="checkbox" value="1">'+
@@ -61,11 +80,23 @@
                     '<input type="text" name="kel_nama[]" id="kel_nama'+incKel+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<input type="date" name="kel_dob[]" id="kel_dob'+incKel+'" class="form-control form-control-sm">'+
+                    '<input type="date" max="" name="kel_dob[]" id="kel_dob'+incKel+'" class="form-control form-control-sm kel_dob">'+
                 '</td>'+
                 '<td>'+
                     '<input type="number" name="kel_umur[]" id="kel_umur'+incKel+'" class="form-control form-control-sm">'+
                 '</td>'+
+                '<td>'+
+                    '<select name="kel_keterangan[]" id="kel_keterangan'+incKel+'" class="form-select form-select-sm">'+
+                        '<option value="Istri">Istri</option>'+
+                        '<option value="Suami">Suami</option>'+
+                        '<option value="AK">AK</option>'+
+                        '<option value="AA">AA</option>'+
+                    '</select>'+
+                '</td>'+
+                '<td></td>'+
+                '<td></td>'+
+                '<td></td>'+
+                '<td></td>'+
                 '<td>'+
                     '<a href="#" class="kel_delete" data-id="'+incKel+'"><i class="bx bx-trash"></i></a>'+
                 '</td>'+
@@ -147,6 +178,14 @@
                 '</td>'+
             '</tr>';
         return template;
+    }
+    
+    function initiateBiayaTransport(){
+        let tgl = $("#tanggal").val();
+        let nomor = $("#nomor").val();
+
+        $("#lampiran_tanggal").val(tgl);
+        $("#lampiran_sppd_no").val(nomor);
     }
 
     // ---------------------- MUAT BARANG --------------------------

@@ -4,6 +4,25 @@
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">Lampiran SPPD Nomor</label>
+                                            <div class="col-sm-8">
+                                                <input readonly type="text" class="form-control" id="lampiran_sppd_no" value="{{old('lampiran_sppd_no',isset($biaya) ? $biaya->lampiran_sppd_no : '')}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">Tanggal</label>
+                                            <div class="col-sm-8">
+                                                <input readonly type="date" class="form-control" id="lampiran_tanggal" value="{{old('tanggal',isset($biaya) ? $biaya->tanggal : date('Y-m-d'))}}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-5">
                                     <div class="col-md-12">
                                         <h6><b>Biaya transport (AA,AK kurang atau sama 2 (dua) Thn 0.67%)</b></h6>
                                     </div>

@@ -209,10 +209,10 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row mb-3">
-                                            <label class="col-sm-4 col-form-label" for="password">Daftar keluarga yang ikut <br>
+                                            <label class="col-sm-12 col-form-label" for="password">Daftar keluarga yang ikut <br>
                                                 <span><small class="text-primary">(AA,AK umur kurang dari dua tahun 67% dari tiket)</small></span>
                                             </label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-12">
                                                 <div class="table-responsive row-table">
                                                     <table class="table" style="height:10rem;">
                                                         <thead>
@@ -223,9 +223,14 @@
                                                             <tr>
                                                                 <th>Perj. Dinas</th>
                                                                 <th>No.</th>
-                                                                <th>Nama</th>
+                                                                <th style="width:280px">Nama</th>
                                                                 <th>Thn/Tgl. Lahir</th>
-                                                                <th>Umur</th>
+                                                                <th style="width:220px">Umur</th>
+                                                                <th style="width:300px">Keterangan</th>
+                                                                <th>Tanggal dibuat</th>
+                                                                <th>Nama pembuat</th>
+                                                                <th>Tanggal diubah</th>
+                                                                <th>Nama pengubah</th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -234,7 +239,7 @@
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="5" class="text-end">
+                                                                <td colspan="11" class="text-end">
                                                                     <button title="Tambah Anggota Keluarga" type="button" class="kel_add btn btn-sm rounded-pill btn-icon btn-primary">
                                                                         <span class="tf-icons bx bx-plus"></span>
                                                                     </button>
