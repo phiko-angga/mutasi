@@ -11,13 +11,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Jumlah orang</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="uangh_jml_orang" name="uangh_jml_orang" value="{{old('uangh_jml_orang',isset($biaya) ? $biaya->uangh_jml_orang : 0)}}" />
+                                                <input readonly type="number" class="form-control" id="uangh_jml_orang" name="uangh_jml_orang" value="{{old('uangh_jml_orang',isset($biaya) ? $biaya->uangh_jml_orang : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Jumlah hari</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="uangh_jml_hari" name="uangh_jml_hari" value="{{old('uangh_jml_hari',isset($biaya) ? $biaya->uangh_jml_hari : 0)}}" />
+                                                <input readonly type="number" class="form-control" id="uangh_jml_hari" name="uangh_jml_hari" value="{{old('uangh_jml_hari',isset($biaya) ? $biaya->uangh_jml_hari : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -38,13 +38,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Pembantu</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="uangh_jml_pembantu" name="uangh_jml_pembantu" value="{{old('uangh_jml_pembantu',isset($biaya) ? $biaya->uangh_jml_pembantu : 0)}}" />
+                                                <input readonly type="number" class="form-control" id="uangh_jml_pembantu" name="uangh_jml_pembantu" value="{{old('uangh_jml_pembantu',isset($biaya) ? $biaya->uangh_jml_pembantu : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Jumlah hari</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="uangh_jml_hari_p" name="uangh_jml_hari_p" value="{{old('uangh_jml_hari_p',isset($biaya) ? $biaya->uangh_jml_hari_p : 0)}}" />
+                                                <input readonly type="number" class="form-control" id="uangh_jml_hari_p" name="uangh_jml_hari_p" value="{{old('uangh_jml_hari_p',isset($biaya) ? $biaya->uangh_jml_hari_p : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -76,7 +76,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">terbilang</label>
                                             <div class="col-sm-8">
-                                                <input type="text" readonly class="form-control" id="uangh_jml_terbilang" name="uangh_jml_terbilang"  value="{{old('uangh_jml_terbilang',isset($biaya) ? $biaya->uangh_jml_terbilang : '')}}"/>
+                                                <input type="text" readonly class="form-control" id="uangh_jml_terbilang" name="uangh_jml_terbilang"  value="{{old('uangh_jml_terbilang',isset($biaya) ? $biaya->uangh_jml_terbilang : '-')}}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +140,16 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tahun Anggaran</label>
                                             <div class="col-sm-8">
-                                                <select name="rampung_thn_anggaran" id="rampung_thn_anggaran" class="form-select"></select>
+                                                <select name="rampung_thn_anggaran" id="rampung_thn_anggaran" class="form-select">
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2021 ? 'selected' : '') : ''}} value="2021">2021</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2022 ? 'selected' : '') : ''}} value="2022">2022</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2023 ? 'selected' : '') : 'selected'}} value="2023">2023</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2024 ? 'selected' : '') : ''}} value="2024">2024</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2025 ? 'selected' : '') : ''}} value="2025">2025</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2026 ? 'selected' : '') : ''}} value="2026">2026</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2027 ? 'selected' : '') : ''}} value="2027">2027</option>
+                                                    <option {{isset($biaya) ? ($biaya->rampung_thn_anggaran == 2028 ? 'selected' : '') : ''}} value="2028">2028</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -152,16 +161,71 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Nama Bendaharawan</label>
                                             <div class="col-sm-8">
-                                                <select name="rampung_bendaharawan_id" id="rampung_bendaharawan_id" class="form-select select2advance" data-select2-placeholder="Nama bendaharawan" data-select2-url="{{url('get-select/jenis-transport')}}"></select>
+                                                <select style="width:100%" name="rampung_bendaharawan_id" id="rampung_bendaharawan_id" class="form-select select2advance" data-select2-placeholder="Nama bendaharawan" data-select2-url="{{url('get-select/paraf?kelompok=Bendaharawan')}}"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">NIP Bendaharawan</label>
+                                            <div class="col-sm-8">
+                                                <input readonly type="text" name="rampung_bendaharawan_nip" id="rampung_bendaharawan_nip" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">
+                                                <div class="form-check">
+                                                    <input class="form-check-input cb_kuasa" id="cb_kuasa" name="trans_manual[]" type="checkbox" value="1">
+                                                    <label class="form-check-label" for="cb_kuasa"> Dikuasakan (jika tidak, nama pegawai yang bersangkutan)</label>
+                                                </div>
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <select style="width:100%" name="rampung_kuasa_nama" id="rampung_kuasa_nama" class="form-select select2advance" data-select2-placeholder="Penerima" data-select2-url="{{url('get-select/paraf?kelompok=Kuasa Pengguna Anggaran')}}"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">NIP yang menerima/dikuasakan</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="rampung_kuasa_nip" id="rampung_kuasa_nip" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">Pejabat pembuat komitmen (PPK)</label>
+                                            <div class="col-sm-8">
+                                                <select style="width:100%" name="rampung_ppk_id" id="rampung_ppk_id" class="form-select select2advance" data-select2-placeholder="Pejabat pembuat komitmen" data-select2-url="{{url('get-select/ppk')}}"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">NIP pejabat pembuat komitmen</label>
+                                            <div class="col-sm-8">
+                                                <input readonly type="text" name="rampung_ppk_nip" id="rampung_ppk_nip" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">Nama kuasa pengguna anggaran/pengguna barang</label>
+                                            <div class="col-sm-8">
+                                                <select style="width:100%" name="rampung_anggaran_id" id="rampung_anggaran_id" class="form-select select2advance" data-select2-placeholder="Pejabat pembuat komitmen" data-select2-url="{{url('get-select/ppk')}}"></select>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label class="col-sm-4 col-form-label" for="nama">NIP kuasa pengguna anggaran/pengguna barang</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" name="rampung_anggaran_nip" id="rampung_anggaran_nip" class="form-control form-control-sm">
                                             </div>
                                         </div>
                                     </div>
                                     
+                                    <div class="col-md-12 mt-4">
+                                        <h6><b>Keterangan rincian perjalanan dinas</b></h6>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea name="rampung_rincian" id="rampung_rincian" cols="30" rows="4" class="form-control">{{old('rampung_rincian',isset($biaya) ? $biaya->rampung_rincian : '')}}</textarea>
+                                    </div>
 
                                     <div class="row mt-4">
                                         <div class="col-sm-12 text-center">
                                             <button type="button" class="btn btn-primary" onclick="stepper.previous()">Back</button>
-                                            <button type="button" class="btn btn-primary" onclick="stepper.next()">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </div>
                                 </div>

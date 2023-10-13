@@ -19,6 +19,10 @@
         curStep = event.detail.indexStep;
         if(curStep == 1){
             initiateBiayaTransport();
+        }else if(curStep == 2){
+            initiateBiayaMuatBarang();
+        }else if(curStep == 3){
+            initiateUangHarian();
         }
     })
 
@@ -51,6 +55,24 @@
         $('#kel_umur'+id).val(age);
     })
 
+    $(document).on("change","#pangkat_golongan",function(){
+        let golongan = $(this).find(":selected").data('golongan');
+        if(golongan.indexOf('IV') >= 0){
+            $(".panel_transport_pembantu").show();
+        }else{
+            $(".panel_transport_pembantu").hide();
+        }
+    })
+
+    $(document).on("change","#cb_perj_dinas",function(){
+        let status = $(this).is(":checked");
+        if(status){
+            $("#perj_dinas").val(1);
+        }else{
+            $("#perj_dinas").val(0);
+        }
+    })
+
     $(document).on("click",".kel_add",function(){
         let item = $("#item-keluarga");
         newkel = template_keluarga();
@@ -71,7 +93,8 @@
                     '<tr id="item'+incKel+'" data-id="'+incKel+'">'+
                 '<td>'+
                     '<div class="form-check">'+
-                        '<input class="form-check-input cb_perj_dinas" id="cb_perj_dinas'+incKel+'" name="kel_perj_dinas[]" type="checkbox" value="1">'+
+                        '<input class="form-check-input cb_perj_dinas" id="cb_perj_dinas'+incKel+'" name="kel_perj_dinas_cb[]" type="checkbox" value="1">'+
+                        '<input id="perj_dinas'+incKel+'" name="kel_perj_dinas[]" type="hidden" value="0">'+
                         '<label class="form-check-label" for="cb_perj_dinas'+incKel+'"></label>'+
                     '</div>'+
                 '</td>'+
@@ -106,10 +129,35 @@
 
     // ---------------------- TRANSPORT --------------------------
     $(document).on("click",".trans_add",function(){
+        let total_kel = $("#item-keluarga").children().length + 1;
+
         let item = $("#item-transport");
-        let newt = template_transport();
+        let newt = template_transport(false,total_kel);
         item.append(newt);
         initSelect2();
+    })
+
+    $(document).on("change",".biaya-per-orang",function(){
+        let id = $(this).closest('tr').data('id');
+        let pembantu = $(this).closest('tr').data('pembantu');
+
+        let kota_asal = $("#transport_kota_asal_id").val();
+        let kota_tujuan = $("#transport_kota_tujuan_id").val();
+
+        let payload = {kota_asal:kota_asal,kota_tujuan:kota_tujuan};
+        let params = {};
+        params.url = '/transport/biaya-per-orang';
+        params.data = payload;
+        params.result = function(data){
+            let biaya = 0;
+            if($.isEmptyObject(data)){
+                biaya = 0;
+            }else{
+                biaya = data.harga_tiket;
+            }
+            transportCalculateBiaya(id,biaya,pembantu);
+        }
+        ajaxCall(params);
     })
 
     $(document).on("click",".trans_add_pembantu",function(){
@@ -117,6 +165,17 @@
         let newt = template_transport(true);
         item.append(newt);
         initSelect2();
+    })
+
+    $(document).on("click",".cb_transport_manual",function(){
+        let id = $(this).closest('tr').data('id');
+
+        let checked = $(this).is(":checked");
+        if(checked){
+            $("#biaya_perorang"+id).attr('readonly',false);
+        }else{
+            $("#biaya_perorang"+id).attr('readonly',true);
+        }
     })
 
     $(document).on("click",".trans_delete",function(e){
@@ -127,38 +186,46 @@
         item.find('tr[id="item'+id+'"]').remove();
     })
 
-    function template_transport(pembantu =  false){
+    function transportCalculateBiaya(id,hargaTiket = 0, pembantu = false){
+        let total_orang = $("#orang"+id).val();
+        $("#biaya_perorang"+id).val(addCommas(hargaTiket));
+
+        let jumBiaya = pembantu ? 0 : hargaTiket * total_orang;
+        $("#jumlah_biaya"+id).val(addCommas(jumBiaya));
+    }
+
+    function template_transport(pembantu = false, kel_jumlah = 0){
 
         ++incKelTrans;
         let template = 
-            '<tr id="item'+incKelTrans+'">'+
+            '<tr id="item'+incKelTrans+'" data-id="'+incKelTrans+'" data-pembantu="'+pembantu+'">'+
                 '<td>'+incKelTrans+'</td>';
 
             if(!pembantu){
                 template += '<td>'+
                     '<div class="form-check">'+
-                        '<input class="form-check-input cb_manual" id="cb_manual'+incKelTrans+'" name="trans_manual[]" type="checkbox" value="1">'+
+                        '<input class="form-check-input cb_transport_manual" id="cb_manual'+incKelTrans+'" name="trans_manual[]" type="checkbox" value="1">'+
                         '<label class="form-check-label" for="cb_manual'+incKelTrans+'"></label>'+
                     '</div>'+
                 '</td>';
             }
 
             template += '<td>'+
-                    '<select name="transport_id[]" id="transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
+                    '<select style="width: 100%" name="transport_id[]" id="transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
                 '</td>'+
-                '<td>'+
-                    '<select name="kota_asal_id[]" id="kota_asal_id" class="form-select select2advance" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                '<td style="width:250px">'+
+                    '<select style="width: 100%" name="kota_asal_id[]" id="transport_kota_asal_id" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>'+
-                '<td>'+
-                    '<select name="kota_tujuan_id[]" id="kota_tujuan_id" class="form-select select2advance" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                '<td style="width:250px">'+
+                    '<select style="width: 100%" name="kota_tujuan_id[]" id="transport_kota_tujuan_id" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>';
                 
             if(!pembantu){
                 template += '<td>'+
-                    '<input type="number" name="orang[]" id="orang'+incKelTrans+'" class="form-control form-control-sm">'+
+                    '<input type="number" readonly name="orang[]" id="orang'+incKelTrans+'" value="'+kel_jumlah+'" class="form-control form-control-sm">'+
                 '</td>'+
-                '<td>'+
-                    '<input type="number" name="biaya_perorang[]" id="biaya_perorang'+incKelTrans+'" class="form-control form-control-sm">'+
+                '<td style="width:220px">'+
+                    '<input type="text" readonly name="biaya_perorang[]" id="biaya_perorang'+incKelTrans+'" class="form-control form-control-sm numeric">'+
                 '</td>';
             }else{
                 template += 
@@ -167,11 +234,18 @@
                 '</td>';
             }
             template += 
-                '<td>'+
-                    '<input type="number" name="jumlah_biaya[]" id="jumlah_biaya'+incKelTrans+'" class="form-control form-control-sm">'+
+                '<td style="width:220px">'+
+                    '<input '+(pembantu ? '' : 'readonly')+' type="text" name="jumlah_biaya[]" id="jumlah_biaya'+incKelTrans+'" class="form-control form-control-sm numeric">'+
                 '</td>'+
-                '<td>'+
-                
+                '<td style="width:300px">'+
+                    '<select style="width: 100%" name="metode[]" id="transport_metode" class="form-select form-select-sm">'+
+                        '<option value="Tiket Bus Manual">Tiket Bus Manual</option>'+
+                        '<option value="SBU/M - Dep. Keu.">SBU/M - Dep. Keu.</option>'+
+                        '<option value="Dep. Perhubungan">Dep. Perhubungan</option>'+
+                        '<option value="Harga Tiket Manual">Harga Tiket Manual</option>'+
+                        '<option value="Table Jarak Darat">Table Jarak Darat</option>'+
+                        '<option value="Jarak Darat Manual">Jarak Darat Manual</option>'+
+                    '</select>'+
                 '</td>'+
                 '<td>'+
                     '<a href="#" class="kel_delete" data-id="'+incKelTrans+'"><i class="bx bx-trash"></i></a>'+
@@ -188,7 +262,56 @@
         $("#lampiran_sppd_no").val(nomor);
     }
 
+    function initiateBiayaMuatBarang(){
+        $('.numeric').maskNumber({integer: true});
+        initSelect2();
+    }
+
+    function initiateUangHarian(){
+        let total_kel = $("#item-keluarga").children().length + 1;
+        $("#uangh_jml_orang").val(total_kel);
+
+        let pembantu_ikut = $("#pembantu_ikut option:selected").val();
+        $("#uangh_jml_pembantu").val(parseInt(pembantu_ikut));
+
+        let lama_dinas = $("#lama_perj_dinas").val();
+        $("#uangh_jml_hari").val(lama_dinas);
+        $("#uangh_jml_hari_p").val(lama_dinas);
+
+        $('.numeric').maskNumber({integer: true});
+        initSelect2();
+    }
+
     // ---------------------- MUAT BARANG --------------------------
+    $(document).on("change",".muat-jarak",function(){
+        let id = $(this).closest('tr').data('id');
+
+        let kota_asal = $("#pengepakan_kota_asal_id").val();
+        let kota_tujuan = $("#pengepakan_kota_tujuan_id").val();
+
+        let payload = {kota_asal:kota_asal,kota_tujuan:kota_tujuan};
+        let params = {};
+        params.url = '/pengepakan/jarak';
+        params.data = payload;
+        params.result = function(data){
+            let jarak = 0;
+            if($.isEmptyObject(data)){
+                jarak = 0;
+            }else{
+                jarak = data.jarak_km;
+            }
+            muatCalculatejarak(id,jarak);
+        }
+        ajaxCall(params);
+    })
+
+    $(document).on("change","#pengepakan_berat, #pengepakan_tarif",function(){
+        let berat = parseInt($("#pengepakan_berat").val());
+        let tarif = parseInt($("#pengepakan_tarif").val().replace(/\,/g, ''));
+        let biaya = berat * tarif;
+        $("#pengepakan_biaya").val(addCommas(biaya));
+    })
+
     $(document).on("click",".muatbarang_add",function(){
         let item = $("#item-muatbarang");
         let newt = template_muatbarang();
@@ -205,38 +328,49 @@
         let item = $("#item-muatbarang");
         item.find('tr[id="item'+id+'"]').remove();
     })
+    
+    function muatCalculatejarak(id,jarak = 0){
+        $("#pengepakan_jarak"+id).val(addCommas(jarak));
+    }
 
     function template_muatbarang(){
         ++incMuat;
         let template = 
-            '<tr id="item'+incMuat+'">'+
+            '<tr id="item'+incMuat+'" data-id="'+incMuat+'">'+
                 '<td>'+incMuat+'</td>'+
                 '<td>'+
                     '<div class="form-check">'+
-                        '<input class="form-check-input cb_manual" id="cb_manual'+incMuat+'" name="trans_manual[]" type="checkbox" value="1">'+
-                        '<label class="form-check-label" for="cb_manual'+incMuat+'"></label>'+
+                        '<input class="form-check-input cb_muatmanual" id="cb_muatmanual'+incMuat+'" name="muat_manual[]" type="checkbox" value="1">'+
+                        '<label class="form-check-label" for="cb_muatmanual'+incMuat+'"></label>'+
                     '</div>'+
                 '</td>'+
                 '<td>'+
-                    '<select name="transport_id[]" id="transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
+                    '<select name="muat_transport_id[]" id="transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
                 '</td>'+
                 '<td>'+
-                    '<select name="kota_asal_id[]" id="kota_asal_id" class="form-select select2advance" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                    '<select name="muat_kota_asal_id[]" id="pengepakan_kota_asal_id" class="form-select select2advance muat-jarak" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>'+
                 '<td>'+
-                    '<select name="kota_tujuan_id[]" id="kota_tujuan_id" class="form-select select2advance" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                    '<select name="muat_kota_tujuan_id[]" id="pengepakan_kota_tujuan_id" class="form-select select2advance muat-jarak" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>'+
                 '<td>'+
-                    '<input type="number" name="pengepakan_berat[]" id="pengepakan_berat'+incMuat+'" class="form-control form-control-sm">'+
+                    '<input type="number" name="muat_berat[]" id="pengepakan_berat'+incMuat+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<input type="number" name="pengepakan_jarak[]" id="pengepakan_jarak'+incMuat+'" class="form-control form-control-sm">'+
+                    '<input type="number" name="muat_jarak[]" id="pengepakan_jarak'+incMuat+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<input type="number" name="pengepakan_biaya[]" id="pengepakan_biaya'+incMuat+'" class="form-control form-control-sm">'+
+                    '<input type="text" name="muat_biaya[]" id="pengepakan_biaya'+incMuat+'" class="form-control form-control-sm numeric">'+
                 '</td>'+
                 '<td>'+
-                    '<input type="text" name="pengepakan_metode[]" id="pengepakan_metode'+incMuat+'" class="form-control form-control-sm">'+
+                    '<select style="width: 100%" name="muat_metode[]" id="pengepakan_metode'+incMuat+'" class="form-select form-select-sm">'+
+                        '<option value="Tiket Bus Manual">Tiket Bus Manual</option>'+
+                        '<option value="SBU/M - Dep. Keu.">SBU/M - Dep. Keu.</option>'+
+                        '<option value="Dep. Perhubungan">Dep. Perhubungan</option>'+
+                        '<option value="Harga Tiket Manual">Harga Tiket Manual</option>'+
+                        '<option value="Table Jarak Darat">Table Jarak Darat</option>'+
+                        '<option value="Jarak Darat Manual">Jarak Darat Manual</option>'+
+                    '</select>'+
                 '</td>'+
                 '<td>'+
                     '<a href="#" class="kel_delete" data-id="'+incMuat+'"><i class="bx bx-trash"></i></a>'+
@@ -244,5 +378,26 @@
             '</tr>';
         return template;
     }
+
+    // --------------- UANG HARIAN -------------------
+    $(document).on("change","#rampung_bendaharawan_id",function(e){
+        let data = $(this).select2('data')[0].data;
+        $("#rampung_bendaharawan_nip").val(data.nip);
+    })
+
+    $(document).on("change","#rampung_kuasa_nama",function(e){
+        let data = $(this).select2('data')[0].data;
+        $("#rampung_kuasa_nip").val(data.nip);
+    })
+
+    $(document).on("change","#rampung_ppk_id",function(e){
+        let data = $(this).select2('data')[0].data;
+        $("#rampung_ppk_nip").val(data.nip);
+    })
+
+    $(document).on("change","#rampung_anggaran_id",function(e){
+        let data = $(this).select2('data')[0].data;
+        $("#rampung_anggaran_nip").val(data.nip);
+    })
 
 </script>

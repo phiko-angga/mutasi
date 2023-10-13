@@ -24,7 +24,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Pejabat pembuat komitmen</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="pejabat_komitmen" id="pejabat_komitmen">
+                                                <select class="form-select" name="pejabat_komitmen_id" id="pejabat_komitmen">
                                                     @foreach($pejabat_komitmen as $p)
                                                         <option value="{{$p->id}}">{{$p->nama}}</option>
                                                     @endforeach
@@ -48,9 +48,9 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Pangkat dan Gol. Ruang Gaji</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="pangkat_golongan" id="pangkat_golongan">
+                                                <select class="form-select" name="pangkat_golongan_id" id="pangkat_golongan">
                                                     @foreach($pangkat_golongan as $pg)
-                                                        <option value="{{$pg->id}}">{{$pg->golongan != "" ? $pg->golongan.' - '.$pg->pangkat : $pg->pangkat}}</option>
+                                                        <option data-golongan="{{$pg->golongan}}" value="{{$pg->id}}">{{$pg->golongan != "" ? $pg->golongan.' - '.$pg->pangkat : $pg->pangkat}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -65,7 +65,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Kelompok (jenis) jabatan</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="kelompok_jabatan" id="kelompok_jabatan">
+                                                <select class="form-select" name="kelompok_jabatan_id" id="kelompok_jabatan">
                                                     @foreach($kelompok_jabatan as $kj)
                                                         <option value="{{$kj->id}}">{{$kj->kelompok.' - '.$kj->nama}}</option>
                                                     @endforeach
@@ -114,7 +114,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Ket. Keberangkatan</label>
                                             <div class="col-sm-8">
-                                                <textarea class="form-control" name="ket_keberangkatan" id="ket_keberangkatan" cols="30" rows="5"></textarea>
+                                                <textarea class="form-control" name="ket_keberangkatan" id="ket_keberangkatan" cols="30" rows="5">{{old('ket_keberangkatan',isset($biaya) ? $biaya->ket_keberangkatan : '')}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tanggal Harus kembali</label>
                                             <div class="col-sm-8">
-                                                <input  type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali"/>
+                                                <input  type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali" value="{{old('tanggal_kembali',isset($biaya) ? $biaya->tanggal_kembali : date('Y-m-d'))}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -150,7 +150,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Ket. ditujuan</label>
                                             <div class="col-sm-8">
-                                                <textarea class="form-control" name="ket_tujuan" id="ket_tujuan" cols="30" rows="5"></textarea>
+                                                <textarea class="form-control" name="ket_tujuan" id="ket_tujuan" cols="30" rows="5">{{old('ket_tujuan',isset($biaya) ? $biaya->ket_tujuan : '')}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -186,7 +186,7 @@
                                                 </div>
                                             </label>
                                             <div class="col-sm-8">
-                                                <textarea class="form-control" name="maksud_perj_dinas" id="maksud_perj_dinas" cols="30" rows="4"></textarea>
+                                                <textarea class="form-control" name="maksud_perj_dinas" id="maksud_perj_dinas" cols="30" rows="4">{{old('maksud_perj_dinas',isset($biaya) ? $biaya->maksud_perj_dinas : '')}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -194,7 +194,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Jumlah pengikut</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="number" class="form-control" max="1" id="jumlah_pengikut" name="jumlah_pengikut"/>
+                                                <input  {{$action == 'store' ? 'required' : ''}} type="number" class="form-control" min="0" id="jumlah_pengikut" name="jumlah_pengikut" value="0"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -268,13 +268,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Mata Anggaran</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" maxLength="50" class="form-control" id="mata_anggaran" name="mata_anggaran"/>
+                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" maxLength="50" class="form-control" id="mata_anggaran" name="mata_anggaran" value="{{old('mata_anggaran',isset($biaya->mata_anggaran) ? $biaya->mata_anggaran : '')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Keterangan lain - lain</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" maxLength="50" class="form-control" id="ket_lain2" name="ket_lain2"/>
+                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" maxLength="50" class="form-control" id="ket_lain2" name="ket_lain2" value="{{old('ket_lain2',isset($biaya->ket_lain2) ? $biaya->ket_lain2 : '')}}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Nama pejabat pembuat komitmen (PPK)</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="pejabat_komitmen" id="pejabat_komitmen_nama">
+                                                <select class="form-select" name="pejabat_komitmen2_id" id="pejabat_komitmen2_nama">
                                                     @foreach($pejabat_komitmen as $p)
                                                         <option data-nip="{{$p->nip}}" value="{{$p->id}}">{{$p->nama}}</option>
                                                     @endforeach

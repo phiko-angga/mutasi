@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransaksiBiaya;
+use App\Models\TransaksiBiayaTransport;
+use App\Models\TransaksiBiayaMuat;
+use App\Models\TransaksiBiayaKeluarga;
 use App\Models\PejabatKomitmen;
 use App\Models\PangkatGolongan;
 use App\Models\KelompokJabatan;
@@ -26,14 +30,14 @@ class TransaksiBiayaController extends Controller
     public function index(Request $request)
     {
         
-        // $transaksi_biaya = new Paraf();
-        // $data = $transaksi_biaya->get_data($request);
+        $transaksi_biaya = new TransaksiBiaya();
+        $data = $transaksi_biaya->get_data($request);
 
         $page = 'Perhitungan Biaya Mutasi';
         if($request->ajax()){
-            return view('transaksi_biaya.list_pagination');
+            return view('transaksi_biaya.list_pagination',compact('data'));
         }else{
-            return view('transaksi_biaya.list', compact('page'));
+            return view('transaksi_biaya.list', compact('data','page'));
         }
     }
     
@@ -77,32 +81,78 @@ class TransaksiBiayaController extends Controller
 
     public function store(Request $request)
     {
-        request()->validate([
-            'kelompok'   => 'required',
-            'nourut'   => 'required',
-            'nama'   => 'required',
-            'nip'   => 'required',
-            'pangkat'   => 'required',
-            'jabatan'   => 'required',
-        ]);
-
+        // request()->validate([
+        //     'kelompok'   => 'required',
+        //     'nourut'   => 'required',
+        //     'nama'   => 'required',
+        //     'nip'   => 'required',
+        //     'pangkat'   => 'required',
+        //     'jabatan'   => 'required',
+        // ]);
         DB::beginTransaction();
         try {
-            $data = $request->except(['_token']);
+            $data = $request->only('tanggal','tanggal_berangkat','tanggal_kembali','nomor','pegawai_diperintah','jabatan_instansi','nip','pejabat_komitmen_id','pejabat_komitmen2_id'
+            ,'pangkat_golongan_id','kelompok_jabatan_id','tingkat_perj_dinas','transport_id','kota_asal_id','ket_keberangkatan','lama_perj_dinas',
+            'kota_tujuan_id','ket_tujuan','status_perkawinan','maksud_perj_dinas','jumlah_pengikut','pembantu_ikut','pembebanan_anggaran','mata_anggaran'
+            ,'ket_lain2','pengepakan_berat','pengepakan_transport_id','pengepakan_tarif','pengepakan_biaya','uangh_jml_orang','uangh_jml_hari','uangh_jml_tarif'
+            ,'uangh_jml_biaya','uangh_jml_pembantu','uangh_jml_hari_p','uangh_jml_tarif_p','uangh_jml_biaya_p','uangh_jml_uang','uangh_jml_terbilang'
+            ,'rampung_jumlah','rampung_dibayar','rampung_sisa','rampung_beban_mak','rampung_buktikas','rampung_tgl_pelunasan','rampung_thn_anggaran'
+            ,'rampung_bendaharawan_id','rampung_kuasa_nama','rampung_ppk_id','rampung_anggaran_id','rampung_rincian');
             
             $user = auth()->user();
+            $data['pengepakan_tarif'] = str_replace(',', '', $data['pengepakan_tarif']);
+            $data['pengepakan_biaya'] = str_replace(',', '', $data['pengepakan_biaya']);
+            $data['uangh_jml_tarif'] = str_replace(',', '', $data['uangh_jml_tarif']);
+            $data['uangh_jml_biaya'] = str_replace(',', '', $data['uangh_jml_biaya']);
+            $data['uangh_jml_tarif_p'] = str_replace(',', '', $data['uangh_jml_tarif_p']);
+            $data['uangh_jml_biaya_p'] = str_replace(',', '', $data['uangh_jml_biaya_p']);
+            $data['uangh_jml_uang'] = str_replace(',', '', $data['uangh_jml_uang']);
+            $data['rampung_jumlah'] = str_replace(',', '', $data['rampung_jumlah']);
+            $data['rampung_dibayar'] = str_replace(',', '', $data['rampung_dibayar']);
+            $data['rampung_beban_mak'] = str_replace(',', '', $data['rampung_beban_mak']);
+            $data['uangh_jml_tarif'] = str_replace(',', '', $data['uangh_jml_tarif']);
+            $data['uangh_jml_biaya'] = str_replace(',', '', $data['uangh_jml_biaya']);
+            $data['uangh_jml_tarif_p'] = str_replace(',', '', $data['uangh_jml_tarif_p']);
+            $data['uangh_jml_biaya_p'] = str_replace(',', '', $data['uangh_jml_biaya_p']);
+            $data['uangh_jml_uang'] = str_replace(',', '', $data['uangh_jml_uang']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
-            $transaksi_biaya = Paraf::create($data);
+            $transaksi_biaya = TransaksiBiaya::create($data);
+
+            // Log::debug('data '.json_encode($request->all()));
+
+            //Keluarga
+            $kel_nama = $request->kel_nama;
+            $kel_dinas = $request->kel_perj_dinas;
+            $kel_dob = $request->kel_dob;
+            $kel_umur = $request->kel_umur;
+            $kel_keterangan = $request->kel_keterangan;
+            $dataKeluarga = [];
+            if($kel_nama != null && count($kel_nama) > 0){
+                foreach($kel_nama as $key => $nama){
+                    $dataKeluarga[] = [
+                        'transaksi_biaya_id' => $transaksi_biaya->id,
+                        'biaya_perj_dinas' => $kel_dinas[$key],
+                        'nama' => $nama,
+                        'tanggal_lahir' => $kel_dob[$key],
+                        'umur' => $kel_umur[$key],
+                        'keterangan' => $kel_keterangan[$key],
+                        'created_by' => $user->id,
+                        'updated_by' => $user->id,
+                    ];
+                }
+            }
+            if(count($dataKeluarga) > 0)
+                $transaksi_keluarga = TransaksiBiayaKeluarga::insert($dataKeluarga);
 
             DB::commit();
 
-            return redirect('/transaksi_biaya')->with('info', 'Paraf berhasil ditambahkan');
+            return redirect('/transaksi-biaya')->with('info', 'Transaksi biaya berhasil ditambahkan');
             
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Paraf gagal, silahkan coba kembali.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Transaksi biaya gagal, silahkan coba kembali.']);
             // something went wrong
         }
     }

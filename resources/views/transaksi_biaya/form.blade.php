@@ -8,13 +8,13 @@
 
 @section('content')
 
-<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('paraf.store') : route('paraf.update',$paraf->id)}}">
+<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('transaksi-biaya.store') : route('transaksi-biaya.update',$biaya->id)}}">
     
     @csrf   
     @if($action == 'update')
     <input name="_method" type="hidden" value="PUT">
     @endif
-    <input type="hidden" name="id" value="{{isset($paraf) ? $paraf->id : ''}}">
+    <input type="hidden" name="id" value="{{isset($biaya) ? $biaya->id : ''}}">
 
     @if($errors->any() || (\Session::has('success')) )
     <div class="row">
@@ -88,19 +88,19 @@
             </div>
         </div>
         <div class="bs-stepper-content">
-            <!-- your steps content here -->
-            <div id="datapegawai-part" class="content" role="tabpanel" aria-labelledby="datapegawai-part-trigger">
-                @include('transaksi_biaya.biaya_data_pegawai')
-            </div>
-            <div id="transport-part" class="content" role="tabpanel" aria-labelledby="transport-part-trigger">
-                @include('transaksi_biaya.biaya_transport')
-            </div>
-            <div id="muatbarang-part" class="content" role="tabpanel" aria-labelledby="muatbarang-part-trigger">
-                @include('transaksi_biaya.biaya_muatbarang')
-            </div>
-            <div id="uangh-part" class="content" role="tabpanel" aria-labelledby="uangh-part-trigger">
-                @include('transaksi_biaya.biaya_uangh')
-            </div>
+                <!-- your steps content here -->
+                <div id="datapegawai-part" class="content" role="tabpanel" aria-labelledby="datapegawai-part-trigger">
+                    @include('transaksi_biaya.biaya_data_pegawai')
+                </div>
+                <div id="transport-part" class="content" role="tabpanel" aria-labelledby="transport-part-trigger">
+                    @include('transaksi_biaya.biaya_transport')
+                </div>
+                <div id="muatbarang-part" class="content" role="tabpanel" aria-labelledby="muatbarang-part-trigger">
+                    @include('transaksi_biaya.biaya_muatbarang')
+                </div>
+                <div id="uangh-part" class="content" role="tabpanel" aria-labelledby="uangh-part-trigger">
+                    @include('transaksi_biaya.biaya_uangh')
+                </div>
         </div>
     </div>
 </form>

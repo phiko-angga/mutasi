@@ -53,3 +53,7 @@ td .row{
 .select2-container--default .select2-selection--single {
   border: none!important;
 }
+
+.table > :not(caption) > * > * {
+  padding: 0.2rem 0.4rem!important;
+}

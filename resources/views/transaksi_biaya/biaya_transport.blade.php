@@ -40,13 +40,13 @@
                                                     <tr>
                                                         <th>No.</th>
                                                         <th>manual</th>
-                                                        <th>Jenis Transport</th>
-                                                        <th>Tempat berangkat</th>
-                                                        <th>Tempat tujuan</th>
+                                                        <th style="width:260px">Jenis Transport</th>
+                                                        <th style="width:260px">Tempat berangkat</th>
+                                                        <th style="width:260px">Tempat tujuan</th>
                                                         <th>Orang</th>
                                                         <th>Biaya @orang</th>
                                                         <th>Jumlah biaya</th>
-                                                        <th>Metode</th>
+                                                        <th style="width:300px">Metode</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -67,12 +67,13 @@
                                     </div>
                                 </div>
 
-                                <div class="row mt-5">
+                                <div style="display:none" class="row mt-5 panel_transport_pembantu">
                                     <div class="col-md-12">
                                         <h6><b>Transport untuk pembantu jika ada (Khusus untuk golongan IV)</b></h6>
                                     </div>
                                 </div>
-                                <div class="row">
+
+                                <div style="display:none" class="row panel_transport_pembantu">
                                     <div class="col-sm-12">
                                         <div class="table-responsive row-table">
                                             <table class="table" style="height:10rem;">

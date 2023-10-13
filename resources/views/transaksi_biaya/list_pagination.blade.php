@@ -3,11 +3,15 @@
         @foreach($data as $key => $row)
         <tr>
             <td>{{ $data->firstItem() + $key}}</td>
-            <td>{{ $row->kelompok }}</td>
-            <td>{{ $row->nama }}</td>
+            <td>{{ $row->nomor }}</td>
+            <td>{{ $row->pegawai_diperintah }}</td>
             <td>{{ $row->nip }}</td>
-            <td>{{ $row->pangkat }}</td>
-            <td>{{ $row->jabatan }}</td>
+            <td>{{ $row->pangkat.' - '.$row->golongan }}</td>
+            <td>{{ $row->status_perkawinan }}</td>
+            <td>{{ $row->jabatan_instansi }}</td>
+            <td>{{ '' }}</td>
+            <td>{{ '' }}</td>
+            <td>{{ '' }}</td>
             <td>{{ $row->created_at }}</td>
             <td>{{ $row->created_name }}</td>
             <td>{{ $row->updated_at }}</td>

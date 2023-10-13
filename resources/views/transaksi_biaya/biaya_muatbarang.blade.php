@@ -7,17 +7,36 @@
                     <h6><b>Biaya pengepakan / penggudangan</b></h6>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
-                        <select name="pengepakan_transport_id" id="pengepakan_transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="{{url('get-select/jenis-transport')}}"></select>
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="nama">Transportasi</label>
+                            <div class="col-sm-8">
+                                <select name="pengepakan_transport_id" id="pengepakan_transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="{{url('get-select/jenis-transport')}}"></select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="nama">Berat Kg</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" id="pengepakan_berat" name="pengepakan_berat" value="{{old('pengepakan_berat',isset($biaya->pengepakan_berat) ? $biaya->pengepakan_berat : 0)}}"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control numeric" id="pengepakan_berat" name="pengepakan_berat" />
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control numeric" id="pengepakan_tarif" name="pengepakan_tarif" />
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control numeric" id="pengepakan_biaya" name="pengepakan_biaya" />
+
+                    <div class="col-sm-6">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / Kg</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control numeric" id="pengepakan_tarif" name="pengepakan_tarif"  value="{{old('pengepakan_tarif',isset($biaya->pengepakan_tarif) ? number_format($biaya->pengepakan_tarif) : 0)}}"/>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" for="nama">Jumlah biaya</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control numeric" id="pengepakan_biaya" name="pengepakan_biaya" value="{{old('pengepakan_biaya',isset($biaya->pengepakan_biaya) ? number_format($biaya->pengepakan_biaya) : 0)}}"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -51,7 +70,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="9" class="text-end">
+                                        <td colspan="10" class="text-end">
                                             <button title="Tambah biaya muat" type="button" class="muatbarang_add btn btn-sm rounded-pill btn-icon btn-primary">
                                                 <span class="tf-icons bx bx-plus"></span>
                                             </button>
