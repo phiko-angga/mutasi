@@ -49,6 +49,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-select/ppk', [GetSelectController::class,'getPpk']);
 
     Route::resource('/transaksi-biaya', TransaksiBiayaController::class)->name('*','transaksi-biaya');
+    Route::get('/transaksi-mutasi', [TransaksiBiayaController::class,'approvedList']);
+    Route::post('/transaksi-biaya/approve', [TransaksiBiayaController::class,'approve']);
+
     Route::resource('/users', UsersController::class)->name('*','users');
     Route::resource('/rute', RuteController::class)->name('*','rute');
     Route::resource('/darat', DaratController::class)->name('*','darat');

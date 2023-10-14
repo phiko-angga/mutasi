@@ -162,3 +162,14 @@ function formatDesign(item) {
     $("#kota_tujuan_id").val("");
     initSelect2();
   })
+
+  async function show_confirm(param){   
+    console.log('ok');
+    const alert =  await Swal.fire({
+        title: param.pesan,
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'Iya',
+        denyButtonText: 'Tidak',
+    }).then(param.response)
+  }

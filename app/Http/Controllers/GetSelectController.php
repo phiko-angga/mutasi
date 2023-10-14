@@ -197,7 +197,7 @@ class GetSelectController extends Controller
         $darat = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan);
         $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
         ->union($darat)->toSql();
-        Log::debug('jarak '.$jarak);
+        // Log::debug('jarak '.$jarak);
         $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
         ->union($darat)->first();
         if(!$jarak){

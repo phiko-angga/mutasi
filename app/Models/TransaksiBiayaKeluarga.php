@@ -11,7 +11,7 @@ class TransaksiBiayaKeluarga extends Model
     
     protected $table = "tb_transaksi_biaya_keluarga";
     protected $fillable = [
-        'transaksi_biaya_id','biaya_perj_dinas','nama','tanggal_lahir','umur','keterangan','created_by','updated_by'
+        'transaksi_biaya_id','biaya_perj_dinas','nama','tanggal_lahir','umur','keterangan','created_by','updated_by','created_at','updated_at'
     ];
     
     public function get_data($request, $paginate = true){

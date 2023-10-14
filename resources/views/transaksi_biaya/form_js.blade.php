@@ -26,9 +26,9 @@
         }
     })
 
-    $(document).on("change","#pejabat_komitmen_nama",function(){
+    $(document).on("change","#pejabat_komitmen2_id",function(){
         let nip = $(this).find(":selected").data('nip');
-        $("#pejabat_komitmen_nip").val(nip);
+        $("#pejabat_komitmen2_nip").val(nip);
     })
 
     $(document).on("click","#maksud_ketuama, #maksud_dirjen",function(){
@@ -135,6 +135,17 @@
         let newt = template_transport(false,total_kel);
         item.append(newt);
         initSelect2();
+        $('.numeric').maskNumber({integer: true});
+    })
+    
+    $(document).on("change",".trans_manual_cb",function(){
+        let id = $(this).closest('tr').data('id');
+        let status = $(this).is(":checked");
+        if(status){
+            $("#trans_manual"+id).val(1);
+        }else{
+            $("#trans_manual"+id).val(0);
+        }
     })
 
     $(document).on("change",".biaya-per-orang",function(){
@@ -201,44 +212,45 @@
             '<tr id="item'+incKelTrans+'" data-id="'+incKelTrans+'" data-pembantu="'+pembantu+'">'+
                 '<td>'+incKelTrans+'</td>';
 
-            if(!pembantu){
-                template += '<td>'+
+                template += '<td '+(pembantu ? 'hidden' : '')+'>'+
                     '<div class="form-check">'+
-                        '<input class="form-check-input cb_transport_manual" id="cb_manual'+incKelTrans+'" name="trans_manual[]" type="checkbox" value="1">'+
+                        '<input class="form-check-input trans_manual_cb" id="trans_manual_cb'+incKelTrans+'" name="trans_manual_cb[]" type="checkbox" value="1">'+
+                        '<input id="trans_manual'+incKelTrans+'" name="trans_manual[]" type="hidden" value="0">'+
                         '<label class="form-check-label" for="cb_manual'+incKelTrans+'"></label>'+
                     '</div>'+
                 '</td>';
-            }
 
             template += '<td>'+
-                    '<select style="width: 100%" name="transport_id[]" id="transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
+                    '<input type="hidden" name="trans_pembantu[]" value="'+(pembantu ? 1 : 0)+'">'+
+                    '<select style="width: 100%" name="trans_transport_id[]" id="trans_transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
                 '</td>'+
                 '<td style="width:250px">'+
-                    '<select style="width: 100%" name="kota_asal_id[]" id="transport_kota_asal_id" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                    '<select style="width: 100%" name="trans_kota_asal_id[]" id="transport_kota_asal_id" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>'+
                 '<td style="width:250px">'+
-                    '<select style="width: 100%" name="kota_tujuan_id[]" id="transport_kota_tujuan_id" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                    '<select style="width: 100%" name="trans_kota_tujuan_id[]" id="transport_kota_tujuan_id" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>';
                 
-            if(!pembantu){
-                template += '<td>'+
-                    '<input type="number" readonly name="orang[]" id="orang'+incKelTrans+'" value="'+kel_jumlah+'" class="form-control form-control-sm">'+
+            // if(!pembantu){
+                template += '<td '+(pembantu ? 'hidden' : '')+'>'+
+                    '<input type="number" readonly name="trans_orang[]" id="orang'+incKelTrans+'" value="'+kel_jumlah+'" class="form-control form-control-sm">'+
                 '</td>'+
-                '<td style="width:220px">'+
-                    '<input type="text" readonly name="biaya_perorang[]" id="biaya_perorang'+incKelTrans+'" class="form-control form-control-sm numeric">'+
+                '<td '+(pembantu ? 'hidden' : '')+' style="width:220px">'+
+                    '<input type="text" readonly name="trans_biaya[]" id="biaya_perorang'+incKelTrans+'" class="form-control form-control-sm numeric">'+
                 '</td>';
-            }else{
+            // }else{
                 template += 
-                '<td>'+
-                    '<input type="text" name="rinci_perkiraan[]" id="rinci_perkiraan'+incKelTrans+'" class="form-control form-control-sm">'+
+                '<td '+(!pembantu ? 'hidden' : '')+'>'+
+                    '<input type="text" name="trans_perkiraan[]" id="rinci_perkiraan'+incKelTrans+'" class="form-control form-control-sm">'+
                 '</td>';
-            }
+            // }
+
             template += 
                 '<td style="width:220px">'+
-                    '<input '+(pembantu ? '' : 'readonly')+' type="text" name="jumlah_biaya[]" id="jumlah_biaya'+incKelTrans+'" class="form-control form-control-sm numeric">'+
+                    '<input '+(pembantu ? '' : 'readonly')+' type="text" name="trans_jumlah_biaya[]" id="jumlah_biaya'+incKelTrans+'" class="form-control form-control-sm numeric">'+
                 '</td>'+
                 '<td style="width:300px">'+
-                    '<select style="width: 100%" name="metode[]" id="transport_metode" class="form-select form-select-sm">'+
+                    '<select style="width: 100%" name="trans_metode[]" id="transport_metode" class="form-select form-select-sm">'+
                         '<option value="Tiket Bus Manual">Tiket Bus Manual</option>'+
                         '<option value="SBU/M - Dep. Keu.">SBU/M - Dep. Keu.</option>'+
                         '<option value="Dep. Perhubungan">Dep. Perhubungan</option>'+
@@ -260,6 +272,9 @@
 
         $("#lampiran_tanggal").val(tgl);
         $("#lampiran_sppd_no").val(nomor);
+        
+        $('.numeric').maskNumber({integer: true});
+        initSelect2();
     }
 
     function initiateBiayaMuatBarang(){
@@ -304,6 +319,16 @@
         }
         ajaxCall(params);
     })
+    
+    $(document).on("change",".cb_muatmanual",function(){
+        let id = $(this).closest('tr').data('id');
+        let status = $(this).is(":checked");
+        if(status){
+            $("#muat_manual"+id).val(1);
+        }else{
+            $("#muat_manual"+id).val(0);
+        }
+    })
 
     $(document).on("change","#pengepakan_berat, #pengepakan_tarif",function(){
         let berat = parseInt($("#pengepakan_berat").val());
@@ -340,7 +365,8 @@
                 '<td>'+incMuat+'</td>'+
                 '<td>'+
                     '<div class="form-check">'+
-                        '<input class="form-check-input cb_muatmanual" id="cb_muatmanual'+incMuat+'" name="muat_manual[]" type="checkbox" value="1">'+
+                        '<input class="form-check-input cb_muatmanual" id="cb_muatmanual'+incMuat+'" name="muat_manual_cb[]" type="checkbox" value="1">'+
+                        '<input id="muat_manual'+incMuat+'" name="muat_manual[]" type="hidden" value="0">'+
                         '<label class="form-check-label" for="cb_muatmanual'+incMuat+'"></label>'+
                     '</div>'+
                 '</td>'+

@@ -81,7 +81,7 @@
                                                     <tr>
                                                         <th colspan="2" class="text-center">Nomor & Transport</th>
                                                         <th colspan="2" class="text-center">Keberangkatan & Tujuan</th>
-                                                        <th colspan="2" class="text-center">Keterangan</th>
+                                                        <th colspan="3" class="text-center">Keterangan</th>
                                                     </tr>
                                                     <tr>
                                                         <th>No.</th>
@@ -90,6 +90,7 @@
                                                         <th>Tempat tujuan</th>
                                                         <th>Rincian Perkiraan</th>
                                                         <th>Jumlah biaya</th>
+                                                        <th>Metode</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
@@ -98,7 +99,7 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="7" class="text-end">
+                                                        <td colspan="8" class="text-end">
                                                             <button title="Tambah transport pembantu" type="button" class="trans_add_pembantu btn btn-sm rounded-pill btn-icon btn-primary">
                                                                 <span class="tf-icons bx bx-plus"></span>
                                                             </button>

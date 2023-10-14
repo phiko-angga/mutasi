@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="row mb-3">
-                                            <label class="col-sm-4 col-form-label" for="nama">terbilang</label>
+                                            <label class="col-sm-4 col-form-label" for="nama">Terbilang</label>
                                             <div class="col-sm-8">
                                                 <input type="text" readonly class="form-control" id="uangh_jml_terbilang" name="uangh_jml_terbilang"  value="{{old('uangh_jml_terbilang',isset($biaya) ? $biaya->uangh_jml_terbilang : '-')}}"/>
                                             </div>
@@ -204,7 +204,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Nama kuasa pengguna anggaran/pengguna barang</label>
                                             <div class="col-sm-8">
-                                                <select style="width:100%" name="rampung_anggaran_id" id="rampung_anggaran_id" class="form-select select2advance" data-select2-placeholder="Pejabat pembuat komitmen" data-select2-url="{{url('get-select/ppk')}}"></select>
+                                                <select style="width:100%" name="rampung_anggaran_id" id="rampung_anggaran_id" class="form-select select2advance" data-select2-placeholder="Nama kuasa pengguna anggaran/pengguna barang" data-select2-url="{{url('get-select/ppk')}}"></select>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

@@ -175,7 +175,7 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <label class="col-sm-4 col-form-label" for="password">maksud perjalanan dinas <br>
+                                            <label class="col-sm-4 col-form-label" for="password">Maksud perjalanan dinas <br>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" value="1" name="maksud_check" id="maksud_ketuama">
                                                     <label class="form-check-label" for="ketuama"><small class="text-primary"> Ketua MA RI</small> </label>
@@ -194,15 +194,15 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Jumlah pengikut</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="number" class="form-control" min="0" id="jumlah_pengikut" name="jumlah_pengikut" value="0"/>
+                                                <input  {{$action == 'store' ? 'required' : ''}} type="number" class="form-control" min="0" id="jumlah_pengikut" name="jumlah_pengikut" value="{{old('jumlah_pengikut',isset($biaya) ? $biaya->jumlah_pengikut : '')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Pembantu ikut</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="pembantu_ikut" id="pembantu_ikut">
-                                                        <option value="0">Tidak ada/Tidak ikut</option>
-                                                        <option value="1">Ya, ikut serta</option>
+                                                        <option {{old('pembantu_ikut',isset($biaya) ? $biaya->pembantu_ikut : '0') == 0 ? 'selected' : ''}} value="0">Tidak ada/Tidak ikut</option>
+                                                        <option {{old('pembantu_ikut',isset($biaya) ? $biaya->pembantu_ikut : '0') == 1 ? 'selected' : ''}} value="1">Ya, ikut serta</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -282,7 +282,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Nama pejabat pembuat komitmen (PPK)</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="pejabat_komitmen2_id" id="pejabat_komitmen2_nama">
+                                                <select class="form-select" name="pejabat_komitmen2_id" id="pejabat_komitmen2_id">
                                                     @foreach($pejabat_komitmen as $p)
                                                         <option data-nip="{{$p->nip}}" value="{{$p->id}}">{{$p->nama}}</option>
                                                     @endforeach
@@ -292,7 +292,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">NIP pejabat pembuat komitmen (PPK)</label>
                                             <div class="col-sm-8">
-                                                <input readonly type="text" class="form-control" id="pejabat_komitmen_nip"/>
+                                                <input readonly type="text" class="form-control" id="pejabat_komitmen2_nip"/>
                                             </div>
                                         </div>
                                     </div>

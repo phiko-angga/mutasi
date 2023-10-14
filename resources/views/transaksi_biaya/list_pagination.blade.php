@@ -22,6 +22,7 @@
                         <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item btn-approve" data-id="{{$row->id}}" href="#"><i class="bx bx-check-square me-2"></i> Aprove</a>
                         <a class="dropdown-item" href="{{url('paraf/'.$row->id.'/edit')}}"><i class="bx bx-edit-alt me-2"></i> Edit</a>
                         <a class="dropdown-item delete_btn"  data-id="{{ $row->id }}" data-name="{{ $row->nama }}" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
                     </div>

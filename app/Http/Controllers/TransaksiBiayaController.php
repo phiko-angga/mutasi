@@ -27,17 +27,30 @@ class TransaksiBiayaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index(Request $request)
     {
-        
         $transaksi_biaya = new TransaksiBiaya();
-        $data = $transaksi_biaya->get_data($request);
+        $data = $transaksi_biaya->get_data($request,true,['approved' => 0]);
 
         $page = 'Perhitungan Biaya Mutasi';
         if($request->ajax()){
             return view('transaksi_biaya.list_pagination',compact('data'));
         }else{
             return view('transaksi_biaya.list', compact('data','page'));
+        }
+    }
+
+    public function approvedList(Request $request)
+    {
+        $transaksi_biaya = new TransaksiBiaya();
+        $data = $transaksi_biaya->get_data($request,true,['approved' => 1]);
+
+        $page = 'Approved Biaya Mutasi';
+        if($request->ajax()){
+            return view('transaksi_biaya.list_approved_pagination',compact('data'));
+        }else{
+            return view('transaksi_biaya.list_approved', compact('data','page'));
         }
     }
     
@@ -89,6 +102,8 @@ class TransaksiBiayaController extends Controller
         //     'pangkat'   => 'required',
         //     'jabatan'   => 'required',
         // ]);
+        // Log::debug('data '.json_encode($request->all()));
+
         DB::beginTransaction();
         try {
             $data = $request->only('tanggal','tanggal_berangkat','tanggal_kembali','nomor','pegawai_diperintah','jabatan_instansi','nip','pejabat_komitmen_id','pejabat_komitmen2_id'
@@ -119,9 +134,7 @@ class TransaksiBiayaController extends Controller
             $data['updated_by'] = $user->id;
             $transaksi_biaya = TransaksiBiaya::create($data);
 
-            // Log::debug('data '.json_encode($request->all()));
-
-            //Keluarga
+            //--------------- KELUARGA -------------------
             $kel_nama = $request->kel_nama;
             $kel_dinas = $request->kel_perj_dinas;
             $kel_dob = $request->kel_dob;
@@ -139,12 +152,82 @@ class TransaksiBiayaController extends Controller
                         'keterangan' => $kel_keterangan[$key],
                         'created_by' => $user->id,
                         'updated_by' => $user->id,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
                     ];
                 }
             }
+            // Log::debug('dataKeluarga '.json_encode($dataKeluarga));
             if(count($dataKeluarga) > 0)
                 $transaksi_keluarga = TransaksiBiayaKeluarga::insert($dataKeluarga);
 
+            //--------- TRANSPORT -----------------
+            $trans_pembantu = $request->trans_pembantu;
+            $trans_transport_id = $request->trans_transport_id;
+            $trans_kota_asal_id = $request->trans_kota_asal_id;
+            $trans_kota_tujuan_id = $request->trans_kota_tujuan_id;
+            $trans_orang = $request->trans_orang;
+            $trans_biaya = $request->trans_biaya;
+            $trans_jumlah_biaya = $request->trans_jumlah_biaya;
+            $trans_metode = $request->trans_metode;
+            $trans_perkiraan = $request->trans_perkiraan;
+            $trans_manual = $request->trans_manual;
+
+            $dataTransport = [];
+            if($trans_pembantu != null && count($trans_pembantu) > 0){
+                foreach($trans_pembantu as $key => $pembantu){
+                    
+                    $dataTransport[] = [
+                        'transaksi_biaya_id' => $transaksi_biaya->id,
+                        'pembantu' => $pembantu,
+                        'transport_id' => $trans_transport_id[$key],
+                        'kota_asal_id' => $trans_kota_asal_id[$key],
+                        'kota_tujuan_id' => $trans_kota_tujuan_id[$key],
+                        'orang' => $trans_orang[$key],
+                        'biaya_perorang' => str_replace(',', '', $trans_biaya[$key]),
+                        'rinci_perkiraan' => $trans_perkiraan[$key] != null ? $trans_perkiraan[$key] : "",
+                        'jumlah_biaya' => str_replace(',', '', $trans_jumlah_biaya[$key]),
+                        'metode' => $trans_metode[$key],
+                        'manual' => $trans_manual[$key],
+                    ];
+                }
+            }
+            // Log::debug('dataTransport '.json_encode($dataTransport));
+            if(count($dataTransport) > 0)
+                $transaksi_transport = TransaksiBiayaTransport::insert($dataTransport);
+
+            //--------- MUAT BARANG -----------------
+            $muat_transport_id = $request->muat_transport_id;
+            $muat_kota_asal_id = $request->muat_kota_asal_id;
+            $muat_kota_tujuan_id = $request->muat_kota_tujuan_id;
+            $muat_berat = $request->muat_berat;
+            $muat_jarak = $request->muat_jarak;
+            $muat_biaya = $request->muat_biaya;
+            $muat_metode = $request->muat_metode;
+            $muat_manual = $request->muat_manual;
+
+            $dataMuat = [];
+            if($muat_transport_id != null && count($muat_transport_id) > 0){
+                foreach($muat_transport_id as $key => $transport){
+                    
+                    $dataMuat = [
+                        'transaksi_biaya_id' => $transaksi_biaya->id,
+                        'transport_id' => $transport,
+                        'manual' => $muat_manual[$key],
+                        'kota_asal_id' => $muat_kota_asal_id[$key],
+                        'kota_tujuan_id' => $muat_kota_tujuan_id[$key],
+                        'berat' => $muat_berat[$key],
+                        'jarak' => str_replace(',', '', $muat_jarak[$key]),
+                        'biaya' => str_replace(',', '', $muat_biaya[$key]),
+                        'metode' => $muat_metode[$key],
+                    ];
+                }
+            }
+            // Log::debug('dataMuat '.json_encode($dataMuat));
+            if(count($dataMuat) > 0)
+                $transaksi_muat = TransaksiBiayaMuat::insert($dataMuat);
+
+            //Commit
             DB::commit();
 
             return redirect('/transaksi-biaya')->with('info', 'Transaksi biaya berhasil ditambahkan');
@@ -163,9 +246,50 @@ class TransaksiBiayaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        
+        $transaksi_biaya = new TransaksiBiaya();
+        $biaya = $transaksi_biaya->get_detail($id);
+        Log::debug('$biaya '.json_encode($biaya));
+
+        $page = 'Approve Biaya';
+        if($request->ajax()){
+            return view('transaksi_biaya.approve_modal',compact('biaya'));
+        }
+    }
+
+    public function approve(Request $request)
+    {
+        request()->validate([
+            'id'   => 'required',
+        ]);
+
+        $transaksi_biaya = TransaksiBiaya::find($request->id);
+        if($transaksi_biaya){
+
+            DB::beginTransaction();
+            try {
+
+                $user = auth()->user();
+                $transaksi_biaya->approved = 1;
+                $transaksi_biaya->approved_by = $user->id;
+                $transaksi_biaya->approved_at = date('Y-m-d H:i:s');
+                $transaksi_biaya->save();
+
+                DB::commit();
+
+                return redirect('/transaksi-biaya')->with('info', 'Biaya berhasil di approve');
+                
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::Error($e->getMessage());
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Approve Biaya gagal, silahkan coba kembali.']);
+                // something went wrong
+            }
+        }else{
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Biaya tidak ditemukan.']);
+        }
     }
 
     /**

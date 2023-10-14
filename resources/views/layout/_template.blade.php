@@ -41,6 +41,7 @@
 
     <link rel="stylesheet" href="{{url('')}}/vendor/libs/apex-charts/apex-charts.css" />
     <link rel="stylesheet" href="{{url('')}}/css/custom.css" />
+    <link rel="stylesheet" href="{{url('')}}/vendor/sweetalert2/sweetalert2.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <!-- Page CSS -->
@@ -111,6 +112,7 @@
 
     <!-- Vendors JS -->
     <script src="{{url('')}}/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="{{url('')}}/vendor/sweetalert2/sweetalert2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- Main JS -->

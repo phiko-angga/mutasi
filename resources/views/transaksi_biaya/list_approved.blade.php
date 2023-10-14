@@ -50,7 +50,6 @@
                 <div class="row">
                     <div class="col-md-12 grid-margin">
                         <div class="d-flex justify-content-between align-items-end flex-wrap">
-                            <div class=" me-3"><a href="{{route('transaksi-biaya.create')}}" class="btn btn-outline-primary btn-fw btn-sm">Tambah data</a></div>
                             <div class=" me-3">
                                 <div class="btn-group" role="group">
                                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,14 +80,11 @@
                                 <th style="width:10%">Nama Jabatan</th>
                                 <th style="width:10%">Kelompok Jabatan</th>
                                 <th style="width:10%">Total Biaya</th>
-                                <th style="">Tanggal dibuat</th>
-                                <th style="">Nama pembuat</th>
-                                <th style="">Tanggal diubah</th>
-                                <th style="">Nama pengubah</th>
-                                <th></th>
+                                <th style="">Di approve oleh</th>
+                                <th style="">Tanggal approve</th>
                             </tr>
                         </thead>
-                        @include('transaksi_biaya.list_pagination')
+                        @include('transaksi_biaya.list_approved_pagination')
                     </table>
                 </div>
             </div><!-- /.box-body -->
@@ -105,62 +101,7 @@
 <script>
     
     $(document).on('change','#search', function(){
-        fetch_tabledata('/transaksi_biaya');
+        fetch_tabledata('/transaksi_biaya/approved-list');
     })
-
-    $('.delete_btn').click(function(e){
-        e.preventDefault();
-        var modalConfirm = $('#modal_confirm');
-        modalConfirm.find('form').attr('action','{{url('')}}/transaksi_biaya/'+$(this).data('id'));
-        modalConfirm.find('#confirm_title').html('Delete data ');
-        modalConfirm.find('#confirm_titlecaption').html('Apakah anda ingin delete ');
-        modalConfirm.find('#confirm_titlename').html($(this).data('name'));
-        modalConfirm.find('#confirm_titlebtn').html('Delete');
-        modalConfirm.find('#id').val($(this).data('id'));
-        modalConfirm.modal('show');
-    })
-
-    $('.btn-approve').click(function(e){
-        e.preventDefault();
-        let id = $(this).data('id');
-        let token = $('input[name="_token"]').val();
-
-        //Get Detail
-        let params = {};
-        params.url = "/transaksi-biaya/"+id;
-        params.data = {_token:token};
-        params.type = 'get';
-        params.result = function(data){ 
-            // console.log(data);
-            loadDetail(data);
-        }
-        ajaxCall(params);
-    })
-
-    $(document).on('click','.btn-approve-confirm',function(e){
-        e.preventDefault();
-        console.log('approve-confirm');
-        
-        let param = {};
-        param.pesan = "Yakin ingin approve ?";
-        param.response = function(result){
-        
-            if (result.isConfirmed) {
-                $("#form-modal-approve").submit();
-            }
-        };
-        show_confirm(param);
-    })
-
-    function loadDetail(data){
-        
-        $("body").find("#approve-modal").remove();
-        $("body").append(data);
-        let form = $("#approve-modal");
-        form.modal('show');
-        // $('.table-history-suara tbody').html('');
-        // $('.table-history-suara tbody').append(data);
-    }
-
 </script>
 @endsection
