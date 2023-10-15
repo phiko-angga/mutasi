@@ -72,6 +72,7 @@
                                 <th style="width:15%">Username</th>
                                 <th>Nama Lengkap</th>
                                 <th>Jabatan</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

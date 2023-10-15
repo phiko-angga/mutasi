@@ -5,6 +5,7 @@
             <td>{{ $data->firstItem() + $key}}</td>
             <td><strong>{{ $row->kode }}</strong></td>
             <td>{{ $row->nama }}</td>
+            <td>{{ $row->provinsi_nama }}</td>
             <td>{!! $row->kantor == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{!! $row->ibukota_prov == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{!! $row->bandara == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>

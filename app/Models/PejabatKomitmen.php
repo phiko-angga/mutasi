@@ -21,9 +21,9 @@ class PejabatKomitmen extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('nama', 'like', '%'.$search.'%')
-            ->orWhere('nip', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('nama', 'ilike', '%'.$search.'%')
+            ->orWhere('nip', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
 
         if($paginate){

@@ -21,11 +21,11 @@ class Paraf extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('tb_tandatangan.nama', 'like', '%'.$search.'%')
-            ->orWhere('tb_tandatangan.nip', 'like', '%'.$search.'%')
-            ->orWhere('tb_tandatangan.pangkat', 'like', '%'.$search.'%')
-            ->orWhere('tb_tandatangan.jabatan', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('tb_tandatangan.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('tb_tandatangan.nip', 'ilike', '%'.$search.'%')
+            ->orWhere('tb_tandatangan.pangkat', 'ilike', '%'.$search.'%')
+            ->orWhere('tb_tandatangan.jabatan', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

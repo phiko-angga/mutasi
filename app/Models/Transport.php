@@ -21,9 +21,9 @@ class Transport extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('nama', 'like', '%'.$search.'%')
-            ->orWhere('kode', 'like', '%'.$search.'%')
-            ->orWhere('alias', 'like', '%'.$search.'%');
+            $data = $data->where('nama', 'ilike', '%'.$search.'%')
+            ->orWhere('kode', 'ilike', '%'.$search.'%')
+            ->orWhere('alias', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

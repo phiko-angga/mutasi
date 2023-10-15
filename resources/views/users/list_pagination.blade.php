@@ -6,6 +6,7 @@
             <td><strong>{{ $row->username }}</strong></td>
             <td>{{ $row->fullname }}</td>
             <td>{{ $row->jabatan }}</td>
+            <td>{!! $row->status == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td class="text-center">
                 <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

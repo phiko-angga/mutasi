@@ -24,11 +24,11 @@ class Rute extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('ka.nama', 'like', '%'.$search.'%')
-            ->orWhere('pr.nama', 'like', '%'.$search.'%')
-            ->orWhere('pr.nama', 'like', '%'.$search.'%')
-            ->orWhere('tb_rute.kode', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('ka.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('pr.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('pr.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('tb_rute.kode', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

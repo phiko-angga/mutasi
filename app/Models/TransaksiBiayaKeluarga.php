@@ -23,9 +23,9 @@ class TransaksiBiayaKeluarga extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('biaya_darat', 'like', '%'.$search.'%')
-            ->orWhere('biaya_laut', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('biaya_darat', 'ilike', '%'.$search.'%')
+            ->orWhere('biaya_laut', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

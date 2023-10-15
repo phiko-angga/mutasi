@@ -178,12 +178,12 @@ class UsersController extends Controller
                     $data['password'] = Hash::make($request->password);
                 }
                 
-                $user = auth()->user();
-                $data['updated_by'] = $user->id;
+                $user2 = auth()->user();
+                $data['updated_by'] = $user2->id;
                 User::where('id',$user->id)->update($data);
                 
                 $menu = $request->menu;
-                $deleteOldMenu = MenuUser::whereNotin('menu_id',$menu)->where('pengguna_id',$user->id)->delete();
+                $deleteOldMenu = MenuUser::where('pengguna_id',$user->id)->delete();
                 
                 $akses = [];
                 foreach($menu as $m){

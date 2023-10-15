@@ -22,7 +22,7 @@ class Pelabuhan extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('nama', 'like', '%'.$search.'%');
+            $data = $data->where('nama', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

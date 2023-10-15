@@ -23,12 +23,12 @@ class Uangh extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('satuan', 'like', '%'.$search.'%')
-            ->orWhere('p.nama', 'like', '%'.$search.'%')
-            ->orWhere('luar_kota', 'like', '%'.$search.'%')
-            ->orWhere('dalam_kota', 'like', '%'.$search.'%')
-            ->orWhere('diklat', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('satuan', 'ilike', '%'.$search.'%')
+            ->orWhere('p.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('luar_kota', 'ilike', '%'.$search.'%')
+            ->orWhere('dalam_kota', 'ilike', '%'.$search.'%')
+            ->orWhere('diklat', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

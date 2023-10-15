@@ -104,7 +104,8 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tempat Berangkat</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="kota_asal_id" id="kota_asal_id">
+                                                <select placeholder="Pilih tempat berangkat" class="form-select" name="kota_asal_id" id="kota_asal_id">
+                                                    <option></option>
                                                     @foreach($kota as $kt)
                                                         <option value="{{$kt->id}}">{{$kt->nama}}</option>
                                                     @endforeach
@@ -128,7 +129,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tanggal Harus kembali</label>
                                             <div class="col-sm-8">
-                                                <input  type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali" value="{{old('tanggal_kembali',isset($biaya) ? $biaya->tanggal_kembali : date('Y-m-d'))}}"/>
+                                                <input  type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali" value="{{old('tanggal_kembali',isset($biaya) ? $biaya->tanggal_kembali : date('Y-m-d',strtotime('+3 days')))}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -141,6 +142,7 @@
                                             <label class="col-sm-4 col-form-label" for="password">Tempat tujuan</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="kota_tujuan_id" id="kota_tujuan_id">
+                                                    <option></option>
                                                     @foreach($kota as $kt)
                                                         <option value="{{$kt->id}}">{{$kt->nama}}</option>
                                                     @endforeach

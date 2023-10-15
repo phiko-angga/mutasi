@@ -10,6 +10,7 @@
                         <th>No</th>
                         <th>Kode</th>
                         <th>Kota</th>
+                        <th>Provinsi</th>
                         <th>Kantor PN</th>
                         <th>Ibu Kota Prov.</th>
                         <th>Bandara</th>
@@ -33,6 +34,7 @@
                         <td>{{ (++$key)}}</td>
                         <td><strong>{{ $row->kode }}</strong></td>
                         <td>{{ $row->nama }}</td>
+                        <td>{{ $row->provinsi_nama }}</td>
                         <td class="text-center">{!! $row->kantor == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
                         <td class="text-center">{!! $row->ibukota_prov == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>
                         <td class="text-center">{!! $row->bandara == '1' ? '<span style="font-family:zapfdingbats;">4</span>' : '' !!}</td>

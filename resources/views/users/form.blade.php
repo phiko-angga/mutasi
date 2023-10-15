@@ -97,6 +97,20 @@
                     </div>
 
                     <div class="row mb-3">
+                        <label class="col-sm-4 col-form-label" for="password">Status</label>
+                        <div class="col-sm-8 d-flex">
+                            <div class="form-check me-3">
+                                <input {{old('status',isset($users) ? $users->status : '') == '0' ? 'checked' : ''}} name="status" class="form-check-input" type="radio" value="0" id="status0">
+                                <label class="form-check-label" for="defaultRadio1"> Tidak aktif </label>
+                            </div>
+                            <div class="form-check">
+                                <input {{old('status',isset($users) ? $users->status : '1') == '1' ? 'checked' : ''}} name="status" class="form-check-input" type="radio" value="1" id="status1">
+                                <label class="form-check-label" for="defaultRadio2"> Aktif </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="password">Password</label>
                         <div class="col-sm-8">
                             <input  {{$action == 'store' ? 'required' : ''}} type="password" class="form-control" id="password" name="password"/>
@@ -105,7 +119,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="password">Verifikasi Password</label>
                         <div class="col-sm-8">
-                            <input  {{$action == 'store' ? 'required' : ''}} type="password" class="form-control" id="password_ver" name="password_ver"/>
+                            <input  {{$action == 'store' ? 'required' : ''}} type="password" class="form-control" id="password_ver"/>
                         </div>
                     </div>
                     <div class="row justify-content-end">

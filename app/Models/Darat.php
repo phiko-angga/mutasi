@@ -28,10 +28,10 @@ class Darat extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('jarak_km', 'like', '%'.$search.'%')
-            ->orWhere('pa.nama', 'like', '%'.$search.'%')
-            ->orWhere('ka.nama', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('jarak_km', 'ilike', '%'.$search.'%')
+            ->orWhere('pa.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('ka.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

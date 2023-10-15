@@ -29,6 +29,7 @@ class User extends Authenticatable
         'jabatan',
         'catatan',
         'depname',
+        'status',
     ];
 
     /**
@@ -56,7 +57,7 @@ class User extends Authenticatable
         
         $search = $request->get('search');
         if(isset($search)){
-            $users = $users->where('fullname', 'like', '%'.$search.'%');
+            $users = $users->where('fullname', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

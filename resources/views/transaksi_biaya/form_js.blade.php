@@ -8,10 +8,13 @@
     var incKelTransPembantu = 0;
     var incMuat = 0;
     var curdate = 0;
+    var biayaTransport = 0;
+    var biayaMuat = 0;
 
     $(document).ready(function () {
-        $("#kota_asal_id,#kota_tujuan_id").select2({width: 'resolve'});
-        $("#pejabat_komitmen_nama").trigger('change');
+        $("#kota_asal_id").select2({width: 'resolve', placeholder:"Pilih tempat berangkat"});
+        $("#kota_tujuan_id").select2({width: 'resolve', placeholder:"Pilih tempat tujuan"});
+        $("#pejabat_komitmen2_id").trigger('change');
         $('.numeric').maskNumber({integer: true});
     })
 
@@ -51,8 +54,22 @@
         dob = new Date(dob);
 
         var today = new Date();
-        var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
-        $('#kel_umur'+id).val(age);
+        // var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
+        
+        var diff = Math.floor(today.getTime() - dob.getTime());
+        var secs = Math.floor(diff/1000);
+        var mins = Math.floor(secs/60);
+        var hours = Math.floor(mins/60);
+        var days = Math.floor(hours/24);
+        var months = Math.floor(days/31);
+        var years = Math.floor(months/12);
+        months=Math.floor(months%12);
+        days = Math.floor(days%31);
+        hours = Math.floor(hours%24);
+        mins = Math.floor(mins%60);
+        secs = Math.floor(secs%60); 
+
+        $('#kel_umur'+id).val(years+' Thn '+months+' Bln '+days+' Hari');
     })
 
     $(document).on("change","#pangkat_golongan",function(){
@@ -106,7 +123,7 @@
                     '<input type="date" max="" name="kel_dob[]" id="kel_dob'+incKel+'" class="form-control form-control-sm kel_dob">'+
                 '</td>'+
                 '<td>'+
-                    '<input type="number" name="kel_umur[]" id="kel_umur'+incKel+'" class="form-control form-control-sm">'+
+                    '<input readonly type="text" name="kel_umur[]" id="kel_umur'+incKel+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
                     '<select name="kel_keterangan[]" id="kel_keterangan'+incKel+'" class="form-select form-select-sm">'+
@@ -205,6 +222,23 @@
         $("#jumlah_biaya"+id).val(addCommas(jumBiaya));
     }
 
+    function biayaCalculate(uangh){
+        if(uangh == 'orang'){
+            let total_orang = $("#uangh_jml_orang").val();
+            let hari = $("#uangh_jml_hari").val();
+            let tarif = parseInt($("#uangh_jml_tarif").val().replace(/\,/g, ''));
+            $("#uangh_jml_biaya").val(addCommas( (total_orang*hari)*tarif ));
+
+        }else
+        if(uangh == 'pembantu'){
+
+            let total_orang = $("#uangh_jml_pembantu").val();
+            let hari = $("#uangh_jml_hari_p").val();
+            let tarif = parseInt($("#uangh_jml_tarif_p").val().replace(/\,/g, ''));
+            $("#uangh_jml_biaya_p").val(addCommas( (total_orang*hari)*tarif ));
+        }
+    }
+
     function template_transport(pembantu = false, kel_jumlah = 0){
 
         ++incKelTrans;
@@ -295,6 +329,18 @@
 
         $('.numeric').maskNumber({integer: true});
         initSelect2();
+
+        //hitung total biaya
+        let itemTransport = $("#item-transport").find("input[name='trans_jumlah_biaya[]']");
+        // console.log('itemTransport',itemTransport);
+        if(itemTransport.length > 0){
+            $.each(itemTransport,function(){
+                biaya = parseInt($(this).val().replace(/\,/g, ''));
+                // console.log('biaya',biaya);
+                biayaTransport += biaya;
+            })
+        }
+        console.log('biayaTransport',biayaTransport);
     }
 
     // ---------------------- MUAT BARANG --------------------------

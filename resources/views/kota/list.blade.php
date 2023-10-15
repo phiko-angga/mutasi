@@ -71,6 +71,7 @@
                                 <th width="5%">No.</th>
                                 <th style="width:15%">Kode</th>
                                 <th>kota</th>
+                                <th>Provinsi</th>
                                 <th>Kantor PN</th>
                                 <th>Ibu Kota Prov.</th>
                                 <th>Bandara</th>

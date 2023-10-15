@@ -23,9 +23,9 @@ class BiayaPengepakan extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('transport_laut', 'like', '%'.$search.'%')
-            ->orWhere('transport_darat', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('transport_laut', 'ilike', '%'.$search.'%')
+            ->orWhere('transport_darat', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

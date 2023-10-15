@@ -84,9 +84,9 @@ class TransaksiBiaya extends Model
         $search = $request->get('search');
         if(isset($search)){
             $data = $data->where(function($query) use($search){
-                $query->where('tb_transaksi_biaya.nama', 'like', '%'.$search.'%')
-                ->orWhere('tb_transaksi_biaya.nomor', 'like', '%'.$search.'%')
-                ->orWhere('c.username', 'like', '%'.$search.'%'); 
+                $query->where('tb_transaksi_biaya.nama', 'ilike', '%'.$search.'%')
+                ->orWhere('tb_transaksi_biaya.nomor', 'ilike', '%'.$search.'%')
+                ->orWhere('c.username', 'ilike', '%'.$search.'%'); 
             });
         }
         

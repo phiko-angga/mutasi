@@ -28,12 +28,12 @@ class Sbum extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('tb_sbum.harga_tiket', 'like', '%'.$search.'%')
-            ->orWhere('pa.nama', 'like', '%'.$search.'%')
-            ->orWhere('pt.nama', 'like', '%'.$search.'%')
-            ->orWhere('ka.nama', 'like', '%'.$search.'%')
-            ->orWhere('kt.nama', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('tb_sbum.harga_tiket', 'ilike', '%'.$search.'%')
+            ->orWhere('pa.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('pt.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('ka.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('kt.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){

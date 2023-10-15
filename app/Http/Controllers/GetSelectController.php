@@ -102,19 +102,20 @@ class GetSelectController extends Controller
         $limit = $request->page_limit;
         $page = $request->page;
 
-        $kota = Kota::select('tb_kota.id','tb_kota.nama','pr.nama as provinsi')->join('tb_provinsi as pr','pr.id','=','tb_kota.provinsi_id');
+        $kota = Kota::select('tb_kota.id','tb_kota.nama','pr.nama as provinsi')
+        ->join('tb_provinsi as pr','pr.id','=','tb_kota.provinsi_id');
         
         if($provinsi != null)
             $kota = $kota->where('provinsi_id',$provinsi);
         
         if($exclude != null){
-            $kota = $kota->where('id','<>',$exclude);
+            $kota = $kota->where('tb_kota.id','<>',$exclude);
         }
 
         if($search != null){
             $kota = $kota->where(function($query) use ($search){
-                $query->where('nama','like','%'.$search.'%')
-                ->orWhere('kode','like','%'.$search.'%');
+                $query->where('tb_kota.nama','like','%'.$search.'%')
+                ->orWhere('tb_kota.kode','like','%'.$search.'%');
             });
         }
         $kota = $kota->skip($page)->take($limit)->get();

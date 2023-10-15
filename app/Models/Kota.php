@@ -31,13 +31,13 @@ class Kota extends Model
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('tb_kota.nama', 'like', '%'.$search.'%')
-            ->orWhere('tb_kota.kode', 'like', '%'.$search.'%')
-            ->orWhere('p.nama', 'like', '%'.$search.'%')
-            ->orWhere('alamat', 'like', '%'.$search.'%')
-            ->orWhere('kodepos', 'like', '%'.$search.'%')
-            ->orWhere('telepon', 'like', '%'.$search.'%')
-            ->orWhere('c.username', 'like', '%'.$search.'%');
+            $data = $data->where('tb_kota.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('tb_kota.kode', 'ilike', '%'.$search.'%')
+            ->orWhere('p.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('alamat', 'ilike', '%'.$search.'%')
+            ->orWhere('kodepos', 'ilike', '%'.$search.'%')
+            ->orWhere('telepon', 'ilike', '%'.$search.'%')
+            ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
         
         if($paginate){
