@@ -13,9 +13,11 @@ class AddStatusToTbPengguna extends Migration
      */
     public function up()
     {
-        Schema::table('tb_pengguna', function (Blueprint $table) {
-            $table->smallInteger('status')->after('id')->default(1);
-        });
+        if (!Schema::hasColumn('tb_pengguna', 'status')) {
+            Schema::table('tb_pengguna', function (Blueprint $table) {
+                $table->smallInteger('status')->after('id')->default(1);
+            });
+        }
     }
 
     /**
