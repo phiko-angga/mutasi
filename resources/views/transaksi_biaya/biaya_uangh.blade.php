@@ -68,7 +68,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Jumlah uang</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="uangh_jml_uang" name="uangh_jml_uang"  value="{{old('uangh_jml_uang',isset($biaya) ? $biaya->uangh_jml_uang : 0)}}"/>
+                                                <input type="text" readonly class="form-control numeric" id="uangh_jml_uang" name="uangh_jml_uang"  value="{{old('uangh_jml_uang',isset($biaya) ? $biaya->uangh_jml_uang : 0)}}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -88,7 +88,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Ditetapkan sejumlah</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="rampung_jumlah" name="rampung_jumlah"  value="{{old('rampung_jumlah',isset($biaya) ? $biaya->rampung_jumlah : 0)}}"/>
+                                                <input type="text" readonly class="form-control numeric" id="rampung_jumlah" name="rampung_jumlah"  value="{{old('rampung_jumlah',isset($biaya) ? $biaya->rampung_jumlah : 0)}}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tanggal Pelunasan</label>
                                             <div class="col-sm-8">
-                                                <input type="date" class="form-control" id="rampung_tgl_pelunasan" name="rampung_tgl_pelunasan"  value="{{old('rampung_tgl_pelunasan',isset($biaya) ? $biaya->rampung_tgl_pelunasan : '')}}"/>
+                                                <input type="date" class="form-control" id="rampung_tgl_pelunasan" name="rampung_tgl_pelunasan"  value="{{old('rampung_tgl_pelunasan',isset($biaya) ? $biaya->rampung_tgl_pelunasan : date('Y-m-d'))}}"/>
                                             </div>
                                         </div>
                                     </div>

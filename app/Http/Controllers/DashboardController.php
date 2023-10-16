@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kandidat;
-use App\Models\Surveyor;
-use App\Models\Tps;
-use App\Models\TpsLampiran;
-use App\Models\PerolehanSuara;
+use App\Models\TransaksiBiaya;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -29,7 +25,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $sumBiayaNotApproved = TransaksiBiaya::selectRaw('sum(rampung_jumlah) as rampung_jumlah')->where('approved',0)->first();
+        $sumBiayaApproved = TransaksiBiaya::selectRaw('sum(rampung_jumlah) as rampung_jumlah')->where('approved',1)->first();
+        return view('welcome',compact('sumBiayaNotApproved','sumBiayaApproved'));
     }
 
 }

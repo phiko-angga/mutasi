@@ -37,13 +37,14 @@
     $(document).on("click","#maksud_ketuama, #maksud_dirjen",function(){
         let tgl = $("#tanggal").val();
         let nomor = $("#nomor").val();
+        let today = $("#today").val();
 
         if($(this).prop('id') == 'maksud_ketuama'){
-            text = "Untuk melaksanakan tugas ketempat yang baru berdasarkan SK KETUA MAHKAMAH AGUNG RI Nomor : "+nomor+" Tanggal : 25 September 2023";
+            text = "Untuk melaksanakan tugas ketempat yang baru berdasarkan SK KETUA MAHKAMAH AGUNG RI Nomor : "+nomor+" Tanggal : "+today;
             $("#maksud_perj_dinas").val(text);
         }else
         if($(this).prop('id') == 'maksud_dirjen'){
-            text = "Untuk melaksanakan tugas ketempat yang baru berdasarkan SK DIREKTUR JENDERAL BADAN PERADILAN UMUM Nomor : "+nomor+" Tanggal : 25 September 2023";
+            text = "Untuk melaksanakan tugas ketempat yang baru berdasarkan SK DIREKTUR JENDERAL BADAN PERADILAN UMUM Nomor : "+nomor+" Tanggal : "+today;
             $("#maksud_perj_dinas").val(text);
         }
     })
@@ -223,20 +224,55 @@
     }
 
     function biayaCalculate(uangh){
+            console.log(uangh);
         if(uangh == 'orang'){
             let total_orang = $("#uangh_jml_orang").val();
             let hari = $("#uangh_jml_hari").val();
             let tarif = parseInt($("#uangh_jml_tarif").val().replace(/\,/g, ''));
             $("#uangh_jml_biaya").val(addCommas( (total_orang*hari)*tarif ));
 
+            console.log(total_orang,hari,tarif);
         }else
         if(uangh == 'pembantu'){
-
             let total_orang = $("#uangh_jml_pembantu").val();
             let hari = $("#uangh_jml_hari_p").val();
             let tarif = parseInt($("#uangh_jml_tarif_p").val().replace(/\,/g, ''));
+            
+            console.log(total_orang,hari,tarif);
             $("#uangh_jml_biaya_p").val(addCommas( (total_orang*hari)*tarif ));
         }
+
+        biayaCalculateAll();
+    }
+
+    function biayaCalculateAll(){
+        
+        //HITUNG TOTAL BIAYA TRANSPORT
+        let itemTransport = $("#item-transport").find("input[name='trans_jumlah_biaya[]']");
+        if(itemTransport.length > 0){
+            $.each(itemTransport,function(){
+                biaya = parseInt($(this).val().replace(/\,/g, ''));
+                biayaTransport += biaya;
+            })
+        }
+
+        //HITUNG TOTAL BIAYA MUAT BARANG
+        let itemMuat= $("#item-muatbarang").find("input[name='muat_biaya[]']");
+        if(itemMuat.length > 0){
+            $.each(itemMuat,function(){
+                biaya = parseInt($(this).val().replace(/\,/g, ''));
+                biayaMuat += biaya;
+            })
+        }
+        let pengepakan_biaya = parseInt($("#pengepakan_biaya").val().replace(/\,/g, ''));
+        let uangh_jml_biaya = parseInt($("#uangh_jml_biaya").val().replace(/\,/g, ''));
+        let uangh_jml_biaya_p = parseInt($("#uangh_jml_biaya_p").val().replace(/\,/g, ''));
+
+        let uangh_jml_uang = biayaTransport + biayaMuat + uangh_jml_biaya + uangh_jml_biaya_p + pengepakan_biaya;
+        $("#uangh_jml_uang").val(addCommas(uangh_jml_uang));
+        $("#rampung_jumlah").val(addCommas(uangh_jml_uang));
+        $("#rampung_dibayar").val(addCommas(uangh_jml_uang));
+        $("#uangh_jml_terbilang").val(terbilang(uangh_jml_uang));
     }
 
     function template_transport(pembantu = false, kel_jumlah = 0){
@@ -329,18 +365,8 @@
 
         $('.numeric').maskNumber({integer: true});
         initSelect2();
-
-        //hitung total biaya
-        let itemTransport = $("#item-transport").find("input[name='trans_jumlah_biaya[]']");
-        // console.log('itemTransport',itemTransport);
-        if(itemTransport.length > 0){
-            $.each(itemTransport,function(){
-                biaya = parseInt($(this).val().replace(/\,/g, ''));
-                // console.log('biaya',biaya);
-                biayaTransport += biaya;
-            })
-        }
-        console.log('biayaTransport',biayaTransport);
+        
+        biayaCalculateAll();
     }
 
     // ---------------------- MUAT BARANG --------------------------
@@ -374,6 +400,15 @@
         }else{
             $("#muat_manual"+id).val(0);
         }
+    })
+
+    $(document).on("keyup","#rampung_dibayar",function(){
+        
+        let biaya = parseInt($("#rampung_jumlah").val().replace(/\,/g, ''));
+        let dibayar = parseInt($(this).val().replace(/\,/g, ''));
+        let sisa = biaya - dibayar;
+        
+        $("#rampung_sisa").val(addCommas(sisa));
     })
 
     $(document).on("change","#pengepakan_berat, #pengepakan_tarif",function(){

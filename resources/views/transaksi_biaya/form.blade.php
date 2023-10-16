@@ -10,6 +10,7 @@
 
 <form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('transaksi-biaya.store') : route('transaksi-biaya.update',$biaya->id)}}">
     
+    <input type="hidden" id="today" value="{{Carbon\Carbon::parse(date('Y-m-d'))->formatLocalized('%d %B %Y')}}">
     @csrf   
     @if($action == 'update')
     <input name="_method" type="hidden" value="PUT">

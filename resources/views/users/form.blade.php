@@ -7,7 +7,6 @@
 @section('content')
 
 <form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('users.store') : route('users.update',$users->id)}}">
-    
     @csrf   
     @if($action == 'update')
     <input name="_method" type="hidden" value="PUT">
