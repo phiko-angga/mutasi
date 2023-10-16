@@ -13,9 +13,6 @@ class AddTransaksiBiayaId extends Migration
      */
     public function up()
     {
-        Schema::table('tb_transaksi_biaya_muat', function (Blueprint $table) {
-            $table->unsignedBigInteger('transaksi_biaya_id')->after('id')->nullable();
-        });
         Schema::table('tb_transaksi_biaya_transport', function (Blueprint $table) {
             $table->unsignedBigInteger('transaksi_biaya_id')->after('id')->nullable();
         });
