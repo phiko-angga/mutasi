@@ -6,10 +6,6 @@
     table{
         border-collapse: collapse;
     }
-    .row-table{
-        height: 400px;
-        overflow: auto;
-    }
      .header th {
         position: sticky;
         top:0;

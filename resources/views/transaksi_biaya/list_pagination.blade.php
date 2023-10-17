@@ -3,15 +3,34 @@
         @foreach($data as $key => $row)
         <tr>
             <td>{{ $data->firstItem() + $key}}</td>
-            <td>{{ $row->nomor }}</td>
             <td>{{ $row->pegawai_diperintah }}</td>
             <td>{{ $row->nip }}</td>
             <td>{{ $row->pangkat.' - '.$row->golongan }}</td>
             <td>{{ $row->status_perkawinan }}</td>
             <td>{{ $row->jabatan_instansi }}</td>
-            <td>{{ '' }}</td>
-            <td>{{ '' }}</td>
-            <td>{{ '' }}</td>
+            <td>{{ $row->jabatan_instansi }}</td>
+            <td>{{ $row->kelompok_jabatan_nama }}</td>
+            <td>{{ number_format($row->rampung_jumlah) }}</td>
+            <td>{{ $row->tingkat_perj_dinas }}</td>
+            <td>{{ $row->jumlah_pengikut }}</td>
+            <td style="width:250px">{{ $row->maksud_perj_dinas }}</td>
+            <td>{{ $row->transport_nama }}</td>
+            <td>{{ $row->kotaa_nama }}</td>
+            <td>{{ $row->provinsia_nama }}</td>
+            <td>{{ $row->kotat_nama }}</td>
+            <td>{{ $row->provinsit_nama }}</td>
+            <td>{{ $row->lama_perj_dinas }}</td>
+            <td>{{Carbon\Carbon::parse($row->tanggal_berangkat)->formatLocalized('%d %B %Y')}}</td>
+            <td>{{Carbon\Carbon::parse($row->tanggal_kembali)->formatLocalized('%d %B %Y')}}</td>
+            <td>{{ $row->pejabat_komitmen_nama }}</td>
+            <td>{{ $row->pembebanan_anggaran }}</td>
+            <td>{{ $row->mata_anggaran }}</td>
+            <td>{{Carbon\Carbon::parse($row->tanggal)->formatLocalized('%d %B %Y')}}</td>
+            <td>{{ $row->pejabat_komitmen_nama2 }}</td>
+            <td>{{ $row->pejabat_komitmen_nip2 }}</td>
+            <td>{{ $row->ket_lain2 }}</td>
+            <td></td>
+            <td></td>
             <td>{{ $row->created_at }}</td>
             <td>{{ $row->created_name }}</td>
             <td>{{ $row->updated_at }}</td>

@@ -10,12 +10,22 @@
     var curdate = 0;
     var biayaTransport = 0;
     var biayaMuat = 0;
+    var bendaharawan = JSON.parse('{!!$bendaharawan!!}');
+    var kuasaanggaran = JSON.parse('{!!$kuasaanggaran!!}');
+    var ppk = JSON.parse('{!!$ppk!!}');
 
     $(document).ready(function () {
         $("#kota_asal_id").select2({width: 'resolve', placeholder:"Pilih tempat berangkat"});
         $("#kota_tujuan_id").select2({width: 'resolve', placeholder:"Pilih tempat tujuan"});
         $("#pejabat_komitmen2_id").trigger('change');
         $('.numeric').maskNumber({integer: true});
+
+        $("#rampung_bendaharawan_nip").val(bendaharawan.nip);
+        $("#rampung_kuasa_nip").val(kuasaanggaran.nip);
+
+        console.log($("#rampung_kuasa_nip").val(),kuasaanggaran.nip);
+        $("#rampung_ppk_nip").val(ppk.nip);
+        $("#rampung_anggaran_nip").val(ppk.nip);
     })
 
     $(".bs-stepper")[0].addEventListener('shown.bs-stepper', function (event) {
@@ -363,6 +373,11 @@
         $("#uangh_jml_hari").val(lama_dinas);
         $("#uangh_jml_hari_p").val(lama_dinas);
 
+        // let nip = $("#nip").val();
+        // $("#rampung_kuasa_nip").val(nip);
+        let nama = $("#pegawai_diperintah").val();
+        $("#rampung_kuasa_nama").val(nama);
+
         $('.numeric').maskNumber({integer: true});
         initSelect2();
         
@@ -487,14 +502,32 @@
     }
 
     // --------------- UANG HARIAN -------------------
+    $(document).on("click","#cb_kuasa",function(e){
+        let status = $(this).is(":checked");
+        if(status){
+            let nip = $("#nip").val();
+            $("#rampung_kuasa_nip").val(nip);
+
+            $("#rampung_kuasa_nama").show();
+            $('#rampung_kuasa_select').next(".select2-container").hide();
+        }else{
+            $("#rampung_kuasa_nama").hide();
+            $("#rampung_kuasa_select").next(".select2-container").show();
+            $("#rampung_kuasa_select").val(kuasaanggaran.id).trigger('change');
+        }
+    })
+
     $(document).on("change","#rampung_bendaharawan_id",function(e){
         let data = $(this).select2('data')[0].data;
         $("#rampung_bendaharawan_nip").val(data.nip);
     })
 
-    $(document).on("change","#rampung_kuasa_nama",function(e){
+    $(document).on("change","#rampung_kuasa_select",function(e){
         let data = $(this).select2('data')[0].data;
-        $("#rampung_kuasa_nip").val(data.nip);
+        if(typeof data != 'undefined')
+            $("#rampung_kuasa_nip").val(data.nip);
+        else
+            $("#rampung_kuasa_nip").val(kuasaanggaran.nip);
     })
 
     $(document).on("change","#rampung_ppk_id",function(e){

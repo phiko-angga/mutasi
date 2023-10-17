@@ -9,10 +9,6 @@
     table{
         border-collapse: collapse;
     }
-    .row-table{
-        /* height: 400px; */
-        overflow: auto;
-    }
      .header th {
         position: sticky;
         top:0;
@@ -56,7 +52,7 @@
                                     <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="menu-icon tf-icons bx bx-printer"></i> Print
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                         <a class="dropdown-item print_pdf" data-url="{{url('transaksi_biaya_print_pdf')}}" href="javascript:void(0);">PDF</a>
                                         <a class="dropdown-item print_excel" data-url="{{url('transaksi_biaya_print_excel')}}" href="javascript:void(0);">EXCEL</a>
                                     </div>
@@ -72,19 +68,38 @@
                         <thead class="header">
                             <tr>
                                 <th width="5%">No.</th>
-                                <th style="width:10%">Nomor</th>
-                                <th style="width:10%">Nama Pegawai</th>
-                                <th style="width:10%">NIP Pegawai</th>
-                                <th style="width:10%">pangkat Gol. Ruang Gaji</th>
-                                <th style="width:10%">Status Kawin</th>
-                                <th style="width:10%">Jabatan/Instansi</th>
-                                <th style="width:10%">Nama Jabatan</th>
-                                <th style="width:10%">Kelompok Jabatan</th>
-                                <th style="width:10%">Total Biaya</th>
-                                <th style="">Tanggal dibuat</th>
-                                <th style="">Nama pembuat</th>
-                                <th style="">Tanggal diubah</th>
-                                <th style="">Nama pengubah</th>
+                                <th>Nama Pegawai</th>
+                                <th>NIP Pegawai</th>
+                                <th>Pangkat Gol. Ruang Gaji</th>
+                                <th>Status Kawin</th>
+                                <th>Jabatan / Instansi</th>
+                                <th>Nama Jabatan</th>
+                                <th>Kelompok Jabatan</th>
+                                <th>Total Biaya</th>
+                                <th>Tingkat Perjalanan Dinas</th>
+                                <th>Jumlah Ikut</th>
+                                <th style="width:250px">Maksud Perjalanan Dinas</th>
+                                <th>Alat Angkutan (jenis transportasi)</th>
+                                <th>Tempat Berangkat</th>
+                                <th>Provinsi Berangkat</th>
+                                <th>Tempat Tujuan</th>
+                                <th>Provinsi Tujuan</th>
+                                <th>Lama Perjalanan</th>
+                                <th>Tgl Berangkat</th>
+                                <th>Tgl Tiba</th>
+                                <th>Pejabat Berwenang Pemberi Perintah</th>
+                                <th>Pembebanan Biaya - Instansi</th>
+                                <th>Pembebanan Biaya - Mata Anggaran</th>
+                                <th>Tertanggal</th>
+                                <th>Nama PPK</th>
+                                <th>NIP PPK</th>
+                                <th>Keterangan lain - lain</th>
+                                <th>Tgl Dievaluasi</th>
+                                <th>Nama Evaluasi Data</th>
+                                <th>Tanggal dibuat</th>
+                                <th>Nama pembuat</th>
+                                <th>Tanggal diubah</th>
+                                <th>Nama pengubah</th>
                                 <th></th>
                             </tr>
                         </thead>

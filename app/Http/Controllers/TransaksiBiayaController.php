@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Paraf;
 use App\Models\TransaksiBiaya;
 use App\Models\TransaksiBiayaTransport;
 use App\Models\TransaksiBiayaMuat;
@@ -82,7 +83,10 @@ class TransaksiBiayaController extends Controller
         $kelompok_jabatan = KelompokJabatan::all();
         $transport = Transport::all();
         $kota = Kota::all();
-        return view('transaksi_biaya.form',compact('action','title','page','pejabat_komitmen','pangkat_golongan','kelompok_jabatan','transport','kota'));
+        $bendaharawan = Paraf::where('kelompok','ilike','Bendaharawan')->first();
+        $kuasaanggaran = Paraf::where('kelompok','ilike','Kuasa Pengguna Anggaran')->first();
+        $ppk = PejabatKomitmen::first();
+        return view('transaksi_biaya.form',compact('ppk','kuasaanggaran','bendaharawan','action','title','page','pejabat_komitmen','pangkat_golongan','kelompok_jabatan','transport','kota'));
     }
 
     /**

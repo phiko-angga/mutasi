@@ -75,6 +75,8 @@ class ProvinsiController extends Controller
             for ($i=0; $i < ($length - $kodeLen); $i++) { 
                 $result .= $prefix.$kode; 
             }
+        }else{
+            $result = $kode; 
         }
         return $result;
     }

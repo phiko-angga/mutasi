@@ -57,3 +57,8 @@ td .row{
 .table > :not(caption) > * > * {
   padding: 0.2rem 0.4rem!important;
 }
+
+.row-table{
+  /* height: 400px;
+  overflow: auto; */
+}

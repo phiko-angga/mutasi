@@ -140,7 +140,7 @@ class GetSelectController extends Controller
         $limit = $request->page_limit;
         $page = $request->page;
 
-        $paraf = Paraf::select('id','nama','nip')->where('kelompok',$kelompok);
+        $paraf = Paraf::select('id','nama','nip')->where('kelompok','ilike',$kelompok);
         
         if($search != null){
             $paraf = $paraf->where(function($query) use ($search){
