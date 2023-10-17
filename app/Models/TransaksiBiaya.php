@@ -138,7 +138,6 @@ class TransaksiBiaya extends Model
         ->join('tb_provinsi as prot','prot.id','=','kott.provinsi_id')
         ->join('tb_pangkat_golongan as pg','pg.id','=','tb_transaksi_biaya.pangkat_golongan_id')
         ->join('tb_tandatangan as ttd','ttd.id','=','tb_transaksi_biaya.rampung_bendaharawan_id')
-        ->join('tb_tandatangan as ttd2','ttd2.id','=','tb_transaksi_biaya.rampung_kuasa_nama')
         ->join('tb_pengguna as c','c.id','=','tb_transaksi_biaya.created_by')
         ->where('tb_transaksi_biaya.id',$id)
         ->leftJoin('tb_pengguna as u','u.id','=','tb_transaksi_biaya.updated_by')->first();
