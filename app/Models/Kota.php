@@ -29,19 +29,27 @@ class Kota extends Model
         ->join('tb_pengguna as c','c.id','=','tb_kota.created_by')
         ->leftJoin('tb_pengguna as u','u.id','=','tb_kota.updated_by');
         
+        $provinsi = $request->get('provinsi');
+        if(isset($provinsi) && $provinsi !== '%'){
+            $data = $data->where('tb_kota.provinsi_id', $provinsi);
+        }
+
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('tb_kota.nama', 'ilike', '%'.$search.'%')
-            ->orWhere('tb_kota.kode', 'ilike', '%'.$search.'%')
-            ->orWhere('p.nama', 'ilike', '%'.$search.'%')
-            ->orWhere('alamat', 'ilike', '%'.$search.'%')
-            ->orWhere('kodepos', 'ilike', '%'.$search.'%')
-            ->orWhere('telepon', 'ilike', '%'.$search.'%')
-            ->orWhere('c.username', 'ilike', '%'.$search.'%');
+            $data = $data->where(function($query){
+                $query->where('tb_kota.nama', 'ilike', '%'.$search.'%')
+                ->orWhere('tb_kota.kode', 'ilike', '%'.$search.'%')
+                ->orWhere('p.nama', 'ilike', '%'.$search.'%')
+                ->orWhere('alamat', 'ilike', '%'.$search.'%')
+                ->orWhere('kodepos', 'ilike', '%'.$search.'%')
+                ->orWhere('telepon', 'ilike', '%'.$search.'%')
+                ->orWhere('c.username', 'ilike', '%'.$search.'%');
+            });
         }
         
         if($paginate){
-            $data = $data->paginate(10);
+            $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
+            $data = $data->paginate($paginate_num);
         }else
             $data = $data->get();
         

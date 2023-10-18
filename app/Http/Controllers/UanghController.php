@@ -25,14 +25,15 @@ class UanghController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $uangh = new Uangh();
         $data = $uangh->get_data($request);
 
         $page = 'Uang Harian';
         if($request->ajax()){
-            return view('uangh.list_pagination', compact('data'));
+            return view('uangh.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('uangh.list', compact('data','page'));
+            return view('uangh.list', compact('data','page','paginate_num'));
         }
     }
     

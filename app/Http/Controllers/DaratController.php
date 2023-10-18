@@ -25,14 +25,15 @@ class DaratController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $darat = new Darat();
         $data = $darat->get_data($request);
 
         $page = 'Darat';
         if($request->ajax()){
-            return view('darat.list_pagination', compact('data'));
+            return view('darat.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('darat.list', compact('data','page'));
+            return view('darat.list', compact('data','page','paginate_num'));
         }
     }
     

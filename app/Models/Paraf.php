@@ -29,7 +29,8 @@ class Paraf extends Model
         }
         
         if($paginate){
-            $data = $data->paginate(10);
+            $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
+            $data = $data->paginate($paginate_num);
         }else
             $data = $data->get();
         
@@ -43,5 +44,36 @@ class Paraf extends Model
         ->where('tb_tandatangan.id',$id)->first();
         
         return $data; 
+    }
+
+    public function kepangkatan(){ 
+        return [
+            'Juru Muda',
+            'Juru Muda Tk. I',
+            'Juru',
+            'Juru Tk. I',
+            'Pengatur Muda',
+            'Pengatur Muda Tk. I',
+            'Pengatur',
+            'Pengatur Tk. I',
+            'Penata Muda',
+            'Penata Muda Tk. I',
+            'Penata',
+            'Penata Tk. I ',
+            'Pembina',
+            'Pembina Tk. I',
+            'Pembina Utama Muda',
+            'Pembina Utama Madya',
+            'Pembina Utama',
+        ];
+    }
+
+    public function ttd(){ 
+        return [
+            'Pejabat Pembuat Komitmen',
+            'Bendaharawan',
+            'Kuasa Pengguna Anggaran',
+            'Yang Menerima/Dikuasakan',
+        ];
     }
 }

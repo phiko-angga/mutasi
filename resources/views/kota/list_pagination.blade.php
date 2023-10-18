@@ -4,8 +4,8 @@
         <tr>
             <td>{{ $data->firstItem() + $key}}</td>
             <td><strong>{{ $row->kode }}</strong></td>
-            <td>{{ $row->nama }}</td>
             <td>{{ $row->provinsi_nama }}</td>
+            <td>{{ $row->nama }}</td>
             <td>{!! $row->kantor == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{!! $row->ibukota_prov == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
             <td>{!! $row->bandara == 1 ? '<i class="bx bx-check text-info"></i>' : '<i class="bx bx-x text-secondary"></i>' !!}</td>
@@ -33,6 +33,19 @@
             </td>
         </tr>
         @endforeach
+        <tr>
+            <td colspan="9">
+                <div class=" me-3">
+                    <small class="text-light fw-semibold">Show records per page</small>
+                    <select style="width:120px" class="form-select form-select-sm" name="show-per-page" id="show-per-page">
+                        <option {{isset($paginate_num) ? ($paginate_num == 10 ? 'selected' : '') : 'selected'}} value="10">10 Records</option>
+                        <option {{isset($paginate_num) ? ($paginate_num == 30 ? 'selected' : '') : ''}} value="30">30 Records</option>
+                        <option {{isset($paginate_num) ? ($paginate_num == 50 ? 'selected' : '') : ''}} value="50">50 Records</option>
+                        <option {{isset($paginate_num) ? ($paginate_num == 100 ? 'selected' : '') : ''}} value="100">100 Records</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
     @else
     <tr>
         <td colspan="9" align="center">

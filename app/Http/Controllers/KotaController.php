@@ -24,14 +24,15 @@ class KotaController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $kota = new Kota();
         $data = $kota->get_data($request);
 
         $page = 'KOTA';
         if($request->ajax()){
-            return view('kota.list_pagination', compact('data'));
+            return view('kota.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('kota.list', compact('data','page'));
+            return view('kota.list', compact('data','page','paginate_num'));
         }
     }
     

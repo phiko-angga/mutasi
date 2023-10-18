@@ -23,14 +23,15 @@ class TransportController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $transport = new Transport();
         $data = $transport->get_data($request);
 
         $page = 'TRANSPORT';
         if($request->ajax()){
-            return view('transport.list_pagination', compact('data'));
+            return view('transport.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('transport.list', compact('data','page'));
+            return view('transport.list', compact('data','page','paginate_num'));
         }
     }
     

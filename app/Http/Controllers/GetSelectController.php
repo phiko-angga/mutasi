@@ -83,6 +83,11 @@ class GetSelectController extends Controller
         $provinsi = $provinsi->skip($page)->take($limit)->get();
         $data = ["total_count"   => 0];
         
+        $data['items'][] = [
+            'id' => '%',
+            'text' => 'ALL'
+        ];
+
         if($provinsi){
             foreach($provinsi as $p){
                 $data['items'][] = [

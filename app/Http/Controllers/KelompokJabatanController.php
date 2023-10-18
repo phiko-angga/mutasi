@@ -23,14 +23,15 @@ class KelompokJabatanController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $pejabat = new KelompokJabatan();
         $data = $pejabat->get_data($request);
 
         $page = 'Kelompok (Jenis) Jabatan';
         if($request->ajax()){
-            return view('kelompok_jabatan.list_pagination', compact('data'));
+            return view('kelompok_jabatan.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('kelompok_jabatan.list', compact('data','page'));
+            return view('kelompok_jabatan.list', compact('data','page','paginate_num'));
         }
     }
     

@@ -25,14 +25,15 @@ class DephubController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $dephub = new Dephub();
         $data = $dephub->get_data($request);
 
         $page = 'Dep Hub';
         if($request->ajax()){
-            return view('dephub.list_pagination', compact('data'));
+            return view('dephub.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('dephub.list', compact('data','page'));
+            return view('dephub.list', compact('data','page','paginate_num'));
         }
     }
     

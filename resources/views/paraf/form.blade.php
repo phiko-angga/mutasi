@@ -55,8 +55,13 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Penandatangan</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="kelompok" name="kelompok" value="{{old('kelompok',isset($paraf) ? $paraf->kelompok : '')}}" />
-                            <small class="text-info">Max 50</small>
+                            <!-- <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="kelompok" name="kelompok" value="{{old('kelompok',isset($paraf) ? $paraf->kelompok : '')}}" />
+                            <small class="text-info">Max 50</small> -->
+                            <select class="form-select" name="kelompok" id="kelompok" value="{{old('kelompok',isset($paraf) ? $paraf->kelompok : '')}}">
+                            @foreach($ttd as $t)
+                                    <option {{isset($paraf) ? ($paraf->kelompok == $t ? 'selected' : '') : ''}} value="{{$t}}">{{$t}}</option>
+                            @endforeach
+                            </select>
                         </div>
                     </div>
                     <div hidden class="row mb-3">
@@ -81,8 +86,13 @@
                     <div class="row mb-3">
                         <label class="col-sm-4 col-form-label" for="kode">Kepangkatan</label>
                         <div class="col-sm-8">
-                            <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="pangkat" name="pangkat" value="{{old('pangkat',isset($paraf) ? $paraf->pangkat : '')}}" />
-                            <small class="text-info">Max 50</small>
+                            <!-- <input required type="text" maxLength="50" onkeydown="return /[^0-9]/i.test(event.key)" class="form-control" id="pangkat" name="pangkat" value="{{old('pangkat',isset($paraf) ? $paraf->pangkat : '')}}" />
+                            <small class="text-info">Max 50</small> -->
+                            <select class="form-select" name="pangkat" id="pangkat" value="{{old('pangkat',isset($paraf) ? $paraf->pangkat : '')}}">
+                                @foreach($kepangkatan as $p)
+                                    <option {{isset($paraf) ? ($paraf->pangkat == $p ? 'selected' : '') : ''}} value="{{$p}}">{{$p}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">

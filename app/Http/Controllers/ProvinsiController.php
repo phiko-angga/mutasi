@@ -23,14 +23,15 @@ class ProvinsiController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $provinsi = new Provinsi();
         $data = $provinsi->get_data($request);
 
         $page = 'PROVINSI';
         if($request->ajax()){
-            return view('provinsi.list_pagination', compact('data'));
+            return view('provinsi.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('provinsi.list', compact('data','page'));
+            return view('provinsi.list', compact('data','page','paginate_num'));
         }
     }
     

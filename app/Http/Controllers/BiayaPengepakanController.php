@@ -25,12 +25,13 @@ class BiayaPengepakanController extends Controller
         
         $biaya = new BiayaPengepakan();
         $data = $biaya->get_data($request);
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
 
         $page = 'Biaya Pengepakan';
         if($request->ajax()){
-            return view('biaya_pengepakan.list_pagination', compact('data'));
+            return view('biaya_pengepakan.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('biaya_pengepakan.list', compact('data','page'));
+            return view('biaya_pengepakan.list', compact('data','page','paginate_num'));
         }
     }
     

@@ -25,14 +25,15 @@ class SbumController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $sbum = new Sbum();
         $data = $sbum->get_data($request);
 
         $page = 'SBU - M';
         if($request->ajax()){
-            return view('sbum.list_pagination', compact('data'));
+            return view('sbum.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('sbum.list', compact('data','page'));
+            return view('sbum.list', compact('data','page','paginate_num'));
         }
     }
     

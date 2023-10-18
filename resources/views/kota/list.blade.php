@@ -16,6 +16,7 @@
 
 @section('content')
 
+@include('layout._filter_wilayah')
 <div class="row">
 
 	<div class="col-md-12 grid-margin stretch-card">
@@ -66,8 +67,8 @@
                             <tr>
                                 <th width="5%">No.</th>
                                 <th style="width:15%">Kode</th>
-                                <th>kota</th>
                                 <th>Provinsi</th>
+                                <th>kota</th>
                                 <th>Kantor PN</th>
                                 <th>Ibu Kota Prov.</th>
                                 <th>Bandara</th>
@@ -101,10 +102,13 @@
 @section('script')
 <script>
     
-    $(document).on('change','#search', function(){
-        fetch_tabledata('/kota');
+    $(document).ready(function(){
+        initSelect2();
     })
 
+    $(document).on('change','#search, #show-per-page, #provinsi_id', function(){
+        fetch_tabledata('/kota');
+    })
     
     $(document).on('click','.delete_btn',function(e){
         e.preventDefault();

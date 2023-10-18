@@ -38,7 +38,8 @@ class Laut extends Model
         }
         
         if($paginate){
-            $data = $data->paginate(10);
+            $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
+            $data = $data->paginate($paginate_num);
         }else
             $data = $data->get();
         

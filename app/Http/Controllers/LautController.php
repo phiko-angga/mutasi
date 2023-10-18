@@ -27,14 +27,15 @@ class LautController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $laut = new Laut();
         $data = $laut->get_data($request);
 
         $page = 'Laut';
         if($request->ajax()){
-            return view('laut.list_pagination', compact('data'));
+            return view('laut.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('laut.list', compact('data','page'));
+            return view('laut.list', compact('data','page','paginate_num'));
         }
     }
     

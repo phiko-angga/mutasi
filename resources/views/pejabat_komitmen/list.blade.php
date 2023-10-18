@@ -90,7 +90,7 @@
 @section('script')
 <script>
     
-    $(document).on('change','#search', function(){
+    $(document).on('change','#search, #show-per-page', function(){
         fetch_tabledata('/pejabat_komitmen');
     })
 

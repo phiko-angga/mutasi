@@ -24,13 +24,14 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $mUser = new User();
         $users = $mUser->get_data($request);
 
         if($request->ajax()){
-            return view('users.list_pagination', compact('users'));
+            return view('users.list_pagination', compact('users','paginate_num'));
         }else{
-            return view('users.list', compact('users'));
+            return view('users.list', compact('users','paginate_num'));
         }
     }
         

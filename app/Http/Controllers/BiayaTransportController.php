@@ -25,12 +25,13 @@ class BiayaTransportController extends Controller
         
         $biaya = new BiayaTransport();
         $data = $biaya->get_data($request);
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
 
         $page = 'Biaya Transportasi';
         if($request->ajax()){
-            return view('biaya_transport.list_pagination', compact('data'));
+            return view('biaya_transport.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('biaya_transport.list', compact('data','page'));
+            return view('biaya_transport.list', compact('data','page','paginate_num'));
         }
     }
     

@@ -25,14 +25,15 @@ class RuteController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $rute = new Rute();
         $data = $rute->get_data($request);
 
         $page = 'Rute';
         if($request->ajax()){
-            return view('rute.list_pagination', compact('data'));
+            return view('rute.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('rute.list', compact('data','page'));
+            return view('rute.list', compact('data','page','paginate_num'));
         }
     }
     

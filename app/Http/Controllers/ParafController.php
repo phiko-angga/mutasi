@@ -25,14 +25,15 @@ class ParafController extends Controller
     public function index(Request $request)
     {
         
+        $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $paraf = new Paraf();
         $data = $paraf->get_data($request);
 
         $page = 'Paraf';
         if($request->ajax()){
-            return view('paraf.list_pagination', compact('data'));
+            return view('paraf.list_pagination', compact('data','paginate_num'));
         }else{
-            return view('paraf.list', compact('data','page'));
+            return view('paraf.list', compact('data','page','paginate_num'));
         }
     }
     
@@ -56,10 +57,15 @@ class ParafController extends Controller
      */
     public function create()
     {
+        
+        $mParaf = new Paraf;
+        $kepangkatan = $mParaf->kepangkatan();
+        $ttd = $mParaf->ttd();
+
         $action = 'store';
         $page = 'Paraf';
         $title = 'Tambah baru';
-        return view('paraf.form',compact('action','title','page'));
+        return view('paraf.form',compact('action','title','page','kepangkatan','ttd'));
     }
 
     /**
@@ -123,11 +129,13 @@ class ParafController extends Controller
 
         $mparaf = new Paraf();
         $paraf = $mparaf->get_id($id);
+        $kepangkatan = $mparaf->kepangkatan();
+        $ttd = $mparaf->ttd();
 
         $action = 'update';
         $title = 'Paraf Update';
         $page = 'Paraf';
-        return view('paraf.form',compact('paraf','action','title','page'));
+        return view('paraf.form',compact('paraf','action','title','page','kepangkatan','ttd'));
     }
 
     /**

@@ -26,8 +26,9 @@
                     <small class="text-light fw-semibold">Show records per page</small>
                     <select style="width:120px" class="form-select form-select-sm" name="show-per-page" id="show-per-page">
                         <option {{isset($paginate_num) ? ($paginate_num == 10 ? 'selected' : '') : 'selected'}} value="10">10 Records</option>
-                        <option {{isset($paginate_num) ? ($paginate_num == 25 ? 'selected' : '') : ''}} value="25">25 Records</option>
+                        <option {{isset($paginate_num) ? ($paginate_num == 30 ? 'selected' : '') : ''}} value="30">30 Records</option>
                         <option {{isset($paginate_num) ? ($paginate_num == 50 ? 'selected' : '') : ''}} value="50">50 Records</option>
+                        <option {{isset($paginate_num) ? ($paginate_num == 100 ? 'selected' : '') : ''}} value="100">100 Records</option>
                     </select>
                 </div>
             </td>
