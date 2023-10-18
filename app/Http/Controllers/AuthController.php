@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Log;
  
 class AuthController extends Controller
 {
@@ -46,5 +48,33 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return Redirect::to('/login');
+    }
+    
+    public function resetPassword(){
+        $users = auth()->user();
+        return view('users.form_reset',compact('users'));
+    }
+
+    public function resetPasswordAct(Request $request){
+        
+        request()->validate([
+            'id'        => 'required',
+            'cur_password'  => 'required',
+            'password'  => ['required','min:8','regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+        ]);
+
+        $id = $request->id;
+        $users = User::find($id);
+        if($users){
+            // $cur_password = Hash::make($request->cur_password);
+            // Log::debug($request->cur_password.' - '.$cur_password.' - '.$users->password);
+            if(Hash::check($request->cur_password, $users->password)){
+                $users->password = Hash::make($request->password);
+                $users->save();
+                return redirect('/')->with('info', 'User password berhasil diubah');
+            }else{
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Current Password tidak cocok.']);
+            }
+        }
     }
 }

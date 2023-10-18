@@ -108,5 +108,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/biaya_pengepakan_print_excel', [BiayaPengepakanController::class,'printExcel']);
     Route::get('/barang_golongan_print_excel', [BarangGolonganController::class,'printExcel']);
 
+    Route::get('/reset-password', [AuthController::class,'resetPassword']);
+    Route::post('/reset-password', [AuthController::class,'resetPasswordAct']);
     Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 });

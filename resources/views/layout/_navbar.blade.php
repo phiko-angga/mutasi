@@ -46,6 +46,12 @@
             <div class="dropdown-divider"></div>
           </li>
           <li>
+            <a class="dropdown-item" href="{{url('reset-password')}}">
+              <i class="bx bx-reset me-2"></i>
+              <span class="align-middle">Reset Password</span>
+            </a>
+          </li>
+          <li>
             <a class="dropdown-item" href="{{url('logout')}}">
               <i class="bx bx-power-off me-2"></i>
               <span class="align-middle">Log Out</span>
