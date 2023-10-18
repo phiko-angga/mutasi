@@ -92,7 +92,8 @@
         fetch_tabledata('/users');
     })
 
-    $('.delete_btn').click(function(e){
+    
+    $(document).on('click','.delete_btn',function(e){
         e.preventDefault();
         var modalConfirm = $('#modal_confirm');
         modalConfirm.find('form').attr('action','{{url('')}}/users/'+$(this).data('id'));

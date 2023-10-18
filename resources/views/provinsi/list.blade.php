@@ -95,8 +95,9 @@
         fetch_tabledata('/provinsi');
     })
 
-    $('.delete_btn').click(function(e){
+    $(document).on('click','.delete_btn',function(e){
         e.preventDefault();
+        console.log('test');
         var modalConfirm = $('#modal_confirm');
         modalConfirm.find('form').attr('action','{{url('')}}/provinsi/'+$(this).data('id'));
         modalConfirm.find('#confirm_title').html('Delete data ');
