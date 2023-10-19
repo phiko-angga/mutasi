@@ -62,9 +62,9 @@ class User extends Authenticatable
         
         if($paginate){
             $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
-            $data = $data->paginate($paginate_num);
+            $users = $users->paginate($paginate_num);
         }else
-            $data = $data->get();
+            $users = $users->get();
         
         return $users; 
     }

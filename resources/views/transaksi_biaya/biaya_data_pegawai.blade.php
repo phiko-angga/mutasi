@@ -196,7 +196,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Jumlah pengikut</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="number" class="form-control" min="0" id="jumlah_pengikut" name="jumlah_pengikut" value="{{old('jumlah_pengikut',isset($biaya) ? $biaya->jumlah_pengikut : '')}}"/>
+                                                <input  {{$action == 'store' ? 'required' : ''}} type="number" class="form-control" min="0" id="jumlah_pengikut" name="jumlah_pengikut" value="{{old('jumlah_pengikut',isset($biaya) ? $biaya->jumlah_pengikut : 0)}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

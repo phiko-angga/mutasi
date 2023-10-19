@@ -23,13 +23,28 @@
         $("#rampung_bendaharawan_nip").val(bendaharawan.nip);
         $("#rampung_kuasa_nip").val(kuasaanggaran.nip);
 
-        console.log($("#rampung_kuasa_nip").val(),kuasaanggaran.nip);
+        // console.log($("#rampung_kuasa_nip").val(),kuasaanggaran.nip);
         $("#rampung_ppk_nip").val(ppk.nip);
         $("#rampung_anggaran_nip").val(ppk.nip);
     })
 
+    $(".bs-stepper")[0].addEventListener('show.bs-stepper', function (event) {
+        curStep = event.detail.indexStep;
+        console.log(curStep);
+        if(curStep == 0){
+            validateBiayaPegawai();
+        }else if(curStep == 1){
+            validateBiayaTransport();
+        }else if(curStep == 2){
+            validateBiayaMuatBarang();
+        }else if(curStep == 3){
+            validateUangHarian();
+        }
+    })
+
     $(".bs-stepper")[0].addEventListener('shown.bs-stepper', function (event) {
         curStep = event.detail.indexStep;
+        console.log(curStep);
         if(curStep == 1){
             initiateBiayaTransport();
         }else if(curStep == 2){
@@ -234,21 +249,21 @@
     }
 
     function biayaCalculate(uangh){
-            console.log(uangh);
+            // console.log(uangh);
         if(uangh == 'orang'){
             let total_orang = $("#uangh_jml_orang").val();
             let hari = $("#uangh_jml_hari").val();
             let tarif = parseInt($("#uangh_jml_tarif").val().replace(/\,/g, ''));
             $("#uangh_jml_biaya").val(addCommas( (total_orang*hari)*tarif ));
 
-            console.log(total_orang,hari,tarif);
+            // console.log(total_orang,hari,tarif);
         }else
         if(uangh == 'pembantu'){
             let total_orang = $("#uangh_jml_pembantu").val();
             let hari = $("#uangh_jml_hari_p").val();
             let tarif = parseInt($("#uangh_jml_tarif_p").val().replace(/\,/g, ''));
             
-            console.log(total_orang,hari,tarif);
+            // console.log(total_orang,hari,tarif);
             $("#uangh_jml_biaya_p").val(addCommas( (total_orang*hari)*tarif ));
         }
 
@@ -540,4 +555,18 @@
         $("#rampung_anggaran_nip").val(data.nip);
     })
 
+    //---------- VALIDATE -------------
+    function validateBiayaPegawai(){
+        console.log($("#nomor").val());
+        if($("#nomor").val() == "") $("#nomor").focus();
+    }
+    function validateBiayaTransport(){
+        if($("#nomor").val() == "") $("#nomor").focus();
+    }
+    function validateBiayaMuatBarang(){
+        if($("#nomor").val() == "") $("#nomor").focus();
+    }
+    function validateUangHarian(){
+        if($("#nomor").val() == "") $("#nomor").focus();
+    }
 </script>
