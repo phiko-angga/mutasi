@@ -12,7 +12,7 @@
     var biayaMuat = 0;
     var bendaharawan = $("#bendaharawan_list").val();
     var kuasaanggaran = $("#kuasaanggaran_list").val();
-    var ppk = JSON.parse('{!!$ppk!!}');
+    var ppk = $("#ppk_list").val();
 
     $(document).ready(function () {
         $("#kota_asal_id").select2({width: 'resolve', placeholder:"Pilih tempat berangkat"});
