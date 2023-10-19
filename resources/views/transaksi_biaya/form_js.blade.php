@@ -10,9 +10,9 @@
     var curdate = 0;
     var biayaTransport = 0;
     var biayaMuat = 0;
-    var bendaharawan = $("#bendaharawan_list").val();
-    var kuasaanggaran = $("#kuasaanggaran_list").val();
-    var ppk = $("#ppk_list").val();
+    var bendaharawan = JSON.parse($("#bendaharawan_list").val());
+    var kuasaanggaran = JSON.parse($("#kuasaanggaran_list").val());
+    var ppk = JSON.parse($("#ppk_list").val());
 
     $(document).ready(function () {
         $("#kota_asal_id").select2({width: 'resolve', placeholder:"Pilih tempat berangkat"});
