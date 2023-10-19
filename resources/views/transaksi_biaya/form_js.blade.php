@@ -10,8 +10,8 @@
     var curdate = 0;
     var biayaTransport = 0;
     var biayaMuat = 0;
-    var bendaharawan = JSON.parse('{!!$bendaharawan!!}');
-    var kuasaanggaran = JSON.parse('{!!$kuasaanggaran!!}');
+    var bendaharawan = $("#bendaharawan_list").val();
+    var kuasaanggaran = $("#kuasaanggaran_list").val();
     var ppk = JSON.parse('{!!$ppk!!}');
 
     $(document).ready(function () {

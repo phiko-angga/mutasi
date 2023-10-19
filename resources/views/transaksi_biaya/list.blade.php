@@ -127,7 +127,7 @@
     $(document).on('click','.delete_btn',function(e){
         e.preventDefault();
         var modalConfirm = $('#modal_confirm');
-        modalConfirm.find('form').attr('action','{{url('')}}/transaksi_biaya/'+$(this).data('id'));
+        modalConfirm.find('form').attr('action','{{url('')}}/transaksi-biaya/'+$(this).data('id'));
         modalConfirm.find('#confirm_title').html('Delete data ');
         modalConfirm.find('#confirm_titlecaption').html('Apakah anda ingin delete ');
         modalConfirm.find('#confirm_titlename').html($(this).data('name'));

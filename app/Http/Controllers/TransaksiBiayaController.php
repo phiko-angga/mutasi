@@ -367,12 +367,15 @@ class TransaksiBiayaController extends Controller
      */
     public function destroy($id)
     {
-        $transaksi_biaya = Paraf::find($id);
-        if($transaksi_biaya ){
-            Paraf::where('id',$transaksi_biaya->id)->delete();
-            return redirect('/transaksi_biaya')->with('info', 'Paraf berhasil di delete.');
+        $transaksi_biaya = TransaksiBiaya::find($id);
+        if($transaksi_biaya){
+            TransaksiBiayaKeluarga::where('transaksi_biaya_id',$transaksi_biaya->id)->delete();
+            TransaksiBiayaTransport::where('transaksi_biaya_id',$transaksi_biaya->id)->delete();
+            TransaksiBiayaMuat::where('transaksi_biaya_id',$transaksi_biaya->id)->delete();
+            TransaksiBiaya::where('id',$transaksi_biaya->id)->delete();
+            return redirect('/transaksi-biaya')->with('info', 'Transaki biaya berhasil di delete.');
         }else{
-            return Redirect::back()->withErrors(['error'=> 'Data Paraf tidak ditemukan.']);
+            return Redirect::back()->withErrors(['error'=> 'Transaki biaya tidak ditemukan.']);
         }
     }
 
