@@ -242,7 +242,7 @@
                                     <div class="row mt-4">
                                         <div class="col-sm-12 text-center">
                                             <button type="button" class="btn btn-primary" onclick="stepper.previous()">Back</button>
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary btn-stepper-next" data-step="3">Submit</button>
                                         </div>
                                     </div>
                                 </div>

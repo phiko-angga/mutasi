@@ -13,7 +13,6 @@
                             <div class="col-md-3 h-100 py-1">
                                 <div class="form-group h-100">
                                     <select form="form-list" style="width:100%" class="form-select select2advance" id="provinsi_id" data-select2-placeholder="Pilih provinsi" data-select2-url="{{ url('get-select/provinsi') }}" aria-label="Default select example">
-                                        
                                         @isset($filter_provinsi)
                                             <option value="{{$filter_provinsi->id}}">{{$filter_provinsi->nama}}</option>
                                         @endif

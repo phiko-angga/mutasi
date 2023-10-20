@@ -302,7 +302,7 @@
                                 
                                 <div class="row justify-content-end">
                                     <div class="col-sm-12 text-center">
-                                        <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                        <button type="button" class="btn btn-primary btn-stepper-next" data-step="0">Next</button>
                                     </div>
                                 </div>
                             </div>

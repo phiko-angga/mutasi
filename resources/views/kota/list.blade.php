@@ -16,7 +16,7 @@
 
 @section('content')
 
-@include('layout._filter_wilayah')
+<!-- @include('layout._filter_wilayah') -->
 <div class="row">
 
 	<div class="col-md-12 grid-margin stretch-card">
@@ -56,7 +56,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class=" me-3 ms-auto"><input value="{{isset($search) ? $search : ''}}" type="text" id="search" name="search" class="form-control form-control-sm" placeholder="Search"  autofocus></div>
+                            <div class=" me-3 ms-auto" style="width:160px">
+                                <div class="form-group h-100">
+                                    <select form="form-list" class="form-select select2advance" id="provinsi_id" data-select2-placeholder="Pilih provinsi" data-select2-url="{{ url('get-select/provinsi') }}" aria-label="Default select example">
+                                        @isset($filter_provinsi)
+                                            <option value="{{$filter_provinsi->id}}">{{$filter_provinsi->nama}}</option>
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class=" me-3"><input value="{{isset($search) ? $search : ''}}" type="text" id="search" name="search" class="form-control form-control-sm" placeholder="Search"  autofocus></div>
                             
                         </div>
                     </div>

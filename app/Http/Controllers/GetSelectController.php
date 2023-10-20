@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BiayaTransport;
 use App\Models\Sbum;
 use App\Models\Dephub;
 use App\Models\Paraf;
@@ -43,7 +44,7 @@ class GetSelectController extends Controller
 
         if($search != null){
             $trans = $trans->where(function($query) use ($search){
-                $query->where('nama','like','%'.$search.'%');
+                $query->where('nama','ilike','%'.$search.'%');
             });
         }
 
@@ -55,6 +56,7 @@ class GetSelectController extends Controller
                 $data['items'][] = [
                     'id' => $p->id,
                     'text' => $p->nama,
+                    'data' => $p
                 ];
             }
             $data['total_count'] = $trans->count();
@@ -76,7 +78,7 @@ class GetSelectController extends Controller
 
         if($search != null){
             $provinsi = $provinsi->where(function($query) use ($search){
-                $query->where('nama','like','%'.$search.'%');
+                $query->where('nama','ilike','%'.$search.'%');
             });
         }
 
@@ -119,8 +121,8 @@ class GetSelectController extends Controller
 
         if($search != null){
             $kota = $kota->where(function($query) use ($search){
-                $query->where('tb_kota.nama','like','%'.$search.'%')
-                ->orWhere('tb_kota.kode','like','%'.$search.'%');
+                $query->where('tb_kota.nama','ilike','%'.$search.'%')
+                ->orWhere('tb_kota.kode','ilike','%'.$search.'%');
             });
         }
         $kota = $kota->skip($page)->take($limit)->get();
@@ -149,7 +151,7 @@ class GetSelectController extends Controller
         
         if($search != null){
             $paraf = $paraf->where(function($query) use ($search){
-                $query->where('nama','like','%'.$search.'%');
+                $query->where('nama','ilike','%'.$search.'%');
             });
         }
         $paraf = $paraf->skip($page)->take($limit)->get();
@@ -177,7 +179,7 @@ class GetSelectController extends Controller
         
         if($search != null){
             $ppk = $ppk->where(function($query) use ($search){
-                $query->where('nama','like','%'.$search.'%');
+                $query->where('nama','ilike','%'.$search.'%');
             });
         }
         $ppk = $ppk->skip($page)->take($limit)->get();
@@ -201,8 +203,8 @@ class GetSelectController extends Controller
         $kotaTujuan = $request->kota_tujuan;
         
         $darat = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan);
-        $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
-        ->union($darat)->toSql();
+        // $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
+        // ->union($darat)->toSql();
         // Log::debug('jarak '.$jarak);
         $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
         ->union($darat)->first();
@@ -226,6 +228,20 @@ class GetSelectController extends Controller
         }
 
         return response()->json($biaya, 200);
+    }
+
+    public function biayaDarat(Request $request){
+        $kotaAsal = $request->kota_asal;
+        $kotaTujuan = $request->kota_tujuan;
+        
+        $data = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)->first();
+        $biaya = 0;
+        if($data){
+            $biaya_darat = BiayaTransport::select('biaya_darat')->first();
+            $biaya = $biaya_darat->biaya_darat * $data->jarak_km;
+        }
+
+        return response()->json(["biaya" => $biaya,"metode" => "Reg Darat"], 200);
     }
     
 }

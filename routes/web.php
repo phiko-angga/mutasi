@@ -45,6 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-select/provinsi', [GetSelectController::class,'getProvinsi']);
     Route::get('/get-select/jenis-transport', [GetSelectController::class,'getTransport']);
     Route::get('/transport/biaya-per-orang', [GetSelectController::class,'biayaPerOrang']);
+    Route::get('/transport/biaya-darat', [GetSelectController::class,'biayaDarat']);
+    Route::get('/transport/biaya-laut', [GetSelectController::class,'biayaLaut']);
+    Route::get('/transport/biaya-udara', [GetSelectController::class,'biayaUdara']);
     Route::get('/pengepakan/jarak', [GetSelectController::class,'getJarak']);
     Route::get('/get-select/paraf', [GetSelectController::class,'getParaf']);
     Route::get('/get-select/ppk', [GetSelectController::class,'getPpk']);

@@ -85,7 +85,7 @@
                 <div class="row justify-content-end mt-4">
                     <div class="col-sm-12 text-center">
                         <button type="button" class="btn btn-primary" onclick="stepper.previous()">Back</button>
-                        <button type="button" class="btn btn-primary" onclick="stepper.next()">Next</button>
+                        <button type="button" class="btn btn-primary btn-stepper-next" data-step="2">Next</button>
                     </div>
                 </div>
             </div>
