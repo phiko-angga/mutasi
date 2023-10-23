@@ -8,8 +8,6 @@
     var incKelTransPembantu = 0;
     var incMuat = 0;
     var curdate = 0;
-    var biayaTransport = 0;
-    var biayaMuat = 0;
     var bendaharawan = JSON.parse($("#bendaharawan_list").val());
     var kuasaanggaran = JSON.parse($("#kuasaanggaran_list").val());
     var ppk = JSON.parse($("#ppk_list").val());
@@ -330,7 +328,28 @@
         biayaCalculateAll();
     }
 
+    function biayaCalculateTarifHari(){
+
+        let id = $(this).closest('tr').data('id');
+
+        let kota_asal = $("#kota_asal_id").val();
+        let kota_tujuan = $("#kota_tujuan_id").val();
+        
+        let payload = {kota_asal:kota_asal,kota_tujuan:kota_tujuan};
+        let params = {};
+        params.url = '/uang-harian';
+        params.data = payload;
+        params.result = function(data){
+            $("#uangh_jml_tarif").val(addCommas(data.uangh)).trigger('change');
+            $("#uangh_jml_tarif_p").val(addCommas(data.uangh)).trigger('change');
+        }
+        ajaxCall(params);
+    }
+
     function biayaCalculateAll(){
+
+        var biayaTransport = 0;
+        var biayaMuat = 0;
         
         //HITUNG TOTAL BIAYA TRANSPORT
         let itemTransport = $("#item-transport").find("input[name='trans_jumlah_biaya[]']");
@@ -469,6 +488,7 @@
         $('.numeric').maskNumber({integer: true});
         initSelect2();
         
+        biayaCalculateTarifHari();
         biayaCalculateAll();
     }
 

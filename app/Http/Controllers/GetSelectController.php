@@ -14,6 +14,7 @@ use App\Models\Provinsi;
 use App\Models\Darat;
 use App\Models\Laut;
 use App\Models\Kota;
+use App\Models\UangH;
 use App\Models\Transport;
 use App\Exports\SbumExport;
 use App\Http\Controllers\Controller;
@@ -307,5 +308,25 @@ class GetSelectController extends Controller
             $tarif = $biaya->$field;
         }
         return response()->json(['tarif' => $tarif], 200);
+    }
+    
+    public function getUangH(Request $request){
+        
+        $kotaAsal = $request->kota_asal;
+        $kotaTujuan = $request->kota_tujuan;
+
+        $uangh = 0;
+        Log::debug($kotaAsal.' - '.$kotaTujuan);
+        $kotaa = Kota::find($kotaAsal);
+        $kotat = Kota::find($kotaTujuan);
+        $uangH = UangH::where('provinsi_id',$kotat->provinsi_id)->first();
+        if($uangH){
+            if($kotaa->provinsi_id == $kotat->provinsi_id){
+                $uangh = $uangH->dalam_kota;
+            }else{
+                $uangh = $uangH->luar_kota;
+            }
+        }
+        return response()->json(['uangh' => $uangh], 200);
     }
 }
