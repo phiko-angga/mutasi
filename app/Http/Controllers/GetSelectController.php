@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BiayaMuat;
 use App\Models\BiayaPengepakan;
 use App\Models\BarangGolongan;
 use App\Models\PangkatGolongan;
