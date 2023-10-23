@@ -49,12 +49,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transport/biaya-laut', [GetSelectController::class,'biayaLaut']);
     Route::get('/transport/biaya-udara', [GetSelectController::class,'biayaUdara']);
     Route::get('/pengepakan/jarak', [GetSelectController::class,'getJarak']);
+    Route::get('/pengepakan/berat-max', [GetSelectController::class,'getPengepakanBerat']);
+    Route::get('/pengepakan/tarif', [GetSelectController::class,'getPengepakanTarif']);
     Route::get('/get-select/paraf', [GetSelectController::class,'getParaf']);
     Route::get('/get-select/ppk', [GetSelectController::class,'getPpk']);
 
     Route::resource('/transaksi-biaya', TransaksiBiayaController::class)->name('*','transaksi-biaya');
     Route::get('/transaksi-mutasi', [TransaksiBiayaController::class,'approvedList']);
     Route::post('/transaksi-biaya/approve', [TransaksiBiayaController::class,'approve']);
+    Route::get('/transaksi-biaya/{id}/cetak', [TransaksiBiayaController::class,'printDetailPdf']);
 
     Route::resource('/users', UsersController::class)->name('*','users');
     Route::resource('/rute', RuteController::class)->name('*','rute');

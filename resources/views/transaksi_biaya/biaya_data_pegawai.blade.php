@@ -168,11 +168,11 @@
                                             <label class="col-sm-4 col-form-label" for="password">Status Perkawinan</label>
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="status_perkawinan" id="status_perkawinan">
-                                                        <option value="Bujangan">Bujangan</option>
-                                                        <option value="Keluarga">Keluarga</option>
-                                                        <option value="Anak 1">Anak 1</option>
-                                                        <option value="Anak 2">Anak 2</option>
-                                                        <option value="Anak 3 (+)">Anak 3 (+)</option>
+                                                        <option data-kode="bujangan" value="Bujangan">Bujangan</option>
+                                                        <option data-kode="keluarga" value="Keluarga">Keluarga</option>
+                                                        <option data-kode="anak1" value="Anak 1">Anak 1</option>
+                                                        <option data-kode="anak2" value="Anak 2">Anak 2</option>
+                                                        <option data-kode="anak3" value="Anak 3 (+)">Anak 3 (+)</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -270,13 +270,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Mata Anggaran</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" maxLength="50" class="form-control" id="mata_anggaran" name="mata_anggaran" value="{{old('mata_anggaran',isset($biaya->mata_anggaran) ? $biaya->mata_anggaran : '')}}"/>
+                                                <input type="text" maxLength="50" class="form-control" id="mata_anggaran" name="mata_anggaran" value="{{old('mata_anggaran',isset($biaya->mata_anggaran) ? $biaya->mata_anggaran : '')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Keterangan lain - lain</label>
                                             <div class="col-sm-8">
-                                                <input  {{$action == 'store' ? 'required' : ''}} type="text" maxLength="50" class="form-control" id="ket_lain2" name="ket_lain2" value="{{old('ket_lain2',isset($biaya->ket_lain2) ? $biaya->ket_lain2 : '')}}"/>
+                                                <input type="text" maxLength="50" class="form-control" id="ket_lain2" name="ket_lain2" value="{{old('ket_lain2',isset($biaya->ket_lain2) ? $biaya->ket_lain2 : '')}}"/>
                                             </div>
                                         </div>
                                     </div>

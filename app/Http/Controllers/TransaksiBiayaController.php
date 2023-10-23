@@ -56,13 +56,15 @@ class TransaksiBiayaController extends Controller
         }
     }
     
-    public function printPdf(Request $request)
+    public function printDetailPdf(Request $request, $id)
     {
-        $title = 'DAFTAR NAMA PEJABAT PENANDATANGANAN';
-        $transaksi_biaya = new Paraf();
-        $data = $transaksi_biaya->get_data($request);
-    	$pdf = PDF::loadview('transaksi_biaya.list_pdf', compact('data','title'));
-    	return $pdf->stream('DAFTAR NAMA PEJABAT PENANDATANGANAN.pdf');
+        $title = 'SURAT PERJALANAN DINAS';
+        $transaksi_biaya = new TransaksiBiaya();
+        $data = $transaksi_biaya->get_detail($id);
+        // Log::debug('data '.json_encode($data));
+    	// return view('transaksi_biaya.list_detail_pdf', compact('data','title'));
+    	$pdf = PDF::loadview('transaksi_biaya.list_detail_pdf', compact('data','title'));
+    	return $pdf->stream('SURAT PERJALANAN DINAS.pdf');
     }
 
     public function printExcel(Request $request)

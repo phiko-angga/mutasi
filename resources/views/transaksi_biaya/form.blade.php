@@ -8,7 +8,7 @@
 
 @section('content')
 
-<form id="form-user" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('transaksi-biaya.store') : route('transaksi-biaya.update',$biaya->id)}}">
+<form id="form-transaksi" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('transaksi-biaya.store') : route('transaksi-biaya.update',$biaya->id)}}">
     <input type="hidden" id="bendaharawan_list" value="{{$bendaharawan}}">
     <input type="hidden" id="kuasaanggaran_list" value="{{$kuasaanggaran}}">
     <input type="hidden" id="ppk_list" value="{{$ppk}}">

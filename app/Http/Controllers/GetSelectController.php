@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BiayaPengepakan;
+use App\Models\BarangGolongan;
+use App\Models\PangkatGolongan;
 use App\Models\BiayaTransport;
 use App\Models\Sbum;
 use App\Models\Dephub;
@@ -30,8 +33,10 @@ class GetSelectController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+
      public function getTransport(Request $request){
         $exclude = $request->exclude;
+        $onlydarat = $request->onlydarat != null ? $request->onlydarat : 0;
         $search = $request->q;
         $limit = $request->page_limit;
         $page = $request->page;
@@ -52,12 +57,16 @@ class GetSelectController extends Controller
         $data = ["total_count"   => 0];
         
         if($trans){
-            foreach($trans as $p){
-                $data['items'][] = [
+            foreach($trans as $key => $p){
+                $data['items'][$key] = [
                     'id' => $p->id,
-                    'text' => $p->nama,
+                    'text' => $p->kode,
                     'data' => $p
                 ];
+                
+                if($onlydarat == 1 && $p->kode != 'DARAT' ){
+                    $data['items'][$key]['disabled'] = true;
+                }
             }
             $data['total_count'] = $trans->count();
         }
@@ -201,18 +210,20 @@ class GetSelectController extends Controller
     public function getJarak(Request $request){
         $kotaAsal = $request->kota_asal;
         $kotaTujuan = $request->kota_tujuan;
-        
-        $darat = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan);
-        // $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
-        // ->union($darat)->toSql();
-        // Log::debug('jarak '.$jarak);
-        $jarak = Laut::select('jarak_mil as jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
-        ->union($darat)->first();
-        if(!$jarak){
-            $jarak = ['jarak_km' => 0];
+        $inTransport = $request->transport;
+        $transport = Transport::find($inTransport);
+        $jarak_km = 0;
+
+        $metode = "";
+        if($transport->kode == 'DARAT'){
+            $metode = "Reg Darat";
+            $jarak = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)->first();
+            if($jarak){
+                $jarak_km = $jarak->jarak_km;
+            }
         }
 
-        return response()->json($jarak, 200);
+        return response()->json(['jarak_km' => $jarak_km,'metode' => $metode], 200);
     }
 
     
@@ -243,5 +254,58 @@ class GetSelectController extends Controller
 
         return response()->json(["biaya" => $biaya,"metode" => "Reg Darat"], 200);
     }
+
+    public function biayaUdara(Request $request){
+        $kotaAsal = $request->kota_asal;
+        $kotaTujuan = $request->kota_tujuan;
+        
+        $dephub = Dephub::select('harga_tiket')->selectRaw("'Reg DepHub' as metode")->selectRaw("'2' as prioritas")->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan);
+        $data = Sbum::select('harga_tiket')->selectRaw("'Reg SBU/M' as metode")->selectRaw("'1' as prioritas")->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
+        ->unionAll($dephub)->orderBy("prioritas","ASC")->first();
+
+        $biaya = 0;
+        $metode = "";
+        if($data){
+            $biaya = $data->harga_tiket;
+            $metode = $data->metode;
+        }
+
+        return response()->json(["biaya" => $biaya,"metode" => $metode], 200);
+    }
+
+    public function biayaLaut(Request $request){
+        return response()->json(["biaya" => 0,"metode" => ""], 200);
+    }
     
+    public function getPengepakanBerat(Request $request){
+        $golongan = $request->golongan;
+        $status_kawin = $request->status_kawin;
+        $berat_max = 0;
+
+        $pangkatGolongan = PangkatGolongan::find($golongan);
+        if($pangkatGolongan){
+            $golongan = $pangkatGolongan->golongan;
+            $golongan = substr($golongan,0,strpos($golongan,"/"));
+            Log::debug('golongan '.$golongan);
+
+            $barangGolongan = BarangGolongan::where('golongan',$golongan)->first();
+            if($barangGolongan){
+                $berat_max = $barangGolongan->$status_kawin;
+            }
+        }
+        return response()->json(['berat_max' => $berat_max], 200);
+    }
+    
+    public function getPengepakanTarif(Request $request){
+        $transport = $request->transport;
+        $tarif = 0;
+
+        $transport = Transport::find($transport);
+        $biaya = BiayaPengepakan::first();
+        if($biaya){
+            $field = 'transport_'.(strtolower($transport->kode));
+            $tarif = $biaya->$field;
+        }
+        return response()->json(['tarif' => $tarif], 200);
+    }
 }

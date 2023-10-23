@@ -11,14 +11,14 @@
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label" for="nama">Transportasi</label>
                             <div class="col-sm-8">
-                                <select name="pengepakan_transport_id" id="pengepakan_transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="{{url('get-select/jenis-transport')}}"></select>
+                                <select name="pengepakan_transport_id" id="pengepakan_transport_id" class="form-select select2advance" data-select2-placeholder="Jenis transport" data-select2-url="{{url('get-select/jenis-transport?onlydarat=1')}}"></select>
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label" for="nama">Berat Kg</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" id="pengepakan_berat" name="pengepakan_berat" value="{{old('pengepakan_berat',isset($biaya->pengepakan_berat) ? $biaya->pengepakan_berat : 0)}}"/>
+                                <input type="number" readonly class="form-control" id="pengepakan_berat" name="pengepakan_berat" value="{{old('pengepakan_berat',isset($biaya->pengepakan_berat) ? $biaya->pengepakan_berat : 0)}}"/>
                             </div>
                         </div>
                     </div>
@@ -27,14 +27,14 @@
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / Kg</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control numeric" id="pengepakan_tarif" name="pengepakan_tarif"  value="{{old('pengepakan_tarif',isset($biaya->pengepakan_tarif) ? number_format($biaya->pengepakan_tarif) : 0)}}"/>
+                                <input readonly type="text" class="form-control numeric" id="pengepakan_tarif" name="pengepakan_tarif"  value="{{old('pengepakan_tarif',isset($biaya->pengepakan_tarif) ? number_format($biaya->pengepakan_tarif) : 0)}}"/>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label class="col-sm-4 col-form-label" for="nama">Jumlah biaya</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control numeric" id="pengepakan_biaya" name="pengepakan_biaya" value="{{old('pengepakan_biaya',isset($biaya->pengepakan_biaya) ? number_format($biaya->pengepakan_biaya) : 0)}}"/>
+                                <input readonly type="text" class="form-control numeric" id="pengepakan_biaya" name="pengepakan_biaya" value="{{old('pengepakan_biaya',isset($biaya->pengepakan_biaya) ? number_format($biaya->pengepakan_biaya) : 0)}}"/>
                             </div>
                         </div>
                     </div>

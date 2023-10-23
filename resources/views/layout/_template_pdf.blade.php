@@ -28,9 +28,9 @@
           border-bottom: 0!important;
       }
 
-      .table tbody td, .table tfoot td {
+      /* .table tbody td, .table tfoot td {
           border: 1px dashed black;
-    }
+    } */
 
     .row {
         display: inline;
@@ -109,6 +109,15 @@
         transform-origin: bottom left;
         background-color: CanvasText;
         clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+      }
+
+      .table-bordered tr{
+        border: 1px solid #000000;
+        /* border-right: solid; */
+      }
+      .table-bordered td, .table-bordered th{
+        border: 1px solid #000000;
+        /* border-right: solid; */
       }
     /* @media (min-width: 1200px){
       .container {
