@@ -315,7 +315,7 @@ class GetSelectController extends Controller
         $tarif = 0;
 
         $transport = Transport::find($transport);
-        $biaya = BiayaPengepakan::first();
+        $biaya = BiayaMuat::first();
         if($biaya){
             $field = 'transport_'.(strtolower($transport->kode));
             $tarif = $biaya->$field;
