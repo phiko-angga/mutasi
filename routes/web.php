@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pengepakan/jarak', [GetSelectController::class,'getJarak']);
     Route::get('/pengepakan/berat-max', [GetSelectController::class,'getPengepakanBerat']);
     Route::get('/pengepakan/tarif', [GetSelectController::class,'getPengepakanTarif']);
+    Route::get('/muat/tarif', [GetSelectController::class,'getMuatTarif']);
     Route::get('/uang-harian', [GetSelectController::class,'getUangH']);
     Route::get('/get-select/paraf', [GetSelectController::class,'getParaf']);
     Route::get('/get-select/ppk', [GetSelectController::class,'getPpk']);

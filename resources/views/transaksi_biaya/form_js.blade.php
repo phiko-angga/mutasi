@@ -350,7 +350,7 @@
 
         var biayaTransport = 0;
         var biayaMuat = 0;
-        
+
         //HITUNG TOTAL BIAYA TRANSPORT
         let itemTransport = $("#item-transport").find("input[name='trans_jumlah_biaya[]']");
         if(itemTransport.length > 0){
@@ -497,6 +497,11 @@
         getPengepakanTarif();
     })
 
+    $(document).on("change",".muat_transport",function(){
+        let id = $(this).closest('tr').data('id');
+        getMuatTarif(id);
+    })
+
     $(document).on("change",".muat-jarak",function(){
         let id = $(this).closest('tr').data('id');
 
@@ -577,9 +582,10 @@
     }
     
     function muatCalculateJumlahBiaya(id){
+        console.log('muatCalculateJumlahBiaya');
         let berat = parseInt($("#pengepakan_berat"+id).val());
         let jarak = parseInt($("#pengepakan_jarak"+id).val());
-        let tarif = parseInt($("#pengepakan_tarif").val().replace(/\,/g, ''));
+        let tarif = parseInt($("#muat_tarif").val());
         let percent = 0;
         if(jarak <= 100)
             percent = 70;
@@ -591,12 +597,15 @@
             percent = 40;
 
         let biaya = (jarak * berat * tarif) * percent / 100;
+        
+        console.log('muatCalculateJumlahBiaya ',biaya,jarak,berat,tarif);
         $("#pengepakan_biaya"+id).val(addCommas(biaya));
 
     }
 
     function template_muatbarang(){
         let berat_max = $("#pengepakan_berat").val();
+        
         ++incMuat;
         let template = 
             '<tr id="item'+incMuat+'" data-id="'+incMuat+'">'+
@@ -609,7 +618,7 @@
                     '</div>'+
                 '</td>'+
                 '<td>'+
-                    '<select name="muat_transport_id[]" id="pengepakan_transport_id'+incMuat+'" class="form-select select2advance pengepakan_transport" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport?onlydarat=1"></select>'+
+                    '<select name="muat_transport_id[]" id="pengepakan_transport_id'+incMuat+'" class="form-select select2advance muat_transport" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport?onlydarat=1"></select>'+
                 '</td>'+
                 '<td>'+
                     '<select name="muat_kota_asal_id[]" id="pengepakan_kota_asal_id'+incMuat+'" class="form-select select2advance muat-jarak" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
@@ -679,6 +688,25 @@
 
             $("#pengepakan_tarif").val(addCommas(tarif));
             $("#pengepakan_biaya").val(addCommas(berat * tarif));
+        }
+        ajaxCall(params);
+    }
+
+    function getMuatTarif(id){
+        let transport = $("#pengepakan_transport_id"+id).val();
+
+        let payload = {transport:transport};
+        let params = {};
+        params.url = '/muat/tarif';
+        params.data = payload;
+        params.result = function(data){
+            let tarif = 0;
+            if($.isEmptyObject(data)){
+                tarif = 0;
+            }else{
+                tarif = data.tarif;
+            }
+            $("#muat_tarif").val(tarif);
         }
         ajaxCall(params);
     }

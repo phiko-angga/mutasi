@@ -28,6 +28,7 @@
                             <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / Kg</label>
                             <div class="col-sm-8">
                                 <input readonly type="text" class="form-control numeric" id="pengepakan_tarif" name="pengepakan_tarif"  value="{{old('pengepakan_tarif',isset($biaya->pengepakan_tarif) ? number_format($biaya->pengepakan_tarif) : 0)}}"/>
+                                <input type="hidden" id="muat_tarif">
                             </div>
                         </div>
 

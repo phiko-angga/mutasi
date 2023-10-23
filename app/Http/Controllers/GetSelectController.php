@@ -310,6 +310,19 @@ class GetSelectController extends Controller
         return response()->json(['tarif' => $tarif], 200);
     }
     
+    public function getMuatTarif(Request $request){
+        $transport = $request->transport;
+        $tarif = 0;
+
+        $transport = Transport::find($transport);
+        $biaya = BiayaPengepakan::first();
+        if($biaya){
+            $field = 'transport_'.(strtolower($transport->kode));
+            $tarif = $biaya->$field;
+        }
+        return response()->json(['tarif' => $tarif], 200);
+    }
+    
     public function getUangH(Request $request){
         
         $kotaAsal = $request->kota_asal;
