@@ -317,8 +317,10 @@ class GetSelectController extends Controller
 
         $transport = Transport::find($transport);
         $biaya = BiayaMuat::first();
+        Log::debug('biaya '.json_encode($biaya));
+        Log::debug('transport '.json_encode($transport));
         if($biaya){
-            $field = 'transport_'.(strtolower($transport->kode));
+            $field = 'biaya_'.(strtolower($transport->kode));
             $tarif = $biaya->$field;
         }
         return response()->json(['tarif' => $tarif], 200);

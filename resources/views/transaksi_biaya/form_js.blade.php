@@ -121,6 +121,14 @@
         item.find('tr[id="item'+id+'"]').remove();
     })
 
+    $(document).on("click",".muat_delete",function(e){
+        e.preventDefault();
+
+        let id = $(this).data('id');
+        let item = $("#item-muatbarang");
+        item.find('tr[id="item'+id+'"]').remove();
+    })
+
     function template_keluarga(){
         ++incKel;
         let template = 
@@ -639,7 +647,7 @@
                     '<input type="text" name="muat_metode[]" id="pengepakan_metode'+incMuat+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<a href="#" class="kel_delete" data-id="'+incMuat+'"><i class="bx bx-trash"></i></a>'+
+                    '<a href="#" class="muat_delete" data-id="'+incMuat+'"><i class="bx bx-trash"></i></a>'+
                 '</td>'+
             '</tr>';
         return template;
