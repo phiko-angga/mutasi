@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Redirect;
 use Log;
 use PDF;
+use DateTime;
 
 class TransaksiBiayaController extends Controller
 {
@@ -36,6 +37,7 @@ class TransaksiBiayaController extends Controller
         $data = $transaksi_biaya->get_data($request,true,['approved' => 0]);
 
         $page = 'Perhitungan Biaya Mutasi';
+
         if($request->ajax()){
             return view('transaksi_biaya.list_pagination',compact('data','paginate_num'));
         }else{
@@ -58,7 +60,7 @@ class TransaksiBiayaController extends Controller
     
     public function printDetailPdf(Request $request, $id)
     {
-        $title = 'SURAT PERJALANAN DINAS';
+        $title = 'SURAT PERJALANAN DINAS (SPD)';
         $transaksi_biaya = new TransaksiBiaya();
         $data = $transaksi_biaya->get_detail($id);
         // Log::debug('data '.json_encode($data));
@@ -212,6 +214,7 @@ class TransaksiBiayaController extends Controller
             $muat_biaya = $request->muat_biaya;
             $muat_metode = $request->muat_metode;
             $muat_manual = $request->muat_manual;
+            $muat_tarif = $request->muat_tarif;
 
             $dataMuat = [];
             if($muat_transport_id != null && count($muat_transport_id) > 0){
@@ -225,6 +228,7 @@ class TransaksiBiayaController extends Controller
                         'kota_tujuan_id' => $muat_kota_tujuan_id[$key],
                         'berat' => $muat_berat[$key],
                         'jarak' => str_replace(',', '', $muat_jarak[$key]),
+                        'tarif' => str_replace(',', '', $muat_tarif[$key]),
                         'biaya' => str_replace(',', '', $muat_biaya[$key]),
                         'metode' => $muat_metode[$key],
                     ];

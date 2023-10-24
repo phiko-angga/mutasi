@@ -23,7 +23,7 @@
 
         // console.log($("#rampung_kuasa_nip").val(),kuasaanggaran.nip);
         $("#rampung_ppk_nip").val(ppk.nip);
-        $("#rampung_anggaran_nip").val(ppk.nip);
+        $("#rampung_anggaran_nip").val(kuasaanggaran.nip);
     })
 
     $(".bs-stepper")[0].addEventListener('show.bs-stepper', function (event) {
@@ -67,26 +67,40 @@
     $(document).on("change",".kel_dob",function(){
         let id = $(this).closest('tr').data('id');
         let dob = $(this).val();
-        dob = new Date(dob);
 
-        var today = new Date();
+        // dob = new Date(dob);
+        // var today = new Date();
         // var age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
         
-        var diff = Math.floor(today.getTime() - dob.getTime());
-        var secs = Math.floor(diff/1000);
-        var mins = Math.floor(secs/60);
-        var hours = Math.floor(mins/60);
-        var days = Math.floor(hours/24);
-        var months = Math.floor(days/31);
-        var years = Math.floor(months/12);
-        months=Math.floor(months%12);
-        days = Math.floor(days%31);
-        hours = Math.floor(hours%24);
-        mins = Math.floor(mins%60);
-        secs = Math.floor(secs%60); 
+        // var diff = Math.floor(today.getTime() - dob.getTime());
+        // var secs = Math.floor(diff/1000);
+        // var mins = Math.floor(secs/60);
+        // var hours = Math.floor(mins/60);
+        // var days = Math.floor(hours/24);
+        // var months = Math.floor(days/31);
+        // var years = Math.floor(months/12);
+        // console.log('days1',days);
+        // console.log('months1',months);
+        // console.log('years1',years);
+        // months=Math.floor(months%12);
+        // days = Math.floor(days%31);
+        // hours = Math.floor(hours%24);
+        // mins = Math.floor(mins%60);
+        // secs = Math.floor(secs%60); 
+        // console.log('days2',days);
+        // console.log('months2',months);
+        url = "/kalkulasi-umur";
 
-        $('#kel_umur'+id).val(years+' Thn '+months+' Bln '+days+' Hari');
-        $('#kel_umur_thn_'+id).val(years);
+        let payload = {dob:dob};
+        let params = {};
+        params.url = url;
+        params.data = payload;
+        params.result = function(data){
+            $('#kel_umur'+id).val(data.tahun+' Thn '+data.bulan+' Bln '+data.hari+' Hari');
+            $('#kel_umur_thn_'+id).val(data.tahun);
+        }
+        ajaxCall(params);
+
     })
 
     $(document).on("change","#pangkat_golongan",function(){
@@ -445,7 +459,7 @@
                     '<input readonly type="text" name="trans_metode[]" id="trans_metode'+incKelTrans+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<a href="#" class="kel_delete" data-id="'+incKelTrans+'"><i class="bx bx-trash"></i></a>'+
+                    '<a href="#" class="trans_delete" data-id="'+incKelTrans+'"><i class="bx bx-trash"></i></a>'+
                 '</td>'+
             '</tr>';
         return template;
@@ -532,12 +546,12 @@
         let status = $(this).is(":checked");
         if(status){
             $("#muat_manual"+id).val(1);
-            $("#muat_metode"+id).val('Manual');
+            $("#pengepakan_metode"+id).val('Manual');
             $("#pengepakan_jarak"+id).attr('readonly',false);
         }else{
             $("#muat_manual"+id).val(0);
             $("#pengepakan_jarak"+id).attr('readonly',true);
-            $("#muat_metode"+id).val('');
+            $("#pengepakan_metode"+id).val('');
         }
     })
 
@@ -639,12 +653,13 @@
                 '</td>'+
                 '<td>'+
                     '<input readonly type="number" name="muat_jarak[]" id="pengepakan_jarak'+incMuat+'" class="form-control form-control-sm">'+
+                    '<input type="hidden" name="muat_tarif[]" id="pengepakan_tarif'+incMuat+'">'+
                 '</td>'+
                 '<td>'+
                     '<input readonly type="text" name="muat_biaya[]" id="pengepakan_biaya'+incMuat+'" class="form-control form-control-sm numeric">'+
                 '</td>'+
                 '<td>'+
-                    '<input type="text" name="muat_metode[]" id="pengepakan_metode'+incMuat+'" class="form-control form-control-sm">'+
+                    '<input readonly type="text" name="muat_metode[]" id="pengepakan_metode'+incMuat+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
                     '<a href="#" class="muat_delete" data-id="'+incMuat+'"><i class="bx bx-trash"></i></a>'+
@@ -715,6 +730,7 @@
                 tarif = data.tarif;
             }
             $("#muat_tarif").val(tarif);
+            $("#pengepakan_tarif"+id).val(tarif);
         }
         ajaxCall(params);
     }

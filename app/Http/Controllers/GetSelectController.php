@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use DateTime;
 use Redirect;
 use Log;
 use PDF;
@@ -332,7 +333,7 @@ class GetSelectController extends Controller
         $kotaTujuan = $request->kota_tujuan;
 
         $uangh = 0;
-        Log::debug($kotaAsal.' - '.$kotaTujuan);
+        // Log::debug($kotaAsal.' - '.$kotaTujuan);
         $kotaa = Kota::find($kotaAsal);
         $kotat = Kota::find($kotaTujuan);
         $uangH = UangH::where('provinsi_id',$kotat->provinsi_id)->first();
@@ -344,5 +345,21 @@ class GetSelectController extends Controller
             }
         }
         return response()->json(['uangh' => $uangh], 200);
+    }
+
+    public function getUmur(Request $request){
+        
+        $dob = $request->dob;
+
+        $bday = new DateTime($dob); // Your date of birth
+        $today = new Datetime(date('Y-m-d'));
+        $diff = $today->diff($bday);
+        Log::debug(' Your age : %d years, %d month, %d days '. $diff->y.' - '. $diff->m.' - '. $diff->d);
+
+        return response()->json([
+            'tahun' => $diff->y,
+            'bulan' => $diff->m,
+            'hari' => $diff->d,
+        ], 200);
     }
 }

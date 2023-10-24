@@ -118,7 +118,7 @@ class TransaksiBiaya extends Model
     }
     
     public function get_detail($id){
-        $data = Self::select('tb_transaksi_biaya.*','pg.pangkat','pg.golongan','c.fullname as created_name','pk.nama as pejabat_komitmen_nama'
+        $data = Self::select('tb_transaksi_biaya.*','pg.pangkat','pg.golongan','c.fullname as created_name','pk.nip as pejabat_komitmen_nip','pk.nama as pejabat_komitmen_nama'
         ,'pk2.nama as pejabat_komitmen_nama2','pk2.nip as pejabat_komitmen_nip2','ttd.nama as bendaharawan_nama','ttd.nip as bendaharawan_nip',
         'rampung_kuasa_nama as kuasa_nama','rampung_kuasa_nip as kuasa_nip','pk3.nama as pejabat_komitmen_nama3','pk3.nip as pejabat_komitmen_nip3',
         'pk4.nama as pejabat_komitmen_nama4','pk4.nip as pejabat_komitmen_nip4',

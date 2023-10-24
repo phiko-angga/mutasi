@@ -23,7 +23,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / hari</label>
                                             <div class="col-sm-8">
-                                                <input readonly required type="text" class="form-control numeric" onchange="biayaCalculate('orang')" id="uangh_jml_tarif" name="uangh_jml_tarif" value="{{old('uangh_jml_tarif',isset($biaya) ? $biaya->uangh_jml_tarif : 0)}}" />
+                                                <input required type="text" class="form-control numeric" onchange="biayaCalculate('orang')" id="uangh_jml_tarif" name="uangh_jml_tarif" value="{{old('uangh_jml_tarif',isset($biaya) ? $biaya->uangh_jml_tarif : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -50,7 +50,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / hari</label>
                                             <div class="col-sm-8">
-                                                <input readonly required type="text" class="form-control numeric" onchange="biayaCalculate('pembantu')" id="uangh_jml_tarif_p" name="uangh_jml_tarif_p" value="{{old('uangh_jml_tarif_p',isset($biaya) ? $biaya->uangh_jml_tarif_p : 0)}}" />
+                                                <input required type="text" class="form-control numeric" onchange="biayaCalculate('pembantu')" id="uangh_jml_tarif_p" name="uangh_jml_tarif_p" value="{{old('uangh_jml_tarif_p',isset($biaya) ? $biaya->uangh_jml_tarif_p : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -217,9 +217,9 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Nama kuasa pengguna anggaran/pengguna barang</label>
                                             <div class="col-sm-8">
-                                                <select style="width:100%" name="rampung_anggaran_id" id="rampung_anggaran_id" class="form-select select2advance" data-select2-placeholder="Nama kuasa pengguna anggaran/pengguna barang" data-select2-url="{{url('get-select/ppk')}}">
-                                                    @isset($ppk)
-                                                        <option value="{{$ppk->id}}" selected="selected">{{$ppk->nama}}</option>
+                                                <select style="width:100%" name="rampung_anggaran_id" id="rampung_anggaran_id" class="form-select select2advance" data-select2-placeholder="Nama kuasa pengguna anggaran/pengguna barang" data-select2-url="{{url('get-select/paraf?kelompok=Kuasa Pengguna Anggaran')}}">
+                                                    @isset($kuasaanggaran)
+                                                        <option value="{{$kuasaanggaran->id}}" selected="selected">{{$kuasaanggaran->nama}}</option>
                                                     @endisset
                                                 </select>
                                             </div>

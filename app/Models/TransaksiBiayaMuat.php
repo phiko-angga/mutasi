@@ -11,7 +11,7 @@ class TransaksiBiayaMuat extends Model
     
     protected $table = "tb_transaksi_biaya_muat";
     protected $fillable = [
-        'transaksi_biaya_id','manual','transport_id','kota_asal_id','kota_tujuan_id','berat','jarak','biaya','metode'
+        'transaksi_biaya_id','manual','transport_id','kota_asal_id','kota_tujuan_id','berat','jarak','tarif','biaya','metode'
     ];
     
     public function get_data($request, $paginate = true){
