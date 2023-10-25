@@ -11,6 +11,7 @@
 <form id="form-transaksi" method="post" enctype="multipart/form-data" action="{{$action == 'store' ? route('transaksi-biaya.store') : route('transaksi-biaya.update',$biaya->id)}}">
     <input type="hidden" id="bendaharawan_list" value="{{$bendaharawan}}">
     <input type="hidden" id="kuasaanggaran_list" value="{{$kuasaanggaran}}">
+    <input type="hidden" id="penerima_list" value="{{$penerima}}">
     <input type="hidden" id="ppk_list" value="{{$ppk}}">
     <input type="hidden" id="today" value="{{Carbon\Carbon::parse(date('Y-m-d'))->formatLocalized('%d %B %Y')}}">
     @csrf   

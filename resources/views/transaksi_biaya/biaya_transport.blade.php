@@ -55,6 +55,12 @@
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
+                                                        <td colspan="7"></td>
+                                                        <td>
+                                                            <h6 id="trans_total_biaya"></h6>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
                                                         <td colspan="10" class="text-end">
                                                             <button title="Tambah transport" type="button" class="trans_add btn btn-sm rounded-pill btn-icon btn-primary">
                                                                 <span class="tf-icons bx bx-plus"></span>
@@ -98,6 +104,12 @@
 
                                                 </tbody>
                                                 <tfoot>
+                                                    <tr>
+                                                        <td colspan="5"></td>
+                                                        <td>
+                                                            <h6 id="trans_total_biaya_pembantu"></h6>
+                                                        </td>
+                                                    </tr>
                                                     <tr>
                                                         <td colspan="8" class="text-end">
                                                             <button title="Tambah transport pembantu" type="button" class="trans_add_pembantu btn btn-sm rounded-pill btn-icon btn-primary">

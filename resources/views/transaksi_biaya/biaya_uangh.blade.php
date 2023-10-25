@@ -182,9 +182,9 @@
                                                 </div>
                                             </label>
                                             <div class="col-sm-8">
-                                                <select style="width:100%" id="rampung_kuasa_select" class="form-select select2advance" data-select2-placeholder="Penerima" data-select2-url="{{url('get-select/paraf?kelompok=Kuasa Pengguna Anggaran')}}">
-                                                    @isset($kuasaanggaran)
-                                                        <option value="{{$kuasaanggaran->id}}" selected="selected">{{$kuasaanggaran->nama}}</option>
+                                                <select style="width:100%" id="rampung_kuasa_select" class="form-select select2advance" data-select2-placeholder="Penerima" data-select2-url="{{url('get-select/paraf?kelompok=Yang menerima/dikuasakan')}}">
+                                                    @isset($penerima)
+                                                        <option value="{{$penerima->id}}" selected="selected">{{$penerima->nama}}</option>
                                                     @endisset
                                                 </select>
                                                 <input style="display:none" readonly type="text" name="rampung_kuasa_nama" id="rampung_kuasa_nama" class="form-control form-control-sm">

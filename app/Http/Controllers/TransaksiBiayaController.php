@@ -90,8 +90,9 @@ class TransaksiBiayaController extends Controller
         $kota = Kota::all();
         $bendaharawan = Paraf::where('kelompok','ilike','Bendaharawan')->first();
         $kuasaanggaran = Paraf::where('kelompok','ilike','Kuasa Pengguna Anggaran')->first();
+        $penerima = Paraf::where('kelompok','ilike','Yang menerima/dikuasakan')->first();
         $ppk = PejabatKomitmen::first();
-        return view('transaksi_biaya.form',compact('ppk','kuasaanggaran','bendaharawan','action','title','page','pejabat_komitmen','pangkat_golongan','kelompok_jabatan','transport','kota'));
+        return view('transaksi_biaya.form',compact('penerima','ppk','kuasaanggaran','bendaharawan','action','title','page','pejabat_komitmen','pangkat_golongan','kelompok_jabatan','transport','kota'));
     }
 
     /**

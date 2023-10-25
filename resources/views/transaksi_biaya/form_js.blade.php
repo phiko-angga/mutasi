@@ -10,6 +10,7 @@
     var curdate = 0;
     var bendaharawan = JSON.parse($("#bendaharawan_list").val());
     var kuasaanggaran = JSON.parse($("#kuasaanggaran_list").val());
+    var penerima = JSON.parse($("#penerima_list").val());
     var ppk = JSON.parse($("#ppk_list").val());
 
     $(document).ready(function () {
@@ -19,7 +20,7 @@
         $('.numeric').maskNumber({integer: true});
 
         $("#rampung_bendaharawan_nip").val(bendaharawan.nip);
-        $("#rampung_kuasa_nip").val(kuasaanggaran.nip);
+        $("#rampung_kuasa_nip").val(penerima.nip);
 
         // console.log($("#rampung_kuasa_nip").val(),kuasaanggaran.nip);
         $("#rampung_ppk_nip").val(ppk.nip);
@@ -141,6 +142,7 @@
         let id = $(this).data('id');
         let item = $("#item-muatbarang");
         item.find('tr[id="item'+id+'"]').remove();
+        muatCalculateJumlahBiayaTotal();
     })
 
     function template_keluarga(){
@@ -191,8 +193,10 @@
         let item = $("#item-transport");
         let newt = template_transport(false,total_kel);
         item.append(newt);
-        initSelect2();
         $('.numeric').maskNumber({integer: true});
+        setTimeout(() => {
+            initSelect2();
+        }, 200);
     })
     
     $(document).on("change",".trans_manual_cb",function(){
@@ -216,25 +220,41 @@
         transportCalculateBiaya(id,data,pembantu);
     })
 
+    $(document).on("change",".trans_jumlah_biaya",function(){
+        let id = $(this).closest('tr').data('id');
+        let biaya = parseInt($(this).val().replace(/\,/g, ''))
+
+        let data = {"biaya":biaya,"metode":"Manual"};
+        let pembantu = $(this).closest('tr').data('pembantu');
+        transportCalculateBiaya(id,data,pembantu);
+    })
+
     $(document).on("change",".biaya-per-orang",function(){
         let id = $(this).closest('tr').data('id');
+        let pembantu = $(this).closest('tr').data('pembantu');
         
-        let data = $("#trans_transport_id"+id).select2('data')[0].data;
-        let transport = data.kode;
-        url = "/transport/biaya-"+transport.toLowerCase();
+        if(pembantu == false){
+            let data = $("#trans_transport_id"+id).select2('data')[0].data;
+            let transport = data.kode;
+            url = "/transport/biaya-"+transport.toLowerCase();
 
-        let kota_asal = $("#trans_kota_asal_id"+id).val();
-        let kota_tujuan = $("#trans_kota_tujuan_id"+id).val();
+            let kota_asal = $("#trans_kota_asal_id"+id).val();
+            let kota_tujuan = $("#trans_kota_tujuan_id"+id).val();
 
-        let payload = {kota_asal:kota_asal,kota_tujuan:kota_tujuan};
-        let params = {};
-        params.url = url;
-        params.data = payload;
-        params.result = function(data){
-            let pembantu = $(this).closest('tr').data('pembantu');
+            let payload = {kota_asal:kota_asal,kota_tujuan:kota_tujuan};
+            let params = {};
+            params.url = url;
+            params.data = payload;
+            params.result = function(data){
+                let pembantu = $(this).closest('tr').data('pembantu');
+                transportCalculateBiaya(id,data,pembantu);
+            }
+            ajaxCall(params);
+        }else{
+            
+            let data = {"biaya":0,"metode":"Manual"};
             transportCalculateBiaya(id,data,pembantu);
         }
-        ajaxCall(params);
 
         // let id = $(this).closest('tr').data('id');
         // let pembantu = $(this).closest('tr').data('pembantu');
@@ -279,9 +299,16 @@
     $(document).on("click",".trans_delete",function(e){
         e.preventDefault();
 
-        let id = $(this).data('id');
-        let item = $("#item-transport");
+        let id = $(this).closest('tr').data('id');
+        let pembantu = $(this).closest('tr').data('pembantu');
+        console.log('pembantu',pembantu);
+        if(pembantu == true)
+            item = $("#item-transport-pembantu");
+        else
+            item = $("#item-transport");
+
         item.find('tr[id="item'+id+'"]').remove();
+        transportCalculateBiayaTotal();
     })
 
     function checkUmur(umur){
@@ -321,11 +348,36 @@
             }else{
                 jumBiaya  = biaya * 2;
             }
+            $("#jumlah_biaya"+id).val(addCommas(jumBiaya));
         }
 
-        $("#jumlah_biaya"+id).val(addCommas(jumBiaya));
-        
         $("#trans_metode"+id).val(data.metode);
+        transportCalculateBiayaTotal();
+    }
+
+    function transportCalculateBiayaTotal(){
+
+        //-------- Total biaya -------------
+        let biayaEl = $("#item-transport").find("input[name='trans_jumlah_biaya[]']");
+        let totalBiaya = 0;
+        if(biayaEl.length > 0){
+            $.each(biayaEl,function(){
+                getBiaya = parseInt($(this).val().replace(/\,/g, ''));
+                totalBiaya += getBiaya;
+            })
+        }
+        $("#trans_total_biaya").html(addCommas(totalBiaya));
+
+        //-------- Total biaya pembantu -------------
+        biayaEl = $("#item-transport-pembantu").find("select[name='trans_jumlah_biaya[]']");
+        totalBiaya = 0;
+        if(biayaEl.length > 0){
+            $.each(biayaEl,function(){
+                getBiaya = parseInt($(this).val().replace(/\,/g, ''));
+                totalBiaya += getBiaya;
+            })
+        }
+        $("#trans_total_biaya_pembantu").html(addCommas(totalBiaya));
     }
 
     function biayaCalculate(uangh){
@@ -403,47 +455,56 @@
 
     function template_transport(pembantu = false, kel_jumlah = 0){
 
-        ++incKelTrans;
+        let inc = 0;
+        if(pembantu){
+            ++incKelTransPembantu;
+            inc = incKelTransPembantu;
+        }else{
+            ++incKelTrans;
+            inc = incKelTrans;
+        }
+
+
         let template = 
-            '<tr id="item'+incKelTrans+'" data-id="'+incKelTrans+'" data-pembantu="'+pembantu+'">'+
-                '<td>'+incKelTrans+'</td>';
+            '<tr id="item'+inc+'" data-id="'+inc+'" data-pembantu="'+pembantu+'">'+
+                '<td>'+inc+'</td>';
 
                 template += '<td '+(pembantu ? 'hidden' : '')+'>'+
                     '<div class="form-check">'+
-                        '<input class="form-check-input trans_manual_cb" id="trans_manual_cb'+incKelTrans+'" name="trans_manual_cb[]" type="checkbox" value="1">'+
-                        '<input id="trans_manual'+incKelTrans+'" name="trans_manual[]" type="hidden" value="0">'+
-                        '<label class="form-check-label" for="cb_manual'+incKelTrans+'"></label>'+
+                        '<input class="form-check-input trans_manual_cb" id="trans_manual_cb'+inc+'" name="trans_manual_cb[]" type="checkbox" value="1">'+
+                        '<input id="trans_manual'+inc+'" name="trans_manual[]" type="hidden" value="0">'+
+                        '<label class="form-check-label" for="cb_manual'+inc+'"></label>'+
                     '</div>'+
                 '</td>';
 
             template += '<td>'+
                     '<input type="hidden" name="trans_pembantu[]" value="'+(pembantu ? 1 : 0)+'">'+
-                    '<select style="width: 100%" name="trans_transport_id[]" id="trans_transport_id'+incKelTrans+'" class="form-select select2advance trans_transport" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
+                    '<select style="width: 100%" name="trans_transport_id[]" id="trans_transport_id'+inc+'" class="form-select select2advance trans_transport" data-select2-placeholder="Jenis transport" data-select2-url="'+base_url+'/get-select/jenis-transport"></select>'+
                 '</td>'+
                 '<td style="width:250px">'+
-                    '<select style="width: 100%" name="trans_kota_asal_id[]" id="trans_kota_asal_id'+incKelTrans+'" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                    '<select style="width: 100%" name="trans_kota_asal_id[]" id="trans_kota_asal_id'+inc+'" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat berangkat" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>'+
                 '<td style="width:250px">'+
-                    '<select style="width: 100%" name="trans_kota_tujuan_id[]" id="trans_kota_tujuan_id'+incKelTrans+'" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
+                    '<select style="width: 100%" name="trans_kota_tujuan_id[]" id="trans_kota_tujuan_id'+inc+'" class="form-select select2advance biaya-per-orang" data-select2-placeholder="Tempat tujuan" data-select2-url="'+base_url+'/get-select/kota"></select>'+
                 '</td>';
                 
             // if(!pembantu){
                 template += '<td '+(pembantu ? 'hidden' : '')+'>'+
-                    '<input type="number" readonly name="trans_orang[]" id="orang'+incKelTrans+'" value="'+kel_jumlah+'" class="form-control form-control-sm">'+
+                    '<input type="number" readonly name="trans_orang[]" id="orang'+inc+'" value="'+kel_jumlah+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td '+(pembantu ? 'hidden' : '')+' style="width:220px">'+
-                    '<input type="text" readonly name="trans_biaya[]" id="biaya_perorang'+incKelTrans+'" class="form-control form-control-sm numeric trans_biaya">'+
+                    '<input type="text" readonly name="trans_biaya[]" id="biaya_perorang'+inc+'" class="form-control form-control-sm numeric trans_biaya">'+
                 '</td>';
             // }else{
                 template += 
                 '<td '+(!pembantu ? 'hidden' : '')+'>'+
-                    '<input type="text" name="trans_perkiraan[]" id="rinci_perkiraan'+incKelTrans+'" class="form-control form-control-sm">'+
+                    '<input type="text" name="trans_perkiraan[]" id="rinci_perkiraan'+inc+'" class="form-control form-control-sm">'+
                 '</td>';
             // }
 
             if(pembantu){
                 template += '<td style="width:220px">'+
-                                '<select name="trans_jumlah_biaya[]" id="jumlah_biaya'+incKelTrans+'" class="form-select">'+
+                                '<select name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-select form-select-sm trans_jumlah_biaya">'+
                                     '<option value="500000">'+addCommas(500000)+'</option>'+
                                     '<option value="200000">'+addCommas(200000)+'</option>'+
                                 '</select>'+
@@ -451,15 +512,15 @@
             }else{
                 
                 template += '<td style="width:220px">'+
-                                '<input readonly type="text" name="trans_jumlah_biaya[]" id="jumlah_biaya'+incKelTrans+'" class="form-control form-control-sm numeric">'+
+                                '<input readonly type="text" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-control form-control-sm text-end numeric">'+
                             '</td style="width:220px">';
             }
             template += 
                 '<td>'+
-                    '<input readonly type="text" name="trans_metode[]" id="trans_metode'+incKelTrans+'" class="form-control form-control-sm">'+
+                    '<input readonly type="text" name="trans_metode[]" id="trans_metode'+inc+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<a href="#" class="trans_delete" data-id="'+incKelTrans+'"><i class="bx bx-trash"></i></a>'+
+                    '<a href="#" class="trans_delete" data-id="'+inc+'"><i class="bx bx-trash"></i></a>'+
                 '</td>'+
             '</tr>';
         return template;
@@ -540,6 +601,12 @@
         }
         ajaxCall(params);
     })
+
+    $(document).on("change",".muat-jarak-manual",function(){
+        let id = $(this).closest('tr').data('id');
+        data = {jarak_km:$(this).val(),metode:"Manual"};
+        muatCalculatejarak(id,data);
+    })
     
     $(document).on("change",".muat_manual_cb",function(){
         let id = $(this).closest('tr').data('id');
@@ -604,7 +671,7 @@
     }
     
     function muatCalculateJumlahBiaya(id){
-        console.log('muatCalculateJumlahBiaya');
+        // console.log('muatCalculateJumlahBiaya');
         let berat = parseInt($("#pengepakan_berat"+id).val());
         let jarak = parseInt($("#pengepakan_jarak"+id).val());
         let tarif = parseInt($("#muat_tarif").val());
@@ -620,8 +687,23 @@
 
         let biaya = (jarak * berat * tarif) * percent / 100;
         
-        console.log('muatCalculateJumlahBiaya ',biaya,jarak,berat,tarif);
+        // console.log('muatCalculateJumlahBiaya ',biaya,jarak,berat,tarif);
         $("#pengepakan_biaya"+id).val(addCommas(biaya));
+        muatCalculateJumlahBiayaTotal();
+    }
+
+    function muatCalculateJumlahBiayaTotal(){
+        
+        //-------- Total biaya -------------
+        let biayaEl = $("#item-muatbarang").find("input[name='muat_biaya[]']");
+        let totalBiaya = 0;
+        if(biayaEl.length > 0){
+            $.each(biayaEl,function(){
+                getBiaya = parseInt($(this).val().replace(/\,/g, ''));
+                totalBiaya += getBiaya;
+            })
+        }
+        $("#muat_total_biaya").html(addCommas(totalBiaya));
 
     }
 
@@ -652,11 +734,11 @@
                     '<input readonly type="number" name="muat_berat[]" value="'+berat_max+'" id="pengepakan_berat'+incMuat+'" class="form-control form-control-sm">'+
                 '</td>'+
                 '<td>'+
-                    '<input readonly type="number" name="muat_jarak[]" id="pengepakan_jarak'+incMuat+'" class="form-control form-control-sm">'+
+                    '<input readonly type="number" name="muat_jarak[]" id="pengepakan_jarak'+incMuat+'" class="form-control form-control-sm muat-jarak-manual">'+
                     '<input type="hidden" name="muat_tarif[]" id="pengepakan_tarif'+incMuat+'">'+
                 '</td>'+
                 '<td>'+
-                    '<input readonly type="text" name="muat_biaya[]" id="pengepakan_biaya'+incMuat+'" class="form-control form-control-sm numeric">'+
+                    '<input readonly type="text" name="muat_biaya[]" id="pengepakan_biaya'+incMuat+'" class="form-control form-control-sm text-end numeric">'+
                 '</td>'+
                 '<td>'+
                     '<input readonly type="text" name="muat_metode[]" id="pengepakan_metode'+incMuat+'" class="form-control form-control-sm">'+
@@ -761,7 +843,7 @@
         if(typeof data != 'undefined')
             $("#rampung_kuasa_nip").val(data.nip);
         else
-            $("#rampung_kuasa_nip").val(kuasaanggaran.nip);
+            $("#rampung_kuasa_nip").val(penerima.nip);
     })
 
     $(document).on("change","#rampung_ppk_id",function(e){

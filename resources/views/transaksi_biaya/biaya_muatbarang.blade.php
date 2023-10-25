@@ -71,6 +71,12 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <td colspan="7"></td>
+                                        <td>
+                                            <h6 class="text-end" id="muat_total_biaya"></h6>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="10" class="text-end">
                                             <button title="Tambah biaya muat" type="button" class="muatbarang_add btn btn-sm rounded-pill btn-icon btn-primary">
                                                 <span class="tf-icons bx bx-plus"></span>
