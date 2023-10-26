@@ -220,7 +220,9 @@ class GetSelectController extends Controller
         $metode = "";
         if($transport->kode == 'DARAT'){
             $metode = "Reg Darat";
-            $jarak = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)->first();
+            $union = Darat::select('jarak_km')->where('kota_asal_id',$kotaTujuan)->where('kota_tujuan_id',$kotaAsal);
+            $jarak = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
+            ->unionAll($union)->first();
             if($jarak){
                 $jarak_km = $jarak->jarak_km;
             }
@@ -248,7 +250,10 @@ class GetSelectController extends Controller
         $kotaAsal = $request->kota_asal;
         $kotaTujuan = $request->kota_tujuan;
         
-        $data = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)->first();
+        $union = Darat::select('jarak_km')->where('kota_asal_id',$kotaTujuan)->where('kota_tujuan_id',$kotaAsal);
+        $data = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
+        ->unionAll($union)
+        ->first();
         $biaya = 0;
         if($data){
             $biaya_darat = BiayaTransport::select('biaya_darat')->first();
@@ -262,9 +267,14 @@ class GetSelectController extends Controller
         $kotaAsal = $request->kota_asal;
         $kotaTujuan = $request->kota_tujuan;
         
-        $dephub = Dephub::select('harga_tiket')->selectRaw("'Reg DepHub' as metode")->selectRaw("'2' as prioritas")->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan);
+        $sbum2 = Sbum::select('harga_tiket')->selectRaw("'Reg SBU/M' as metode")->selectRaw("'2' as prioritas")->where('kota_asal_id',$kotaTujuan)->where('kota_tujuan_id',$kotaAsal);
+        $dephub = Dephub::select('harga_tiket')->selectRaw("'Reg DepHub' as metode")->selectRaw("'3' as prioritas")->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan);
+        $dephub2 = Dephub::select('harga_tiket')->selectRaw("'Reg DepHub' as metode")->selectRaw("'4' as prioritas")->where('kota_asal_id',$kotaTujuan)->where('kota_tujuan_id',$kotaAsal);
         $data = Sbum::select('harga_tiket')->selectRaw("'Reg SBU/M' as metode")->selectRaw("'1' as prioritas")->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
-        ->unionAll($dephub)->orderBy("prioritas","ASC")->first();
+        ->unionAll($sbum2)
+        ->unionAll($dephub)
+        ->unionAll($dephub2)
+        ->orderBy("prioritas","ASC")->first();
 
         $biaya = 0;
         $metode = "";
