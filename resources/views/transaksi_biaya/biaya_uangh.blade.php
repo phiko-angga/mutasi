@@ -162,16 +162,19 @@
                                             <label class="col-sm-4 col-form-label" for="nama">Nama Bendaharawan</label>
                                             <div class="col-sm-8">
                                                 <select style="width:100%" name="rampung_bendaharawan_id" id="rampung_bendaharawan_id" class="form-select select2advance" data-select2-placeholder="Nama bendaharawan" data-select2-url="{{url('get-select/paraf?kelompok=Bendaharawan')}}">
-                                                    @isset($bendaharawan)
+                                                    
+                                                    @if(isset($biaya))
+                                                        <option value="{{$biaya->rampung_bendaharawan_id}}" selected="selected">{{$biaya->bendaharawan_nama}}</option>
+                                                    @else($bendaharawan)
                                                         <option value="{{$bendaharawan->id}}" selected="selected">{{$bendaharawan->nama}}</option>
-                                                    @endisset
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">NIP Bendaharawan</label>
                                             <div class="col-sm-8">
-                                                <input readonly type="text" name="rampung_bendaharawan_nip" id="rampung_bendaharawan_nip" class="form-control form-control-sm">
+                                                <input readonly type="text" value="{{isset($biaya) ? $biaya->bendaharawan_nip : $bendaharawan->nip }}" name="rampung_bendaharawan_nip" id="rampung_bendaharawan_nip" class="form-control form-control-sm">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -182,10 +185,13 @@
                                                 </div>
                                             </label>
                                             <div class="col-sm-8">
-                                                <select style="width:100%" id="rampung_kuasa_select" class="form-select select2advance" data-select2-placeholder="Penerima" data-select2-url="{{url('get-select/paraf?kelompok=Yang menerima/dikuasakan')}}">
-                                                    @isset($penerima)
+                                                <select style="width:100%" name="rampung_kuasa" id="rampung_kuasa_select" class="form-select select2advance" data-select2-placeholder="Penerima" data-select2-url="{{url('get-select/paraf?kelompok=Yang menerima/dikuasakan')}}">
+                                                
+                                                    @if(isset($biaya))
+                                                        <option value="{{$biaya->rampung_kuasa}}" selected="selected">{{$biaya->rampung_kuasa_nama}}</option>
+                                                    @else($penerima)  
                                                         <option value="{{$penerima->id}}" selected="selected">{{$penerima->nama}}</option>
-                                                    @endisset
+                                                    @endif
                                                 </select>
                                                 <input style="display:none" readonly type="text" name="rampung_kuasa_nama" id="rampung_kuasa_nama" class="form-control form-control-sm">
                                             </div>
@@ -193,7 +199,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">NIP yang menerima/dikuasakan</label>
                                             <div class="col-sm-8">
-                                                <input type="text" readonly name="rampung_kuasa_nip" id="rampung_kuasa_nip" class="form-control form-control-sm">
+                                                <input type="text" readonly name="rampung_kuasa_nip" id="rampung_kuasa_nip" value="{{isset($biaya) ? ($biaya->nip == null ? $biaya->kuasa_nip : $biaya->nip) : $penerima->nip }}" class="form-control form-control-sm">
                                             </div>
                                         </div>
                                     </div>
@@ -202,32 +208,36 @@
                                             <label class="col-sm-4 col-form-label" for="nama">Pejabat pembuat komitmen (PPK)</label>
                                             <div class="col-sm-8">
                                                 <select style="width:100%" name="rampung_ppk_id" id="rampung_ppk_id" class="form-select select2advance" data-select2-placeholder="Pejabat pembuat komitmen" data-select2-url="{{url('get-select/ppk')}}">
-                                                    @isset($ppk)
+                                                    @if(isset($biaya))
+                                                        <option value="{{$biaya->rampung_ppk_id}}" selected="selected">{{$biaya->pejabat_komitmen_nama3}}</option>
+                                                    @else($ppk) 
                                                         <option value="{{$ppk->id}}" selected="selected">{{$ppk->nama}}</option>
-                                                    @endisset
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">NIP pejabat pembuat komitmen</label>
                                             <div class="col-sm-8">
-                                                <input readonly type="text" name="rampung_ppk_nip" id="rampung_ppk_nip" class="form-control form-control-sm">
+                                                <input readonly type="text" name="rampung_ppk_nip" id="rampung_ppk_nip" value="{{isset($biaya) ? $biaya->pejabat_komitmen_nip3 : $ppk->nip }}" class="form-control form-control-sm">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Nama kuasa pengguna anggaran/pengguna barang</label>
                                             <div class="col-sm-8">
                                                 <select style="width:100%" name="rampung_anggaran_id" id="rampung_anggaran_id" class="form-select select2advance" data-select2-placeholder="Nama kuasa pengguna anggaran/pengguna barang" data-select2-url="{{url('get-select/paraf?kelompok=Kuasa Pengguna Anggaran')}}">
-                                                    @isset($kuasaanggaran)
+                                                    @if(isset($biaya))
+                                                        <option value="{{$biaya->rampung_anggaran_id}}" selected="selected">{{$biaya->pejabat_komitmen_nama4}}</option>
+                                                    @else($kuasaanggaran) 
                                                         <option value="{{$kuasaanggaran->id}}" selected="selected">{{$kuasaanggaran->nama}}</option>
-                                                    @endisset
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">NIP kuasa pengguna anggaran/pengguna barang</label>
                                             <div class="col-sm-8">
-                                                <input type="text" readonly name="rampung_anggaran_nip" id="rampung_anggaran_nip" class="form-control form-control-sm">
+                                                <input type="text" readonly name="rampung_anggaran_nip" id="rampung_anggaran_nip" value="{{isset($biaya) ? $biaya->pejabat_komitmen_nip4 : $kuasaanggaran->nip }}" class="form-control form-control-sm">
                                             </div>
                                         </div>
                                     </div>

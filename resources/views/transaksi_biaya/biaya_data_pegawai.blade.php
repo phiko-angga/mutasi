@@ -26,7 +26,7 @@
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="pejabat_komitmen_id" id="pejabat_komitmen">
                                                     @foreach($pejabat_komitmen as $p)
-                                                        <option value="{{$p->id}}">{{$p->nama}}</option>
+                                                        <option {{isset($biaya) ? ($biaya->pejabat_komitmen_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -50,7 +50,7 @@
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="pangkat_golongan_id" id="pangkat_golongan">
                                                     @foreach($pangkat_golongan as $pg)
-                                                        <option data-golongan="{{$pg->golongan}}" value="{{$pg->id}}">{{$pg->golongan != "" ? $pg->golongan.' - '.$pg->pangkat : $pg->pangkat}}</option>
+                                                        <option {{isset($biaya) ? ($biaya->pangkat_golongan_id == $pg->id ? 'selected' : '') : ''}} data-golongan="{{$pg->golongan}}" value="{{$pg->id}}">{{$pg->golongan != "" ? $pg->golongan.' - '.$pg->pangkat : $pg->pangkat}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -67,7 +67,7 @@
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="kelompok_jabatan_id" id="kelompok_jabatan">
                                                     @foreach($kelompok_jabatan as $kj)
-                                                        <option value="{{$kj->id}}">{{$kj->kelompok.' - '.$kj->nama}}</option>
+                                                        <option {{isset($biaya) ? ($biaya->kelompok_jabatan_id == $kj->id ? 'selected' : '') : ''}} value="{{$kj->id}}">{{$kj->kelompok.' - '.$kj->nama}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -96,7 +96,7 @@
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="transport_id" id="transport_id">
                                                     @foreach($transport as $t)
-                                                        <option value="{{$t->id}}">{{$t->nama}}</option>
+                                                        <option {{isset($biaya) ? ($biaya->transport_id == $t->id ? 'selected' : '') : ''}} value="{{$t->id}}">{{$t->nama}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -104,11 +104,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tempat Berangkat</label>
                                             <div class="col-sm-8">
-                                                <select placeholder="Pilih tempat berangkat" class="form-select" name="kota_asal_id" id="kota_asal_id">
-                                                    <option></option>
-                                                    @foreach($kota as $kt)
-                                                        <option value="{{$kt->id}}">{{$kt->nama}}</option>
-                                                    @endforeach
+                                                <select placeholder="Pilih tempat berangkat" class="form-select select2advance" name="kota_asal_id" id="kota_asal_id" data-select2-wilayah="1" data-select2-placeholder="Tempat berangkat" data-select2-url="{{url('get-select/kota')}}">
+                                                   
+                                                    @if(isset($biaya))
+                                                        <option value="{{$biaya->kota_asal_id}}">{{$biaya->kotaa_nama.'#Provinsi '.$biaya->provinsia_nama}}</option>
+                                                    @else 
+                                                        <option></option>
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
@@ -141,11 +143,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tempat tujuan</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="kota_tujuan_id" id="kota_tujuan_id">
-                                                    <option></option>
-                                                    @foreach($kota as $kt)
-                                                        <option value="{{$kt->id}}">{{$kt->nama}}</option>
-                                                    @endforeach
+                                                <select placeholder="Pilih tempat tujuan" class="form-select select2advance" name="kota_tujuan_id" id="kota_tujuan_id" data-select2-wilayah="1" data-select2-placeholder="Tempat tujuan" data-select2-url="{{url('get-select/kota')}}">
+                                                    
+                                                    @if(isset($biaya))
+                                                        <option value="{{$biaya->kota_tujuan_id}}">{{$biaya->kotat_nama.'#Provinsi '.$biaya->provinsit_nama}}</option>
+                                                    @else 
+                                                        <option></option>
+                                                    @endif
                                                 </select>
                                             </div>
                                         </div>
@@ -167,12 +171,19 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Status Perkawinan</label>
                                             <div class="col-sm-8">
+                                                @php
+                                                $statusKawinList = [
+                                                        ['kode' => 'bujangan','value' => 'Bujangan'],
+                                                        ['kode' => 'keluarga','value' => 'Keluarga'],
+                                                        ['kode' => 'anak1','value' => 'Anak 1'],
+                                                        ['kode' => 'anak2','value' => 'Anak 2'],
+                                                        ['kode' => 'anak3','value' => 'Anak 3 (+)'],
+                                                    ]
+                                                @endphp
                                                 <select class="form-select" name="status_perkawinan" id="status_perkawinan">
-                                                        <option data-kode="bujangan" value="Bujangan">Bujangan</option>
-                                                        <option data-kode="keluarga" value="Keluarga">Keluarga</option>
-                                                        <option data-kode="anak1" value="Anak 1">Anak 1</option>
-                                                        <option data-kode="anak2" value="Anak 2">Anak 2</option>
-                                                        <option data-kode="anak3" value="Anak 3 (+)">Anak 3 (+)</option>
+                                                    @foreach($statusKawinList as $sp)
+                                                        <option {{isset($biaya) ? ($biaya->status_perkawinan == $sp['value'] ? 'selected' : '') : ''}} data-kode="{{$sp['kode']}}" value="{{$sp['value']}}">{{$sp['value']}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -237,7 +248,6 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody id="item-keluarga">
-
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
@@ -270,13 +280,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Mata Anggaran</label>
                                             <div class="col-sm-8">
-                                                <input type="text" maxLength="50" class="form-control" id="mata_anggaran" name="mata_anggaran" value="{{old('mata_anggaran',isset($biaya->mata_anggaran) ? $biaya->mata_anggaran : '')}}"/>
+                                                <input type="text" maxLength="50" class="form-control" id="mata_anggaran" name="mata_anggaran" value="{{old('mata_anggaran',isset($biaya) ? $biaya->mata_anggaran : '')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Keterangan lain - lain</label>
                                             <div class="col-sm-8">
-                                                <input type="text" maxLength="50" class="form-control" id="ket_lain2" name="ket_lain2" value="{{old('ket_lain2',isset($biaya->ket_lain2) ? $biaya->ket_lain2 : '')}}"/>
+                                                <input type="text" maxLength="50" class="form-control" id="ket_lain2" name="ket_lain2" value="{{old('ket_lain2',isset($biaya) ? $biaya->ket_lain2 : '')}}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -286,7 +296,7 @@
                                             <div class="col-sm-8">
                                                 <select class="form-select" name="pejabat_komitmen2_id" id="pejabat_komitmen2_id">
                                                     @foreach($pejabat_komitmen as $p)
-                                                        <option data-nip="{{$p->nip}}" value="{{$p->id}}">{{$p->nama}}</option>
+                                                        <option {{isset($biaya) ? ($biaya->pejabat_komitmen2_id == $p->id ? 'selected' : '') : ''}} data-nip="{{$p->nip}}" value="{{$p->id}}">{{$p->nama}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

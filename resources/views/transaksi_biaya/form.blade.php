@@ -13,6 +13,10 @@
     <input type="hidden" id="kuasaanggaran_list" value="{{$kuasaanggaran}}">
     <input type="hidden" id="penerima_list" value="{{$penerima}}">
     <input type="hidden" id="ppk_list" value="{{$ppk}}">
+    <input type="hidden" id="keluarga_list" value="{{isset($biaya) ? $biaya->keluarga : '[]'}}">
+    <input type="hidden" id="transport_list" value="{{isset($biaya) ? $biaya->transport : '[]'}}">
+    <input type="hidden" id="transport_pembantu_list" value="{{isset($biaya) ? $biaya->transport_pembantu : '[]'}}">
+    <input type="hidden" id="muatbarang_list" value="{{isset($biaya) ? $biaya->muat : '[]'}}">
     <input type="hidden" id="today" value="{{Carbon\Carbon::parse(date('Y-m-d'))->formatLocalized('%d %B %Y')}}">
     @csrf   
     @if($action == 'update')

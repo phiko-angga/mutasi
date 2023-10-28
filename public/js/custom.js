@@ -111,11 +111,44 @@ function formatDesign(item) {
             var limit_rows = 10;
             var url = $(this).data('select2-url');
             var placeholder = $(this).data('select2-placeholder');
+            var wilayah = $(this).data('select2-wilayah');
+            wilayah = typeof wilayah == 'undefined' ? "0" : "1"; 
+            console.log(wilayah);
 
-            $(this).select2({
+            if(wilayah == "1"){
+
+              $(this).select2({
                 width: 'resolve',
                 placeholder: placeholder,
                 ajax: {
+                  url: url,
+                  dataType: 'json',
+                  data: function (params) {
+                      return {
+                          q: params.term, // search term
+                          page: params.page,
+                          page_limit: limit_rows,
+                      };
+                  },
+                  processResults: function (data, params) {
+                    return {
+                      results: data.items,
+                      pagination: {
+                          more: (params.page * limit_rows) < data.total           
+                      }
+                    };
+                  },
+                  cache: true,
+                },
+                templateResult: formatDesign,
+                templateSelection: formatDesignSelected
+            });
+            }else{
+                
+              $(this).select2({
+                  width: 'resolve',
+                  placeholder: placeholder,
+                  ajax: {
                     url: url,
                     dataType: 'json',
                     data: function (params) {
@@ -126,16 +159,17 @@ function formatDesign(item) {
                         };
                     },
                     processResults: function (data, params) {
-                    return {
+                      return {
                         results: data.items,
                         pagination: {
                             more: (params.page * limit_rows) < data.total           
                         }
-                    };
+                      };
                     },
-                    cache: true
-                }
-            });
+                    cache: true,
+                  }
+              });
+            }
         })
     }
   }

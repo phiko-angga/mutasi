@@ -122,7 +122,7 @@ class TransaksiBiayaController extends Controller
             ,'ket_lain2','pengepakan_berat','pengepakan_transport_id','pengepakan_tarif','pengepakan_biaya','uangh_jml_orang','uangh_jml_hari','uangh_jml_tarif'
             ,'uangh_jml_biaya','uangh_jml_pembantu','uangh_jml_hari_p','uangh_jml_tarif_p','uangh_jml_biaya_p','uangh_jml_uang','uangh_jml_terbilang'
             ,'rampung_jumlah','rampung_dibayar','rampung_sisa','rampung_beban_mak','rampung_buktikas','rampung_tgl_pelunasan','rampung_thn_anggaran'
-            ,'rampung_bendaharawan_id','rampung_kuasa_nama','rampung_ppk_id','rampung_anggaran_id','rampung_rincian');
+            ,'rampung_bendaharawan_id','rampung_kuasa_nama','rampung_ppk_id','rampung_anggaran_id','rampung_rincian','rampung_kuasa_nip','rampung_kuasa');
             
             $user = auth()->user();
             $data['pengepakan_tarif'] = str_replace(',', '', $data['pengepakan_tarif']);
@@ -263,7 +263,7 @@ class TransaksiBiayaController extends Controller
         
         $transaksi_biaya = new TransaksiBiaya();
         $biaya = $transaksi_biaya->get_detail($id);
-        Log::debug('$biaya '.json_encode($biaya));
+        // Log::debug('$biaya '.json_encode($biaya));
 
         $page = 'Approve Biaya';
         if($request->ajax()){
@@ -313,13 +313,24 @@ class TransaksiBiayaController extends Controller
     public function edit($id)
     {
 
-        $mtransaksi_biaya = new Paraf();
-        $transaksi_biaya = $mtransaksi_biaya->get_id($id);
-
         $action = 'update';
-        $title = 'Paraf Update';
-        $page = 'Paraf';
-        return view('transaksi_biaya.form',compact('transaksi_biaya','action','title','page'));
+        $page = 'Perhitungan Biaya Mutasi';
+        $title = 'Update';
+        $pejabat_komitmen = PejabatKomitmen::all();
+        $pangkat_golongan = PangkatGolongan::all();
+        $kelompok_jabatan = KelompokJabatan::all();
+        $transport = Transport::all();
+        $kota = Kota::all();
+        $bendaharawan = Paraf::where('kelompok','ilike','Bendaharawan')->first();
+        $kuasaanggaran = Paraf::where('kelompok','ilike','Kuasa Pengguna Anggaran')->first();
+        $penerima = Paraf::where('kelompok','ilike','Yang menerima/dikuasakan')->first();
+        $ppk = PejabatKomitmen::first();
+
+        $transaksi_biaya = new TransaksiBiaya();
+        $biaya = $transaksi_biaya->get_detail($id);
+
+        return view('transaksi_biaya.form',compact('penerima','ppk','kuasaanggaran','bendaharawan', 'transaksi_biaya','pejabat_komitmen',
+        'pangkat_golongan','kelompok_jabatan','transport','kota','action','title','page','biaya'));
     }
 
     /**
@@ -331,39 +342,157 @@ class TransaksiBiayaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        request()->validate([
-            'id'   => 'required',
-            'kelompok'   => 'required',
-            'nourut'   => 'required',
-            'nama'   => 'required',
-            'nip'   => 'required',
-            'pangkat'   => 'required',
-            'jabatan'   => 'required',
-        ]);
-
-        $transaksi_biaya = Paraf::find($request->id);
-        if($transaksi_biaya){
-
+        $cekTransaksi = TransaksiBiaya::find($id);
+        if($cekTransaksi){
+                
             DB::beginTransaction();
             try {
-                $data = $request->except(['_token','_method']);
+                $data = $request->only('tanggal','tanggal_berangkat','tanggal_kembali','nomor','pegawai_diperintah','jabatan_instansi','nip','pejabat_komitmen_id','pejabat_komitmen2_id'
+                ,'pangkat_golongan_id','kelompok_jabatan_id','tingkat_perj_dinas','transport_id','kota_asal_id','ket_keberangkatan','lama_perj_dinas',
+                'kota_tujuan_id','ket_tujuan','status_perkawinan','maksud_perj_dinas','jumlah_pengikut','pembantu_ikut','pembebanan_anggaran','mata_anggaran'
+                ,'ket_lain2','pengepakan_berat','pengepakan_transport_id','pengepakan_tarif','pengepakan_biaya','uangh_jml_orang','uangh_jml_hari','uangh_jml_tarif'
+                ,'uangh_jml_biaya','uangh_jml_pembantu','uangh_jml_hari_p','uangh_jml_tarif_p','uangh_jml_biaya_p','uangh_jml_uang','uangh_jml_terbilang'
+                ,'rampung_jumlah','rampung_dibayar','rampung_sisa','rampung_beban_mak','rampung_buktikas','rampung_tgl_pelunasan','rampung_thn_anggaran'
+                ,'rampung_bendaharawan_id','rampung_kuasa_nama','rampung_ppk_id','rampung_anggaran_id','rampung_rincian','rampung_kuasa_nip','rampung_kuasa');
                 
                 $user = auth()->user();
+                $data['pengepakan_tarif'] = str_replace(',', '', $data['pengepakan_tarif']);
+                $data['pengepakan_biaya'] = str_replace(',', '', $data['pengepakan_biaya']);
+                $data['uangh_jml_tarif'] = str_replace(',', '', $data['uangh_jml_tarif']);
+                $data['uangh_jml_biaya'] = str_replace(',', '', $data['uangh_jml_biaya']);
+                $data['uangh_jml_tarif_p'] = str_replace(',', '', $data['uangh_jml_tarif_p']);
+                $data['uangh_jml_biaya_p'] = str_replace(',', '', $data['uangh_jml_biaya_p']);
+                $data['uangh_jml_uang'] = str_replace(',', '', $data['uangh_jml_uang']);
+                $data['rampung_jumlah'] = str_replace(',', '', $data['rampung_jumlah']);
+                $data['rampung_dibayar'] = str_replace(',', '', $data['rampung_dibayar']);
+                $data['rampung_beban_mak'] = str_replace(',', '', $data['rampung_beban_mak']);
+                $data['uangh_jml_tarif'] = str_replace(',', '', $data['uangh_jml_tarif']);
+                $data['uangh_jml_biaya'] = str_replace(',', '', $data['uangh_jml_biaya']);
+                $data['uangh_jml_tarif_p'] = str_replace(',', '', $data['uangh_jml_tarif_p']);
+                $data['uangh_jml_biaya_p'] = str_replace(',', '', $data['uangh_jml_biaya_p']);
+                $data['uangh_jml_uang'] = str_replace(',', '', $data['uangh_jml_uang']);
                 $data['updated_by'] = $user->id;
-                Paraf::where('id',$transaksi_biaya->id)->update($data);
+                $transaksi_biaya = TransaksiBiaya::where('id',$id)->update($data);
+
+                //--------------- KELUARGA -------------------
+                $kel_nama = $request->kel_nama;
+                $kel_dinas = $request->kel_perj_dinas;
+                $kel_dob = $request->kel_dob;
+                $kel_umur = $request->kel_umur;
+                $kel_keterangan = $request->kel_keterangan;
+                $kel_id = $request->kel_id;
+                $dataKeluarga = [];
+
+                //delete keluarga old
+                TransaksiBiayaKeluarga::where('transaksi_biaya_id',$id)->whereNotIn('id',$kel_id)->delete();
+
+                //insert / update
+                if($kel_nama != null && count($kel_nama) > 0){
+                    foreach($kel_nama as $key => $nama){
+                        TransaksiBiayaKeluarga::updateOrCreate([
+                            'id' => $kel_id[$key],
+                            'transaksi_biaya_id' => $id,
+                        ],[
+                            'biaya_perj_dinas' => $kel_dinas[$key],
+                            'nama' => $nama,
+                            'tanggal_lahir' => $kel_dob[$key],
+                            'umur' => $kel_umur[$key],
+                            'keterangan' => $kel_keterangan[$key],
+                            'updated_by' => $user->id,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ]);
+                    }
+                }
+                
+                //--------- TRANSPORT -----------------
+                $trans_pembantu = $request->trans_pembantu;
+                $trans_transport_id = $request->trans_transport_id;
+                $trans_kota_asal_id = $request->trans_kota_asal_id;
+                $trans_kota_tujuan_id = $request->trans_kota_tujuan_id;
+                $trans_orang = $request->trans_orang;
+                $trans_biaya = $request->trans_biaya;
+                $trans_jumlah_biaya = $request->trans_jumlah_biaya;
+                $trans_metode = $request->trans_metode;
+                $trans_perkiraan = $request->trans_perkiraan;
+                $trans_manual = $request->trans_manual;
+                $trans_id = $request->trans_id;
+
+                //delete Transport old
+                TransaksiBiayaTransport::where('transaksi_biaya_id',$id)->whereNotIn('id',$trans_id)->delete();
+
+                $dataTransport = [];
+                if($trans_pembantu != null && count($trans_pembantu) > 0){
+                    foreach($trans_pembantu as $key => $pembantu){
+                        
+                        TransaksiBiayaTransport::updateOrCreate([
+                            'id' => $trans_id[$key],
+                            'transaksi_biaya_id' => $id,
+                        ],[
+                            'pembantu' => $pembantu,
+                            'transport_id' => $trans_transport_id[$key],
+                            'kota_asal_id' => $trans_kota_asal_id[$key],
+                            'kota_tujuan_id' => $trans_kota_tujuan_id[$key],
+                            'orang' => $trans_orang[$key],
+                            'biaya_perorang' => str_replace(',', '', $trans_biaya[$key]),
+                            'rinci_perkiraan' => $trans_perkiraan[$key] != null ? $trans_perkiraan[$key] : "",
+                            'jumlah_biaya' => str_replace(',', '', $trans_jumlah_biaya[$key]),
+                            'metode' => $trans_metode[$key],
+                            'manual' => $trans_manual[$key],
+                        ]);
+                    }
+                }
+                
+                //--------- MUAT BARANG -----------------
+                $muat_transport_id = $request->muat_transport_id;
+                $muat_kota_asal_id = $request->muat_kota_asal_id;
+                $muat_kota_tujuan_id = $request->muat_kota_tujuan_id;
+                $muat_berat = $request->muat_berat;
+                $muat_jarak = $request->muat_jarak;
+                $muat_biaya = $request->muat_biaya;
+                $muat_metode = $request->muat_metode;
+                $muat_manual = $request->muat_manual;
+                $muat_tarif = $request->muat_tarif;
+                $muat_id = $request->muat_id;
+
+                //delete Transport old
+                TransaksiBiayaMuat::where('transaksi_biaya_id',$id)->whereNotIn('id',$muat_id)->delete();
+
+                $dataMuat = [];
+                if($muat_transport_id != null && count($muat_transport_id) > 0){
+                    foreach($muat_transport_id as $key => $transport){
+
+                        TransaksiBiayaMuat::updateOrCreate([
+                            'id' => $muat_id[$key],
+                            'transaksi_biaya_id' => $id,
+                        ],[
+                            'transport_id' => $transport,
+                            'manual' => $muat_manual[$key],
+                            'kota_asal_id' => $muat_kota_asal_id[$key],
+                            'kota_tujuan_id' => $muat_kota_tujuan_id[$key],
+                            'berat' => $muat_berat[$key],
+                            'jarak' => str_replace(',', '', $muat_jarak[$key]),
+                            'tarif' => str_replace(',', '', $muat_tarif[$key]),
+                            'biaya' => str_replace(',', '', $muat_biaya[$key]),
+                            'metode' => $muat_metode[$key],
+                        ]);
+                    }
+                }
+
+                //Commit
                 DB::commit();
 
-                return redirect('/transaksi_biaya')->with('info', 'Paraf berhasil di update');
+                return redirect('/transaksi-biaya')->with('info', 'Transaksi biaya berhasil diubah');
                 
             } catch (\Exception $e) {
                 DB::rollback();
-                Log::Error($e->getMessage());
-                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Paraf gagal, silahkan coba kembali.']);
+                Log::error($e->getMessage());
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Transaksi biaya gagal, silahkan coba kembali.']);
                 // something went wrong
             }
         }else{
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Paraf tidak ditemukan.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'ID tidak ditemukan']);
         }
+        
     }
 
     /**

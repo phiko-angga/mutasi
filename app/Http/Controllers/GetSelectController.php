@@ -40,6 +40,7 @@ class GetSelectController extends Controller
      public function getTransport(Request $request){
         $exclude = $request->exclude;
         $onlydarat = $request->onlydarat != null ? $request->onlydarat : 0;
+        $excludelaut = $request->excludelaut != null ? $request->excludelaut : 0;
         $search = $request->q;
         $limit = $request->page_limit;
         $page = $request->page;
@@ -68,6 +69,10 @@ class GetSelectController extends Controller
                 ];
                 
                 if($onlydarat == 1 && $p->kode != 'DARAT' ){
+                    $data['items'][$key]['disabled'] = true;
+                }
+
+                if($excludelaut == 1 && $p->kode == 'LAUT' ){
                     $data['items'][$key]['disabled'] = true;
                 }
             }
@@ -144,7 +149,7 @@ class GetSelectController extends Controller
             foreach($kota as $p){
                 $data['items'][] = [
                     'id' => $p->id,
-                    'text' => $p->nama,
+                    'text' => $p->nama."#Provinsi ".$p->provinsi,
                     'data' => $p
                 ];
             }
@@ -328,8 +333,8 @@ class GetSelectController extends Controller
 
         $transport = Transport::find($transport);
         $biaya = BiayaMuat::first();
-        Log::debug('biaya '.json_encode($biaya));
-        Log::debug('transport '.json_encode($transport));
+        // Log::debug('biaya '.json_encode($biaya));
+        // Log::debug('transport '.json_encode($transport));
         if($biaya){
             $field = 'biaya_'.(strtolower($transport->kode));
             $tarif = $biaya->$field;
@@ -364,7 +369,7 @@ class GetSelectController extends Controller
         $bday = new DateTime($dob); // Your date of birth
         $today = new Datetime(date('Y-m-d'));
         $diff = $today->diff($bday);
-        Log::debug(' Your age : %d years, %d month, %d days '. $diff->y.' - '. $diff->m.' - '. $diff->d);
+        // Log::debug(' Your age : %d years, %d month, %d days '. $diff->y.' - '. $diff->m.' - '. $diff->d);
 
         return response()->json([
             'tahun' => $diff->y,
