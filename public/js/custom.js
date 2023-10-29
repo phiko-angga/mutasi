@@ -107,17 +107,50 @@ function formatDesign(item) {
   function initSelect2(){
         
     if ( $('.select2advance').length > 0 ){
-        $('.select2advance').each(function(index, el) {
-            var limit_rows = 10;
-            var url = $(this).data('select2-url');
-            var placeholder = $(this).data('select2-placeholder');
-            var wilayah = $(this).data('select2-wilayah');
-            wilayah = typeof wilayah == 'undefined' ? "0" : "1"; 
-            console.log(wilayah);
+      $('.select2advance').each(function(index, el) {
+        let flag = $(this).hasClass("select2-hidden-accessible");
 
-            if(wilayah == "1"){
+        console.log('flag',flag);
+        // if(!flag){
+            
+          var limit_rows = 10;
+          var url = $(this).data('select2-url');
+          var placeholder = $(this).data('select2-placeholder');
+          var wilayah = $(this).data('select2-wilayah');
+          wilayah = typeof wilayah == 'undefined' ? "0" : "1"; 
 
-              $(this).select2({
+          if(wilayah == "1"){
+
+            $(this).select2({
+              width: 'resolve',
+              placeholder: placeholder,
+              ajax: {
+                url: url,
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                        page: params.page,
+                        page_limit: limit_rows,
+                    };
+                },
+                processResults: function (data, params) {
+                  return {
+                    results: data.items,
+                    pagination: {
+                        more: (params.page * limit_rows) < data.total           
+                    }
+                  };
+                },
+                cache: true,
+              },
+              templateResult: formatDesign,
+              templateSelection: formatDesignSelected
+            });
+
+          }else{
+              
+            $(this).select2({
                 width: 'resolve',
                 placeholder: placeholder,
                 ajax: {
@@ -139,38 +172,11 @@ function formatDesign(item) {
                     };
                   },
                   cache: true,
-                },
-                templateResult: formatDesign,
-                templateSelection: formatDesignSelected
+                }
             });
-            }else{
-                
-              $(this).select2({
-                  width: 'resolve',
-                  placeholder: placeholder,
-                  ajax: {
-                    url: url,
-                    dataType: 'json',
-                    data: function (params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page,
-                            page_limit: limit_rows,
-                        };
-                    },
-                    processResults: function (data, params) {
-                      return {
-                        results: data.items,
-                        pagination: {
-                            more: (params.page * limit_rows) < data.total           
-                        }
-                      };
-                    },
-                    cache: true,
-                  }
-              });
-            }
-        })
+          }
+        // }
+      })
     }
   }
 

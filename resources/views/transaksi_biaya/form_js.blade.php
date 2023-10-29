@@ -18,7 +18,6 @@
         $("#kota_tujuan_id").select2({width: 'resolve', placeholder:"Pilih tempat tujuan"});
         $("#pejabat_komitmen2_id").trigger('change');
         $('.numeric').maskNumber({integer: true});
-        initSelect2();
 
         // $("#rampung_bendaharawan_nip").val(bendaharawan.nip);
         // $("#rampung_kuasa_nip").val(penerima.nip);
@@ -69,6 +68,10 @@
                 item.append(newkel);
             })
         }
+        setTimeout(() => {
+            $('.numeric').maskNumber({integer: true});
+            initSelect2();
+        }, 200);
     })
 
     $(".bs-stepper")[0].addEventListener('show.bs-stepper', function (event) {
@@ -251,7 +254,9 @@
         let newt = template_transport(false,total_kel);
         item.append(newt);
         $('.numeric').maskNumber({integer: true});
+
         setTimeout(() => {
+            $('.numeric').maskNumber({integer: true});
             initSelect2();
         }, 200);
     })
@@ -339,7 +344,11 @@
         let item = $("#item-transport-pembantu");
         let newt = template_transport(true);
         item.append(newt);
-        initSelect2();
+        
+        setTimeout(() => {
+            $('.numeric').maskNumber({integer: true});
+            initSelect2();
+        }, 200);
     })
 
     $(document).on("click",".cb_transport_manual",function(){
@@ -347,9 +356,9 @@
 
         let checked = $(this).is(":checked");
         if(checked){
-            $("#biaya_perorang"+id).attr('readonly',false);
+            $("#item-transport").find("#biaya_perorang"+id).attr('readonly',false);
         }else{
-            $("#biaya_perorang"+id).attr('readonly',true);
+            $("#item-transport").find("#biaya_perorang"+id).attr('readonly',true);
         }
     })
 
@@ -370,6 +379,7 @@
 
     function checkUmur(umur){
         let kelUmur = $("input[name='kel_umur_thn[]']");
+        console.log('umur',kelUmur,umur);
         let umurFind = false;
         if(kelUmur.length > 0){
             $.each(kelUmur,function(){
@@ -381,6 +391,7 @@
 
             })
         }
+        console.log(umurFind);
         return umurFind;
     }
 
@@ -394,30 +405,32 @@
         }
         
         let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
-        $("#biaya_perorang"+id).val(addCommas(biaya));
 
         // let jumBiaya = pembantu ? 0 : biaya * total_orang;
         let jumBiaya = 0;
         if(!pembantu){
+            
+            $("#item-transport").find("#biaya_perorang"+id).val(addCommas(biaya));
+
             metode = $("#trans_metode"+id).val();
             metode = metode != "" ? metode.toLowerCase() : metode;
 
-            if(metode != "manual"){
+            // if(metode != "manual"){
                 umur2thn = checkUmur(2);
                 if(umur2thn){
                     jumBiaya = biaya * (jumlah_pengikut + 0.67);
                 }else{
                     jumBiaya  = biaya * (jumlah_pengikut + 1);
                 }
-            }else{
-                jumBiaya  = biaya * (jumlah_pengikut + 1);
-            }
+            // }else{
+            //     jumBiaya  = biaya * (jumlah_pengikut + 1);
+            // }
 
-            $("#jumlah_biaya"+id).val(addCommas(jumBiaya));
-            
+            $("#item-transport").find("#jumlah_biaya"+id).val(addCommas(jumBiaya));
             $("#item-transport").find("#trans_metode"+id).val(data.metode);
         }else{
             
+            $("#item-transport-pembantu").find("#biaya_perorang"+id).val(addCommas(biaya));
             $("#item-transport-pembantu").find("#trans_metode"+id).val(data.metode);
         }
         
@@ -591,19 +604,19 @@
                 '</td>';
             // }
 
-            if(pembantu){
-                template += '<td style="width:220px">'+
-                                '<select value="'+data.jumlah_biaya+'" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-select form-select-sm trans_jumlah_biaya">'+
-                                    '<option '+(data.jumlah_biaya == 500000 ? 'selected' : '')+' value="500000">'+addCommas(500000)+'</option>'+
-                                    '<option '+(data.jumlah_biaya == 200000 ? 'selected' : '')+' value="200000">'+addCommas(200000)+'</option>'+
-                                '</select>'+
-                            '</td style="width:220px">';
-            }else{
+            // if(pembantu){
+            //     template += '<td style="width:220px">'+
+            //                     '<select value="'+data.jumlah_biaya+'" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-select form-select-sm trans_jumlah_biaya">'+
+            //                         '<option '+(data.jumlah_biaya == 500000 ? 'selected' : '')+' value="500000">'+addCommas(500000)+'</option>'+
+            //                         '<option '+(data.jumlah_biaya == 200000 ? 'selected' : '')+' value="200000">'+addCommas(200000)+'</option>'+
+            //                     '</select>'+
+            //                 '</td style="width:220px">';
+            // }else{
                 
                 template += '<td style="width:220px">'+
-                                '<input readonly type="text" value="'+addCommas(data.jumlah_biaya)+'" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-control form-control-sm text-end numeric">'+
+                                '<input '+(pembantu == true ? '' : 'readonly')+' type="text" value="'+addCommas(data.jumlah_biaya)+'" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-control form-control-sm text-end numeric">'+
                             '</td style="width:220px">';
-            }
+            // }
             template += 
                 '<td>'+
                     '<input readonly type="text" value="'+data.metode+'" name="trans_metode[]" id="trans_metode'+inc+'" class="form-control form-control-sm">'+
@@ -763,7 +776,7 @@
         // console.log('muatCalculateJumlahBiaya');
         let berat = parseInt($("#pengepakan_berat"+id).val());
         let jarak = parseInt($("#pengepakan_jarak"+id).val());
-        let tarif = parseInt($("#pengepakan_tarif").val().replace(/\,/g, ''));
+        let tarif = parseInt($("#pengepakan_tarif"+id).val().replace(/\,/g, ''));
         tarif = tarif == "" ? 0 : tarif;
 
         let percent = 0;

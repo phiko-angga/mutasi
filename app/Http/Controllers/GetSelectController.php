@@ -304,7 +304,7 @@ class GetSelectController extends Controller
         if($pangkatGolongan){
             $golongan = $pangkatGolongan->golongan;
             $golongan = substr($golongan,0,strpos($golongan,"/"));
-            Log::debug('golongan '.$golongan);
+            // Log::debug('golongan '.$golongan);
 
             $barangGolongan = BarangGolongan::where('golongan',$golongan)->first();
             if($barangGolongan){
