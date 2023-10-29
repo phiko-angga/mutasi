@@ -13,7 +13,7 @@
             <td>{{ number_format($row->rampung_jumlah) }}</td>
             <td>{{ $row->tingkat_perj_dinas }}</td>
             <td>{{ $row->jumlah_pengikut }}</td>
-            <td style="width:250px">{{ $row->maksud_perj_dinas }}</td>
+            <td style="width:250px">{{ substr($row->maksud_perj_dinas,0,49) }} ...</td>
             <td>{{ $row->transport_nama }}</td>
             <td>{{ $row->kotaa_nama }}</td>
             <td>{{ $row->provinsia_nama }}</td>

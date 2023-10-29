@@ -11,6 +11,10 @@
   </title>
 
   <style>
+    .page-break {
+        page-break-after: always;
+    }
+    
     @page {
       size:"A4";
       margin: 2rem;

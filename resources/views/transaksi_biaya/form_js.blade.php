@@ -377,6 +377,10 @@
         transportCalculateBiayaTotal();
     })
 
+    $(document).on("keyup",".trans_jumlah_biaya",function(e){
+        transportCalculateBiayaTotal();
+    })
+
     function checkUmur(umur){
         let kelUmur = $("input[name='kel_umur_thn[]']");
         console.log('umur',kelUmur,umur);
@@ -451,7 +455,7 @@
         $("#trans_total_biaya").html(addCommas(totalBiaya));
 
         //-------- Total biaya pembantu -------------
-        biayaEl = $("#item-transport-pembantu").find("select[name='trans_jumlah_biaya[]']");
+        biayaEl = $("#item-transport-pembantu").find("input[name='trans_jumlah_biaya[]']");
         totalBiaya = 0;
         if(biayaEl.length > 0){
             $.each(biayaEl,function(){
@@ -524,6 +528,8 @@
                 biayaMuat += biaya;
             })
         }
+        biayaMuat = biayaMuat > 2000000 ? biayaMuat : biayaMuat; 
+
         let pengepakan_biaya = parseInt($("#pengepakan_biaya").val().replace(/\,/g, ''));
         let uangh_jml_biaya = parseInt($("#uangh_jml_biaya").val().replace(/\,/g, ''));
         let uangh_jml_biaya_p = parseInt($("#uangh_jml_biaya_p").val().replace(/\,/g, ''));
@@ -614,7 +620,7 @@
             // }else{
                 
                 template += '<td style="width:220px">'+
-                                '<input '+(pembantu == true ? '' : 'readonly')+' type="text" value="'+addCommas(data.jumlah_biaya)+'" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-control form-control-sm text-end numeric">'+
+                                '<input '+(pembantu == true ? '' : 'readonly')+' type="text" value="'+addCommas(data.jumlah_biaya)+'" name="trans_jumlah_biaya[]" id="jumlah_biaya'+inc+'" class="form-control form-control-sm text-end numeric trans_jumlah_biaya">'+
                             '</td style="width:220px">';
             // }
             template += 
@@ -789,7 +795,7 @@
         else if(jarak > 500)
             percent = 40;
 
-        console.log(jarak,berat,tarif,percent);
+        // console.log(jarak,berat,tarif,percent);
         let biaya = (jarak * berat * tarif) * percent / 100;
         
         // console.log('muatCalculateJumlahBiaya ',biaya,jarak,berat,tarif);
@@ -808,6 +814,7 @@
                 totalBiaya += getBiaya;
             })
         }
+        totalBiaya = totalBiaya > 2000000 ? 2000000 : totalBiaya;
         $("#muat_total_biaya").html(addCommas(totalBiaya));
 
     }
@@ -1090,9 +1097,9 @@
                 kembali = true;
                 formselect = true;
             }
-            console.log(el,el.val());
+            // console.log(el,el.val());
         }
-            console.log(kembali);
+            // console.log(kembali);
 
 
         if(kembali){

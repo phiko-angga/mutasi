@@ -175,10 +175,10 @@
                                 </tr>
                                 <tr style="text-align:center">
                                     <td colspan="2">
-                                        <h4>DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM</h4>
-                                        <h4>Pejabat Pembuat Komitmen (PPK)</h4>
-                                        <h4 style="margin-top:28px">{{$data->pejabat_komitmen_nama}}</h4>
-                                        <h4>NIP. {{$data->pejabat_komitmen_nip}}</h4>
+                                        <p style="margin-bottom:40px">DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM<br>Pejabat Pembuat Komitmen (PPK)</p>
+                                        <p>{{$data->pejabat_komitmen_nama}}<br>
+                                        NIP. {{$data->pejabat_komitmen_nip}}
+                                        </p>
                                     </td>
                                 </tr>
                             </tbody>
@@ -310,11 +310,171 @@
                 </tbody>
             </table>
             
-            <div style="margin-top:18px;font-size:16px">
+            <div style="margin-top:18px;font-size:16px;magin-bottom:20px">
                 <span style="width:140px">Terbilang</span>
                 <span style="font-weight:800"> : {{$data->uangh_jml_terbilang}}</span>
             </div>
+            
+            <table class="table" style="border:0">
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;width:50%">
+                            <p>Telah dibayar sejumlah</p>
+                            <p>Rp {{number_format($data->rampung_dibayar)}}</p>
+                        </td>
+                        <td style="text-align:left">
+                            <p>Jakarta,</p>
+                            <p>Telah menerima jumlah uang sebesar</p>
+                            <p>Rp {{number_format($data->rampung_dibayar)}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;width:50%">
+                            <p style="margin-bottom:40px">Bendaharawan</p>
+                            <p>{{$data->bendaharawan_nama}}<br>
+                            NIP. {{$data->bendaharawan_nip}}
+                            </p>
+                        </td>
+                        <td style="text-align:center">
+                            <p style="margin-bottom:40px">Yang menerima/dikuasakan</p>
+                            <p>{{$data->kuasa_nama}}<br>
+                            NIP. {{$data->kuasa_nip}}
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
+    
+    <div class="col-12" style="margin-bottom:40px">
+        <hr>
+        <h4 style="text-align:center">PERHITUNGAN SPD RAMPUNG</h4>
+        <table style="margin-top:20px;width:100%">
+            <tbody>
+                <tr>
+                    <td style="width:160px;;font-weight:700">Ditetapkan sejumlah <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>Rp {{number_format($data->rampung_jumlah)}}</td>
+                </tr>
+                <tr>
+                    <td style="width:160px;;font-weight:700">Yang telah dibayar <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>Rp {{number_format($data->rampung_dibayar)}}</td>
+                </tr>
+                <tr>
+                    <td style="width:160px;font-weight:700">Sisa kurang/lebih <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>Rp {{number_format($data->rampung_jumlah - $data->rampung_dibayar)}}</td>
+                </tr>
+                <tr>
+                    <td style="width:70%"></td>
+                    <td style="width:30%;text-align:center;">
+                        <p style="margin-bottom:40px">DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM<br>Pejabat Pembuat Komitmen (PPK)</p>
+                        <p>{{$data->pejabat_komitmen_nama}}<br>
+                        NIP. {{$data->pejabat_komitmen_nip}}
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+ <!-- KUITANSI -->
+<div class="row page-break">
+    <div class="col-12">
+        <table style="width:100%">
+            <tbody>
+                <tr>
+                    <td style="width:50%">
+                        <div style="width:80%;text-align:center">
+                            <h5><b style="font-size:18px">MAHKAMAH AGUNG RI</b><br>DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM<br>JAKARTA</h5>
+                        </div>
+                    </td>
+                    <td style="width:50%">
+
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td style="width:130px;;font-weight:700">Beban MAK  <span style="float:right">:&nbsp;&nbsp;</span></td>
+                                    <td>{{$data->rampung_beban_mak}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:130px;;font-weight:700">Bukti Kas No. <span style="float:right">:&nbsp;&nbsp;</span></td>
+                                    <td>{{$data->rampung_buktikas}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width:130px;;font-weight:700">Tahun Anggaran <span style="float:right">:&nbsp;&nbsp;</span></td>
+                                    <td>{{$data->rampung_thn_anggaran}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="text-align:center;width:100%">
+                    <td colspan="2">
+                        <h5><strong>KUITANSI</strong></h5>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        
+        <table style="width:100%;margin-top:20px">
+            <tbody>
+                <tr>
+                    <td style="width:180px;;font-weight:700">Sudah Terima Dari  <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>DIREKTORAT JENDERAL BADAN PERADILAN UMUM</td>
+                </tr>
+                <tr>
+                    <td style="width:130px;;font-weight:700">Uang Sebesar <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>Rp {{number_format($data->rampung_jumlah)}}</td>
+                </tr>
+                <tr>
+                    <td style="width:130px;;font-weight:700">Untuk Pembayaran <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>Biaya Perjalanan Dinas  An. {{$data->kuasa_nama}}</td>
+                </tr>
+                <tr>
+                    <td style="width:130px;;font-weight:700">Berdasarkan SPD Nomor <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>{{$data->nomor}}</td>
+                </tr>
+                <tr>
+                    <td style="width:130px;;font-weight:700">Tanggal <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>{{Carbon\Carbon::parse($data->tanggal_berangkat)->formatLocalized('%d %B %Y')}}</td>
+                </tr>
+                <tr>
+                    <td style="width:130px;;font-weight:700">Untuk Perjalanan Dinas dari <span style="float:right">:&nbsp;&nbsp;</span></td>
+                    <td>{{$data->kotaa_nama}} ke {{$data->kotat_nama}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><h4> Terbilang : {{$data->uangh_jml_terbilang}}</h4></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <table style="width:100%;margin-top:20px">
+            <tbody>
+            <tr>
+                <td style="text-align:center;width:33%">
+                    <p style="margin-bottom:40px">Mengetahui/Menyetujui<br>Kuasa Pengguna Anggaran/<br>Pengguna Barang Th. {{$data->rampung_thn_anggaran}}</p>
+                    <p>{{$data->pejabat_komitmen_nama4}}<br>
+                    NIP. {{$data->pejabat_komitmen_nip4}}
+                    </p>
+                </td>
+                <td style="text-align:center;width:33%">
+                    <p style="margin-bottom:40px">Bendaharawan<br><br></p>
+                    <p>{{$data->bendaharawan_nama}}<br>
+                    NIP. {{$data->bendaharawan_nip}}
+                    </p>
+                </td>
+                <td style="text-align:center;width:33%">
+                    <p style="margin-bottom:40px">Yang menerima/dikuasakan<br><br></p>
+                    <p>{{$data->kuasa_nama}}<br>
+                    NIP. {{$data->kuasa_nip}}
+                    </p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
