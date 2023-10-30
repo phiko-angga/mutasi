@@ -12,6 +12,7 @@ use App\Models\PangkatGolongan;
 use App\Models\KelompokJabatan;
 use App\Models\Transport;
 use App\Models\Kota;
+use App\Exports\TransaksiBiayaExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,6 +59,15 @@ class TransaksiBiayaController extends Controller
         }
     }
     
+    public function printPdf(Request $request)
+    {
+        $title = 'Perhitungan Biaya Mutasi';
+        $transaksi_biaya = new TransaksiBiaya();
+        $data = $transaksi_biaya->get_data($request,true,['approved' => 0]);
+    	$pdf = PDF::loadview('transaksi_biaya.list_pdf', compact('data','title'))->setPaper('a4', 'landscape');
+    	return $pdf->stream('PERHITUNGAN BIAYA MUTASI.pdf');
+    }
+
     public function printDetailPdf(Request $request, $id)
     {
         $title = 'SURAT PERJALANAN DINAS (SPD)';
@@ -71,7 +81,7 @@ class TransaksiBiayaController extends Controller
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new transaksi_biayaExport($request), 'DAFTAR NAMA PEJABAT PENANDATANGANAN.xlsx');
+        return \Excel::download(new TransaksiBiayaExport($request), 'PERHITUNGAN BIAYA MUTASI.xlsx');
     }
     /**
      * Show the form for creating a new resource.

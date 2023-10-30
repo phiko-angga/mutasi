@@ -98,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/biaya_muat_print_pdf', [BiayaMuatController::class,'printPdf']);
     Route::get('/biaya_pengepakan_print_pdf', [BiayaPengepakanController::class,'printPdf']);
     Route::get('/barang_golongan_print_pdf', [BarangGolonganController::class,'printPdf']);
+    Route::get('/transaksi_biaya_print_pdf', [TransaksiBiayaController::class,'printPdf']);
 
     Route::get('/rute_print_excel', [RuteController::class,'printExcel']);
     Route::get('/darat_print_excel', [DaratController::class,'printExcel']);
@@ -116,6 +117,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/biaya_muat_print_excel', [BiayaMuatController::class,'printExcel']);
     Route::get('/biaya_pengepakan_print_excel', [BiayaPengepakanController::class,'printExcel']);
     Route::get('/barang_golongan_print_excel', [BarangGolonganController::class,'printExcel']);
+    Route::get('/transaksi_biaya_print_excel', [TransaksiBiayaController::class,'printExcel']);
 
     Route::get('/reset-password', [AuthController::class,'resetPassword']);
     Route::post('/reset-password', [AuthController::class,'resetPasswordAct']);
