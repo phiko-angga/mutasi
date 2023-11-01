@@ -80,13 +80,13 @@ class TransaksiBiayaController extends Controller
     	return $pdf->stream('SURAT PERJALANAN DINAS.pdf');
     }
 
+    public function printExcel(Request $request)
+    {
+        return \Excel::download(new TransaksiBiayaExport($request), 'PERHITUNGAN BIAYA MUTASI.xlsx');
+    }
+
     public function printDetailExcel(Request $request, $id)
     {
-        // $transaksi_biaya = new TransaksiBiaya();
-        // $data = $transaksi_biaya->get_detail($id);
-        // $title = 'judul';
-        // Log::debug('data '.json_encode($data));
-    	// return view('transaksi_biaya.part_excel_spd', compact('data','title'));
         return \Excel::download(new TransaksiBiayaDetailExport($request,$id), 'Perhitungan Biaya Mutasi Detail.xlsx');
     }
 
