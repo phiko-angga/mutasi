@@ -171,7 +171,7 @@
                                 </tr>
                                 <tr>
                                     <td style="width:80px;;font-weight:700">Tanggal <span style="float:right">:&nbsp;&nbsp;</span></td>
-                                    <td>{{Carbon\Carbon::parse(date('Y-m-d'))->formatLocalized('%d %B %Y')}}</td>
+                                    <td>{{Carbon\Carbon::parse($data->tanggal)->formatLocalized('%d %B %Y')}}</td>
                                 </tr>
                                 <tr style="text-align:center">
                                     <td colspan="2">
@@ -205,11 +205,11 @@
                     <tbody>
                         <tr>
                             <td style="width:80px;;font-weight:700">Lampiran SPD  <span style="float:right">:&nbsp;&nbsp;</span></td>
-                            <td></td>
+                            <td>{{$data->nomor}}</td>
                         </tr>
                         <tr>
                             <td style="width:80px;;font-weight:700">Tanggal <span style="float:right">:&nbsp;&nbsp;</span></td>
-                            <td></td>
+                            <td>{{Carbon\Carbon::parse($data->tanggal)->formatLocalized('%d %B %Y')}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -287,7 +287,7 @@
                         <td style="text-align:center">III</td>
                         <td>
                             <h4>UANG HARIAN :</h4>
-                            <p>...</p>
+                            <p>{{$data->status_perkawinan}} di {{$data->kotat_nama}}, {{$data->provinsit_nama}}</p>
                             <p>: {{$data->uangh_jml_orang}} Orang x Rp. {{number_format($data->uangh_jml_tarif)}} x {{$data->uangh_jml_hari}} Hari</p>
                            
                         </td>

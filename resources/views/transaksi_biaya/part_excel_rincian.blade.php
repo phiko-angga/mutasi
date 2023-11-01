@@ -91,7 +91,7 @@
             <td style="text-align:center">III</td>
             <td colspan="9">
                 <h4>UANG HARIAN :</h4>
-                <p>...</p>
+                <p>{{$data->status_perkawinan}} di {{$data->kotat_nama}}, {{$data->provinsit_nama}}</p>
                 <p>: {{$data->uangh_jml_orang}} Orang x Rp. {{number_format($data->uangh_jml_tarif)}} x {{$data->uangh_jml_hari}} Hari</p>
                 
             </td>

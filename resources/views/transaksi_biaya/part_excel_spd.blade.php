@@ -157,7 +157,7 @@
                         </tr>
                         <tr>
                             <td style="width:80px;;font-weight:700">Tanggal <span style="float:right">:&nbsp;&nbsp;</span></td>
-                            <td>{{Carbon\Carbon::parse(date('Y-m-d'))->formatLocalized('%d %B %Y')}}</td>
+                            <td>{{Carbon\Carbon::parse($data->tanggal)->formatLocalized('%d %B %Y')}}</td>
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align:center">
