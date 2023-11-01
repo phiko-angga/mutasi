@@ -42,7 +42,8 @@
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item btn-approve" data-id="{{$row->id}}" href="#"><i class="bx bx-check-square me-2"></i> Aprove</a>
-                        <a class="dropdown-item" target="_blank" href="{{url('transaksi-biaya/'.$row->id.'/cetak')}}"><i class="bx bx-file me-2"></i> Cetak</a>
+                        <a class="dropdown-item" target="_blank" href="{{url('transaksi-biaya/'.$row->id.'/cetak')}}"><i class="bx bx-file me-2"></i> Cetak PDF</a>
+                        <a class="dropdown-item" target="_blank" href="{{url('transaksi-biaya/'.$row->id.'/cetak-excel')}}"><i class="bx bx-file me-2"></i> Cetak Excel</a>
                         <a class="dropdown-item" href="{{url('transaksi-biaya/'.$row->id.'/edit')}}"><i class="bx bx-edit-alt me-2"></i> Edit</a>
                         <a class="dropdown-item delete_btn"  data-id="{{ $row->id }}" data-name="{{ $row->pegawai_diperintah }}" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
                     </div>

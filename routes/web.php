@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transaksi-mutasi', [TransaksiBiayaController::class,'approvedList']);
     Route::post('/transaksi-biaya/approve', [TransaksiBiayaController::class,'approve']);
     Route::get('/transaksi-biaya/{id}/cetak', [TransaksiBiayaController::class,'printDetailPdf']);
+    Route::get('/transaksi-biaya/{id}/cetak-excel', [TransaksiBiayaController::class,'printDetailExcel']);
 
     Route::resource('/users', UsersController::class)->name('*','users');
     Route::resource('/rute', RuteController::class)->name('*','rute');

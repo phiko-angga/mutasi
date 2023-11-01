@@ -143,8 +143,8 @@ class TransaksiBiaya extends Model
         ->join('tb_pengguna as c','c.id','=','tb_transaksi_biaya.created_by')
         ->where('tb_transaksi_biaya.id',$id)->first();
         
-        Log::debug('id '.json_encode($id));
-        Log::debug('data '.json_encode($data));
+        // Log::debug('id '.json_encode($id));
+        // Log::debug('data '.json_encode($data));
         
         return $data; 
     }
