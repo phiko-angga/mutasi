@@ -4,6 +4,11 @@
 <table style="width:100%">
     <tbody>
         <tr>
+            <td>
+                <div style="width:20%;margin-top:40px">
+                    <img style="width:60px;height:auto" src="{{asset('img/logo.png')}}" alt="">
+                </div>
+            </td>
             <td style="width:50%">
                 <div style="width:80%;text-align:center">
                     <h5><b style="font-size:18px">MAHKAMAH AGUNG RI</b><br>DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM<br>JAKARTA</h5>
@@ -194,6 +199,11 @@
 <table style="width:100%">
     <tbody>
         <tr>
+            <td>
+                <div style="width:20%;margin-top:40px">
+                    <img style="width:60px;height:auto" src="{{asset('img/logo.png')}}" alt="">
+                </div>
+            </td>
             <td style="width:50%">
                 <div style="width:80%;text-align:center">
                     <h5><b style="font-size:18px">MAHKAMAH AGUNG RI</b><br>DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM<br>JAKARTA</h5>
@@ -347,8 +357,7 @@
         </div>
     </div>
     
-    <div class="col-12" style="margin-bottom:40px">
-        <hr>
+    <div class="col-12" style="margin-bottom:40px;page-break-before: always">
         <h4 style="text-align:center">PERHITUNGAN SPD RAMPUNG</h4>
         <table style="margin-top:20px;width:100%">
             <tbody>
@@ -380,10 +389,15 @@
 
  <!-- KUITANSI -->
 <div class="row page-break">
-    <div class="col-12">
+    <div class="col-12" style="page-break-before: always">
         <table style="width:100%">
             <tbody>
                 <tr>
+                    <td>
+                        <div style="width:20%;margin-top:40px">
+                            <img style="width:60px;height:auto" src="{{asset('img/logo.png')}}" alt="">
+                        </div>
+                    </td>
                     <td style="width:50%">
                         <div style="width:80%;text-align:center">
                             <h5><b style="font-size:18px">MAHKAMAH AGUNG RI</b><br>DIREKTORAT JENDERAL<br>BADAN PERADILAN UMUM<br>JAKARTA</h5>
@@ -410,7 +424,7 @@
                     </td>
                 </tr>
                 <tr style="text-align:center;width:100%">
-                    <td colspan="2">
+                    <td colspan="3">
                         <h5><strong>KUITANSI</strong></h5>
                         
                     </td>
