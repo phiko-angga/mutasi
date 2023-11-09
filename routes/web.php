@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/transaksi-biaya/approve', [TransaksiBiayaController::class,'approve']);
     Route::get('/transaksi-biaya/{id}/cetak', [TransaksiBiayaController::class,'printDetailPdf']);
     Route::get('/transaksi-biaya/{id}/cetak-excel', [TransaksiBiayaController::class,'printDetailExcel']);
+    Route::get('/transaksi-biaya/{id}/cetak-doc', [TransaksiBiayaController::class,'printDetailDoc']);
 
     Route::resource('/users', UsersController::class)->name('*','users');
     Route::resource('/rute', RuteController::class)->name('*','rute');

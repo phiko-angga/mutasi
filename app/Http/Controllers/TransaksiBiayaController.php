@@ -18,6 +18,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use PhpOffice\PhpWord\PhpWord;
 use Carbon\Carbon;
 use Redirect;
 use Log;
@@ -88,6 +89,159 @@ class TransaksiBiayaController extends Controller
     public function printDetailExcel(Request $request, $id)
     {
         return \Excel::download(new TransaksiBiayaDetailExport($request,$id), 'Perhitungan Biaya Mutasi Detail.xlsx');
+    }
+
+    public function printDetailDoc(Request $request, $id)
+    {
+        $transaksi_biaya = new TransaksiBiaya();
+        $data = $transaksi_biaya->get_detail($id);
+
+        $phpWord = new PhpWord();
+        // $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection(['marginLeft' => 300,'marginRight' => 300]);
+        $fontStyle = ['size' => 12];
+        $alignCenterStyle = ['align' => 'center'];
+        
+        $table = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 0; $r++) {
+            $table->addRow();
+            for ($c = 0; $c <= 3; $c++) {
+                if($r == 0 && $c == 0){
+                    $cell = $table->addCell();
+                    $cell->addImage("./img/logo.png",array('width' => 80, 'height' => 100));  
+                }
+                if($r == 0 && $c == 1){
+                    // $table->addRow()
+                    $cell = $table->addCell();
+                    $cell->addText("MAHKAMAH AGUNG RI",array('size' => 16,'bold' => true),$alignCenterStyle);
+                    $cell->addText("DIREKTORAT JENDERAL",$fontStyle,$alignCenterStyle);
+                    $cell->addText("BADAN PERADILAN UMUM",$fontStyle,$alignCenterStyle);
+                    $cell->addText("JAKARTA",$fontStyle,$alignCenterStyle);
+                }
+                if($r == 0 && $c == 2){
+                    // $table->addRow();
+                    $cell = $table->addCell();
+                    $cell->addText("Lembar Ke");
+                    $cell->addText("Kode No");
+                    $cell->addText("Nomor");
+                }
+                if($r == 0 && $c == 3){
+                    // $table->addRow();
+                    $cell = $table->addCell();
+                    $cell->addText(": ");
+                    $cell->addText(": ");
+                    $cell->addText(": ".$data->nomor);
+                }
+            }
+            
+        }
+        $section->addText("");
+
+        $table->addRow();
+        $cell = $table->addCell(2000,['gridSpan' => 3]);
+        $cell->addText("SURAT PERJALANAN DINAS (SPD)",$fontStyle,$alignCenterStyle);
+
+        $val = [];
+        $val[0][0] = "1.";
+        $val[0][1] = "Pejabat Pembuat Komitmen";
+        $val[0][2] = "SEKRETARIAT DITJEN BADAN PERADILAN UMUM";
+
+        $val[1][0] = "2.";
+        $val[1][1] = [
+            '0' => "Nama pegawai diperintahkan",
+            '1' => "NIP",
+        ];
+        $val[1][2] = [
+            '0' => $data->pegawai_diperintah,
+            '1' => $data->nip,
+        ];
+
+        $val[2][0] = "3.";
+        $val[2][1] = [
+            '0' => "a. Pangkat dan Gol. Ruang Gaji (PP No. 6 Tahun 1997)",
+            '1' => "b. Jabatan Instansi",
+            '2' => "c. Tingkat Biaya Perjalanan Dinas",
+        ];
+        $val[2][2] = [
+            '0' => $data->pangkat.' - '.$data->golongan,
+            '1' => $data->jabatan_instansi,
+            '2' => $data->tingkat_perj_dinas,
+        ];
+
+        $val[3][0] = "4.";
+        $val[3][1] = "Maksud Perjalanan Dinas";
+        $val[3][2] = $data->maksud_perj_dinas;
+
+        $val[4][0] = "5.";
+        $val[4][1] = "Alat angkutan yang dipergunakan";
+        $val[4][2] = $data->transport_nama;
+        
+        $val[5][0] = "6.";
+        $val[5][1] = [
+            '0' => "a. Tempat berangkat",
+            '1' => "b. Tempat tujuan",
+        ];
+        $val[5][2] = [
+            '0' => $data->kotaa_nama,
+            '1' => $data->kotat_nama,
+        ];
+        
+        $val[6][0] = "7.";
+        $val[6][1] = [
+            '0' => "a. Lama perjalanan dinas",
+            '1' => "b. Tanggal berangkat",
+            '2' => "c. Tanggal harus kembali/tiba di tempat baru",
+        ];
+        $val[6][2] = [
+            '0' => $data->lama_perj_dinas,
+            '1' => Carbon::parse($data->tanggal_berangkat)->formatLocalized('%d %B %Y'),
+            '2' => Carbon::parse($data->tanggal_kembali)->formatLocalized('%d %B %Y'),
+        ];
+        
+        $val[7][0] = "8.";
+        $val[7][1] = [
+            'style' => ['gridSpan' => 2],
+            'table' => 1,
+        ];
+        $val[7][1][] = [
+            '0' => "pengikut : Nama",
+            '1' => "Tanggal Lahir / Umur",
+            '2' => "Keterangan"
+        ];
+        if(isset($data->keluarga)){
+            foreach($data->keluarga as $kel){
+                $val[7][1][] = [
+                    '0' => "a. ".$kel->nama,
+                    '1' => Carbon::parse($kel->tanggal_lahir)->formatLocalized('%d %B %Y'),
+                    '2' => $kel->keterangan
+                ];      
+            }
+        }
+
+        $table2 = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct','borderColor' => '000000','borderSize' => '400']);
+        $rowCount = count($val);
+        for ($r = 0; $r <= ($rowCount-1); $r++) {
+            $table2->addRow();
+
+            $cellCount = count($val[$r]);
+            for ($c = 0; $c <= ($cellCount-1); $c++) {
+                $cell = $table2->addCell();
+                $v = $val[$r][$c];
+                if(is_array($v)){
+                    for ($rc = 0; $rc <= (count($v)-1); $rc++) {
+                        $v1 = $val[$r][$c][$rc];
+                        $cell->addText( $v1);
+                    }
+                }else{
+                    $cell->addText( $val[$r][$c]);
+                }
+            }
+            
+        }
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save('Perhitungan Biaya Mutasi.docx');
+        return response()->download(public_path('Perhitungan Biaya Mutasi.docx'));
     }
 
     /**

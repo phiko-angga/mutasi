@@ -969,6 +969,7 @@
 
     $(document).on("change","#rampung_bendaharawan_id",function(e){
         let data = $(this).select2('data')[0].data;
+        console.log($(this).select2('data'),data);
         $("#rampung_bendaharawan_nip").val(data.nip);
     })
 
