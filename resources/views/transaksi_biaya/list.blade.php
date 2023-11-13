@@ -193,7 +193,7 @@
 
     $(document).on('click','.btn-approve-confirm',function(e){
         e.preventDefault();
-        console.log('approve-confirm');
+        // console.log('approve-confirm');
         
         let param = {};
         param.pesan = "Yakin ingin approve ?";

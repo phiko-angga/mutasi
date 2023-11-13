@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/transaksi-biaya', TransaksiBiayaController::class)->name('*','transaksi-biaya');
     Route::get('/transaksi-mutasi', [TransaksiBiayaController::class,'approvedList']);
     Route::post('/transaksi-biaya/approve', [TransaksiBiayaController::class,'approve']);
+    Route::post('/transaksi-biaya/revisi', [TransaksiBiayaController::class,'revisi']);
     Route::get('/transaksi-biaya/{id}/cetak', [TransaksiBiayaController::class,'printDetailPdf']);
     Route::get('/transaksi-biaya/{id}/cetak-excel', [TransaksiBiayaController::class,'printDetailExcel']);
     Route::get('/transaksi-biaya/{id}/cetak-doc', [TransaksiBiayaController::class,'printDetailDoc']);

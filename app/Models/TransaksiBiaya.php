@@ -122,7 +122,7 @@ class TransaksiBiaya extends Model
         $data = Self::select('tb_transaksi_biaya.*','pg.pangkat','pg.golongan','c.fullname as created_name','pk.nip as pejabat_komitmen_nip','pk.nama as pejabat_komitmen_nama'
         ,'pk2.nama as pejabat_komitmen_nama2','pk2.nip as pejabat_komitmen_nip2','ttd.nama as bendaharawan_nama','ttd.nip as bendaharawan_nip',
         'rampung_kuasa_nama as kuasa_nama','rampung_kuasa_nip as kuasa_nip','pk3.nama as pejabat_komitmen_nama3','pk3.nip as pejabat_komitmen_nip3',
-        'pk4.nama as pejabat_komitmen_nama4','pk4.nip as pejabat_komitmen_nip4',
+        'pk4.nama as pejabat_komitmen_nama4','pk4.nip as pejabat_komitmen_nip4','kj.nama as kelompok_jabatan_nama',
         'tr.nama as transport_nama','tr2.nama as pengepakan_transport_nama','kota.nama as kotaa_nama','kott.nama as kotat_nama','proa.nama as provinsia_nama','prot.nama as provinsit_nama')
         ->selectRaw("(select coalesce(fullname,'') from tb_pengguna where id = tb_transaksi_biaya.updated_by limit 1) as updated_name")
         ->with([
@@ -140,6 +140,7 @@ class TransaksiBiaya extends Model
         ->join('tb_provinsi as prot','prot.id','=','kott.provinsi_id')
         ->join('tb_pangkat_golongan as pg','pg.id','=','tb_transaksi_biaya.pangkat_golongan_id')
         ->join('tb_tandatangan as ttd','ttd.id','=','tb_transaksi_biaya.rampung_bendaharawan_id')
+        ->join('tb_kelompok_jabatan as kj','kj.id','=','tb_transaksi_biaya.kelompok_jabatan_id')
         ->join('tb_pengguna as c','c.id','=','tb_transaksi_biaya.created_by')
         ->where('tb_transaksi_biaya.id',$id)->first();
         

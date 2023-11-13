@@ -73,7 +73,6 @@
                                 <th style="width:10%">pangkat Gol. Ruang Gaji</th>
                                 <th style="width:10%">Status Kawin</th>
                                 <th style="width:10%">Jabatan/Instansi</th>
-                                <th style="width:10%">Nama Jabatan</th>
                                 <th style="width:10%">Kelompok Jabatan</th>
                                 <th style="width:10%">Total Biaya</th>
                                 <th style="">Di approve oleh</th>
@@ -98,6 +97,29 @@
     
     $(document).on('change','#search, #show-per-page', function(){
         fetch_tabledata('/transaksi_biaya/approved-list');
+    })
+    
+    $(document).on('click','.btn-revisi',function(e){
+        e.preventDefault();
+        let id = $(this).data("id");
+        let token = $('input[name="_token"]').val();
+        let param = {};
+        param.pesan = "Yakin ingin di revisi ?";
+        param.response = function(result){
+        
+            if (result.isConfirmed) {
+                
+                let params = {};
+                params.url = "/transaksi-biaya/revisi";
+                params.data = {_token:token,id:id};
+                params.type = 'post';
+                params.result = function(data){ 
+                    location.reload();
+                }
+                ajaxCall(params);
+            }
+        };
+        show_confirm(param);
     })
 </script>
 @endsection

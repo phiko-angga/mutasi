@@ -367,12 +367,12 @@ class TransaksiBiayaController extends Controller
             }
         }
 
-        //----------------- TRANSPORT --------------------
+        //----------------- RINCIAN BIAYA --------------------
         $section2 = $phpWord->addSection(['marginLeft' => 300,'marginRight' => 300]);
         $fontStyle = ['size' => 12];
         $alignCenterStyle = ['align' => 'center'];
         
-        //------------ HEADER ------------------
+        //------------ RINCIAN BIAYA HEADER ------------------
         $table = $section2->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
         for ($r = 0; $r <= 0; $r++) {
             $table->addRow();
@@ -410,7 +410,7 @@ class TransaksiBiayaController extends Controller
         $cell = $table->addCell(2000,['gridSpan' => 3]);
         $cell->addText("RINCIAN BIAYA PERJALANAN DINAS",$fontStyle,$alignCenterStyle);
 
-        //------------ BODY ------------------
+        //------------ RINCIAN BIAYA BODY ------------------
         $no = -1;
         $val = [];
 
@@ -508,7 +508,6 @@ class TransaksiBiayaController extends Controller
         $val[$no]['textastyle'][0] = $alignCenterStyle;
         $val[$no][0] = "Terbilang : ".$data->uangh_jml_terbilang;
 
-
         $table2 = $section2->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct','borderColor' => '000000','borderSize' => '6']);
         $rowCount = count($val);
 
@@ -561,6 +560,235 @@ class TransaksiBiayaController extends Controller
             }
         }
         $section2->addText("");
+
+        //------------ RINCIAN BIAYA FOOTER ------------------
+        $table3 = $section2->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 5; $r++) {
+            $table3->addRow();
+            for ($c = 0; $c <= 1; $c++) {
+                
+                if(in_array($r,[2,3,4])){
+                    $cell = $table3->addCell()->addText("");  
+                }
+
+                if($r == 0 && $c == 0){
+                    $cell = $table3->addCell();
+                    $cell->addText("Telah dibayar sejumlah",null,['align' => 'left']);
+                    $cell->addText(number_format($data->rampung_dibayar),null,['align' => 'left']);
+                }
+                if($r == 0 && $c == 1){
+                    $cell = $table3->addCell();
+                    $cell->addText("Jakarta,",null,['align' => 'left']);
+                    $cell->addText("Telah menerima jumlah uang sebesar,",null,['align' => 'left']);
+                    $cell->addText(number_format($data->rampung_dibayar),null,['align' => 'left']);
+                }
+
+                if($r == 1 ){
+                    if($c == 0){
+                        $cell = $table3->addCell();
+                        $cell->addText("Bendaharawan",null,['align' => 'center']);
+                    }else
+                    if($c == 1){
+                        $cell = $table3->addCell();
+                        $cell->addText("Yang menerima/dikuasakan",null,['align' => 'center']);
+                    }
+                }
+                if($r == 5){
+                    if($c == 0){
+                        $cell = $table3->addCell();
+                        $cell->addText($data->bendaharawan_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->bendaharawan_nip,null,['align' => 'center']);
+                    }else
+                    if($c == 1){
+                        $cell = $table3->addCell();
+                        $cell->addText($data->kuasa_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->kuasa_nip,null,['align' => 'center']);
+                    }
+                }
+            }
+        }
+
+        //----------------- SPD RAMPUNG --------------------
+        $section3 = $phpWord->addSection(['marginLeft' => 300,'marginRight' => 300]);
+        $fontStyle = ['size' => 12];
+        $alignCenterStyle = ['align' => 'center'];
+        
+        //------------ SPD RAMPUNG HEADER ------------------
+        $table = $section3->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 1; $r++) {
+            $table->addRow();
+            for ($c = 0; $c <= 1; $c++) {
+                if($r == 0 && $c == 0){
+                    $cell = $table->addCell(null,["gridSpan" => 2]);
+                    $cell->addText("PERHTUNGAN SPD RAMPUNG",$fontStyle,['align' => 'center']);
+                }
+                if($r == 1 && $c == 0){
+                    $cell = $table->addCell(2500);
+                    $cell->addText("Ditetapkan sejumlah");
+                    $cell->addText("Yang telah dibayar");
+                    $cell->addText("Sisa Kurang / Lebih");
+                }
+                if($r == 1 && $c == 1){
+                    $cell = $table->addCell();
+                    $cell->addText(": Rp ".number_format($data->rampung_jumlah));
+                    $cell->addText(": Rp ".number_format($data->rampung_dibayar));
+                    $cell->addText(": Rp ".number_format($data->rampung_jumlah - $data->rampung_dibayar));
+                }
+            }
+        }
+        $section3->addText("");
+
+        //------------ SPD RAMPUNG FOOTER ------------------
+        $table3 = $section3->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 4; $r++) {
+            $table3->addRow();
+            for ($c = 0; $c <= 1; $c++) {
+                
+                if(in_array($r,[1,2,3])){
+                    $cell = $table3->addCell()->addText("");  
+                }
+
+                if($r == 0 && $c == 0){
+                    $cell = $table3->addCell();
+                }
+                if($r == 0 && $c == 1){
+                        $cell = $table3->addCell();
+                        $cell->addText("DIREKTORAT JENDERAL",null,['align' => 'center']);
+                        $cell->addText("BADAN PERADILAN UMUM",null,['align' => 'center']);
+                        $cell->addText("Pejabat Pembuat Komitmen (PPK)",null,['align' => 'center']);
+                }
+
+                if($r == 4){
+                    if($c == 0){
+                        $cell = $table3->addCell();
+                    }else
+                    if($c == 1){
+                        $cell = $table3->addCell();
+                        $cell->addText($data->pejabat_komitmen_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->pejabat_komitmen_nip,null,['align' => 'center']);
+                    }
+                }
+            }
+        }
+
+        //----------------- KUITANSI --------------------
+        $section4 = $phpWord->addSection(['marginLeft' => 300,'marginRight' => 300]);
+        $fontStyle = ['size' => 12];
+        $alignCenterStyle = ['align' => 'center'];
+        
+        //------------ KUITANSI HEADER ------------------
+        $table = $section4->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 0; $r++) {
+            $table->addRow();
+            for ($c = 0; $c <= 3; $c++) {
+                if($r == 0 && $c == 0){
+                    $cell = $table->addCell();
+                    $cell->addImage("./img/logo.png",array('width' => 80, 'height' => 100));  
+                }
+                if($r == 0 && $c == 1){
+                    $cell = $table->addCell();
+                    $cell->addText("MAHKAMAH AGUNG RI",array('size' => 16,'bold' => true),$alignCenterStyle);
+                    $cell->addText("DIREKTORAT JENDERAL",$fontStyle,$alignCenterStyle);
+                    $cell->addText("BADAN PERADILAN UMUM",$fontStyle,$alignCenterStyle);
+                    $cell->addText("JAKARTA",$fontStyle,$alignCenterStyle);
+                }
+                if($r == 0 && $c == 2){
+                    $cell = $table->addCell();
+                    $cell->addText("Beban MAK");
+                    $cell->addText("Bukti Kas No.");
+                    $cell->addText("Tahun Anggaran");
+                }
+                if($r == 0 && $c == 3){
+                    
+                    $cell = $table->addCell();
+                    $cell->addText(": ".$data->rampung_beban_mak);
+                    $cell->addText(": ".$data->rampung_buktikas);
+                    $cell->addText(": ".$data->rampung_thn_anggaran);
+                }
+            }
+        }
+
+        $table->addRow();
+        $cell = $table->addCell(2000,['gridSpan' => 3]);
+        $cell->addText("KUITANSI",$fontStyle,$alignCenterStyle);
+
+        $section4->addText("");
+
+        $table = $section4->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 1; $r++) {
+            $table->addRow();
+            for ($c = 0; $c <= 1; $c++) {
+                if($r == 0 && $c == 0){
+                    $cell = $table->addCell(3000);
+                    $cell->addText("Sudah Terima Dari");
+                    $cell->addText("Uang Sebesar");
+                    $cell->addText("Untuk Pembayaran");
+                    $cell->addText("Berdasarkan SPD Nomor");
+                    $cell->addText("Tanggal");
+                    $cell->addText("Untuk Perjalanan Dinas dari");
+                }
+                if($r == 0 && $c == 1){
+                    $cell = $table->addCell();
+                    $cell->addText("DIREKTORAT JENDERAL BADAN PERADILAN UMUM");
+                    $cell->addText(": Rp ".number_format($data->rampung_jumlah));
+                    $cell->addText(": Biaya Perjalanan Dinas  An. ".$data->kuasa_nama);
+                    $cell->addText(": ".$data->nomor);
+                    $cell->addText(": ".Carbon::parse($data->tanggal_berangkat)->formatLocalized('%d %B %Y'));
+                    $cell->addText(": ".$data->kotaa_nama." Ke ".$data->kotat_nama);
+                }
+                
+                if($r == 1 && $c == 0){
+                    $cell = $table->addCell(null,["gridSpan" => 2]);
+                    $cell->addText("Terbilang : ".$data->uangh_jml_terbilang,$fontStyle,['align' => 'center']);
+                }
+            }
+        }
+        $section4->addText("");
+
+        //------------ KUITANSI FOOTER ------------------
+        $table3 = $section4->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 4; $r++) {
+            $table3->addRow();
+            for ($c = 0; $c <= 2; $c++) {
+                
+                if(in_array($r,[1,2,3])){
+                    $cell = $table3->addCell()->addText("");  
+                }
+
+                if($r == 0 && $c == 0){
+                    $cell = $table3->addCell();
+                    $cell->addText("Mengetahui/Menyetujui",null,['align' => 'center']);
+                    $cell->addText("Kuasa Pengguna Anggaran/",null,['align' => 'center']);
+                    $cell->addText("Pengguna Barang Th.".$data->rampung_thn_anggaran,null,['align' => 'center']);
+                }
+                if($r == 0 && $c == 1){
+                        $cell = $table3->addCell();
+                        $cell->addText("Bendaharawan",null,['align' => 'center']);
+                }
+                if($r == 0 && $c == 2){
+                        $cell = $table3->addCell();
+                        $cell->addText("Yang menerima/dikuasakan",null,['align' => 'center']);
+                }
+
+                if($r == 4){
+                    if($c == 0){
+                        $cell = $table3->addCell();
+                        $cell->addText($data->pejabat_komitmen_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->pejabat_komitmen_nip4,null,['align' => 'center']);
+                    }else
+                    if($c == 1){
+                        $cell = $table3->addCell();
+                        $cell->addText($data->bendaharawan_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->bendaharawan_nip,null,['align' => 'center']);
+                    }else
+                    if($c == 2){
+                        $cell = $table3->addCell();
+                        $cell->addText($data->kuasa_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->kuasa_nip,null,['align' => 'center']);
+                    }
+                }
+            }
+        }
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('Perhitungan Biaya Mutasi.docx');
@@ -795,6 +1023,36 @@ class TransaksiBiayaController extends Controller
             }
         }else{
             return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Biaya tidak ditemukan.']);
+        }
+    }
+
+    public function revisi(Request $request)
+    {
+        request()->validate([
+            'id'   => 'required',
+        ]);
+
+        $transaksi_biaya = TransaksiBiaya::find($request->id);
+        if($transaksi_biaya){
+
+            DB::beginTransaction();
+            try {
+
+                $user = auth()->user();
+                $transaksi_biaya->approved = 0;
+                $transaksi_biaya->save();
+
+                DB::commit();
+
+                return response()->json(['status' => 1], 200);
+                
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::Error($e->getMessage());
+                return response()->json(['status' => 0], 200);
+            }
+        }else{
+            return response()->json(['status' => 0], 200);
         }
     }
 
