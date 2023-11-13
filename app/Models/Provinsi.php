@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Provinsi extends Model
 {
@@ -25,6 +26,8 @@ class Provinsi extends Model
             ->orWhere('kode', 'ilike', '%'.$search.'%')
             ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
+
+        Log::debug('query '.$data->toSql());
         
         if($paginate){
             $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;

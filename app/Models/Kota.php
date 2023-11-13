@@ -36,7 +36,7 @@ class Kota extends Model
 
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where(function($query){
+            $data = $data->where(function($query) use($search){
                 $query->where('tb_kota.nama', 'ilike', '%'.$search.'%')
                 ->orWhere('tb_kota.kode', 'ilike', '%'.$search.'%')
                 ->orWhere('p.nama', 'ilike', '%'.$search.'%')

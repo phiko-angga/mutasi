@@ -772,16 +772,16 @@
             jarak = data.jarak_km;
         }
 
-        $("#pengepakan_jarak"+id).val(addCommas(jarak));
+        $("#pengepakan_jarak"+id).val(jarak);
         $("#pengepakan_metode"+id).val(data.metode);
 
         muatCalculateJumlahBiaya(id);
     }
     
     function muatCalculateJumlahBiaya(id){
-        // console.log('muatCalculateJumlahBiaya');
+        console.log('pengepakan_jarak_id',$("#pengepakan_jarak"+id).val());
         let berat = parseInt($("#pengepakan_berat"+id).val());
-        let jarak = parseInt($("#pengepakan_jarak"+id).val());
+        let jarak = parseInt($("#pengepakan_jarak"+id).val().replace(/\,/g, ''));
         let tarif = parseInt($("#pengepakan_tarif"+id).val().replace(/\,/g, ''));
         tarif = tarif == "" ? 0 : tarif;
 
@@ -795,7 +795,7 @@
         else if(jarak > 500)
             percent = 40;
 
-        // console.log(jarak,berat,tarif,percent);
+        console.log(jarak,berat,tarif,percent);
         let biaya = (jarak * berat * tarif) * percent / 100;
         
         // console.log('muatCalculateJumlahBiaya ',biaya,jarak,berat,tarif);
@@ -992,6 +992,7 @@
     })
 
     //---------- VALIDATE -------------
+
     $(document).on('click','.btn-stepper-next', function(e){
         let curStep = $(this).data('step');
         console.log('btn-stepper-next',curStep);

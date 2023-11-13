@@ -8,6 +8,7 @@
       </div>
       <div class="modal-body">
         <p><span id="confirm_titlecaption"></span> <span class="fw-bold" id="confirm_titlename"></span></p>
+        <p id="confirm_content"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

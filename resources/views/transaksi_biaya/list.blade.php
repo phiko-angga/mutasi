@@ -129,8 +129,46 @@
         var modalConfirm = $('#modal_confirm');
         modalConfirm.find('form').attr('action','{{url('')}}/transaksi-biaya/'+$(this).data('id'));
         modalConfirm.find('#confirm_title').html('Delete data ');
-        modalConfirm.find('#confirm_titlecaption').html('Apakah anda ingin delete ');
-        modalConfirm.find('#confirm_titlename').html($(this).data('name'));
+        modalConfirm.find('#confirm_titlecaption').html('Anda yakin ingin menghapus sebuah surat perjalanan dinas sebagai berikut : ');
+
+        let content = [
+            '<ul>',
+                '<li>',
+                    '<div class="d-flex">',
+                        '<p style="width:90px"> Nama',
+                            '<span style="float:right"> : &nbsp;&nbsp;',
+                        '</p>',
+                        $(this).data('nama'),
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div class="d-flex">',
+                        '<p style="width:90px"> NIP',
+                            '<span style="float:right"> : &nbsp;&nbsp;',
+                        '</p>',
+                        $(this).data('nip'),
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div class="d-flex">',
+                        '<p style="width:90px"> Tanggal',
+                            '<span style="float:right"> : &nbsp;&nbsp;',
+                        '</p>',
+                        $(this).data('tanggal'),
+                    '</div>',
+                '</li>',
+                '<li>',
+                    '<div class="d-flex">',
+                        '<p style="width:90px"> Nomor',
+                            '<span style="float:right"> : &nbsp;&nbsp;',
+                        '</p>',
+                        $(this).data('nomor'),
+                    '</div>',
+                '</li>',
+            '</ul>',
+        ]
+
+        modalConfirm.find('#confirm_content').html(content.join(""));
         modalConfirm.find('#confirm_titlebtn').html('Delete');
         modalConfirm.find('#id').val($(this).data('id'));
         modalConfirm.modal('show');

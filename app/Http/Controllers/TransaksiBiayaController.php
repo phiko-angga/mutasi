@@ -102,6 +102,7 @@ class TransaksiBiayaController extends Controller
         $fontStyle = ['size' => 12];
         $alignCenterStyle = ['align' => 'center'];
         
+        //------------ HEADER ------------------
         $table = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
         for ($r = 0; $r <= 0; $r++) {
             $table->addRow();
@@ -141,10 +142,12 @@ class TransaksiBiayaController extends Controller
         $cell = $table->addCell(2000,['gridSpan' => 3]);
         $cell->addText("SURAT PERJALANAN DINAS (SPD)",$fontStyle,$alignCenterStyle);
 
+        //------------ BODY ------------------
         $val = [];
         $val[0][0] = "1.";
         $val[0][1] = "Pejabat Pembuat Komitmen";
         $val[0][2] = "SEKRETARIAT DITJEN BADAN PERADILAN UMUM";
+        $val[0]['style'][2] = ['gridSpan' => 2];
 
         $val[1][0] = "2.";
         $val[1][1] = [
@@ -155,6 +158,7 @@ class TransaksiBiayaController extends Controller
             '0' => $data->pegawai_diperintah,
             '1' => $data->nip,
         ];
+        $val[1]['style'][2] = ['gridSpan' => 2];
 
         $val[2][0] = "3.";
         $val[2][1] = [
@@ -167,14 +171,17 @@ class TransaksiBiayaController extends Controller
             '1' => $data->jabatan_instansi,
             '2' => $data->tingkat_perj_dinas,
         ];
+        $val[2]['style'][2] = ['gridSpan' => 2];
 
         $val[3][0] = "4.";
         $val[3][1] = "Maksud Perjalanan Dinas";
         $val[3][2] = $data->maksud_perj_dinas;
+        $val[3]['style'][2] = ['gridSpan' => 2];
 
         $val[4][0] = "5.";
         $val[4][1] = "Alat angkutan yang dipergunakan";
         $val[4][2] = $data->transport_nama;
+        $val[4]['style'][2] = ['gridSpan' => 2];
         
         $val[5][0] = "6.";
         $val[5][1] = [
@@ -185,6 +192,7 @@ class TransaksiBiayaController extends Controller
             '0' => $data->kotaa_nama,
             '1' => $data->kotat_nama,
         ];
+        $val[5]['style'][2] = ['gridSpan' => 2];
         
         $val[6][0] = "7.";
         $val[6][1] = [
@@ -197,47 +205,362 @@ class TransaksiBiayaController extends Controller
             '1' => Carbon::parse($data->tanggal_berangkat)->formatLocalized('%d %B %Y'),
             '2' => Carbon::parse($data->tanggal_kembali)->formatLocalized('%d %B %Y'),
         ];
+        $val[6]['style'][2] = ['gridSpan' => 2];
         
         $val[7][0] = "8.";
-        $val[7][1] = [
-            'style' => ['gridSpan' => 2],
-            'table' => 1,
-        ];
-        $val[7][1][] = [
-            '0' => "pengikut : Nama",
-            '1' => "Tanggal Lahir / Umur",
-            '2' => "Keterangan"
-        ];
+        $val[7][1] = "pengikut : Nama";
+        $val[7][2] = "Tanggal Lahir / Umur";
+        $val[7][3] = "Keterangan";
+
+        $no = 7;
+        $alp = "a";
         if(isset($data->keluarga)){
             foreach($data->keluarga as $kel){
-                $val[7][1][] = [
-                    '0' => "a. ".$kel->nama,
-                    '1' => Carbon::parse($kel->tanggal_lahir)->formatLocalized('%d %B %Y'),
-                    '2' => $kel->keterangan
-                ];      
+                ++$no;
+                
+                $val[$no][0] = "";
+                $val[$no][1] = $alp.". ".$kel->nama;
+                $val[$no][2] = Carbon::parse($kel->tanggal_lahir)->formatLocalized('%d %B %Y');
+                $val[$no][3] = $kel->keterangan;   
+                
+                ++$alp;
             }
         }
+        ++$no;
 
-        $table2 = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct','borderColor' => '000000','borderSize' => '400']);
+        $val[$no][0] = "9.";
+        $val[$no][1] = [
+            '0' => "Pembebanan Anggaran",
+            '1' => "a. Instansi",
+            '2' => "b. Mata Anggaran",
+        ];
+        $val[$no][2] = "DIREKTORAT JENDERAL BADAN PERADILAN UMUM";
+        $val[$no]['textfstyle'][2] = $fontStyle;
+        $val[$no]['textastyle'][2] = $alignCenterStyle;
+        $val[$no]['style'][2] = ['gridSpan' => 2];
+        ++$no;
+
+        $val[$no][0] = "10.";
+        $val[$no][1] = "Keterangan lain - Lain";
+        $val[$no][2] = $data->ket_lain2;
+        $val[$no]['style'][2] = ['gridSpan' => 2];
+        ++$no;
+
+        $table2 = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct','borderColor' => '000000','borderSize' => '6']);
         $rowCount = count($val);
+
+        //------- Row / Baris -------
         for ($r = 0; $r <= ($rowCount-1); $r++) {
             $table2->addRow();
 
             $cellCount = count($val[$r]);
+            //------- Cell / Kolom -------
             for ($c = 0; $c <= ($cellCount-1); $c++) {
-                $cell = $table2->addCell();
-                $v = $val[$r][$c];
-                if(is_array($v)){
-                    for ($rc = 0; $rc <= (count($v)-1); $rc++) {
-                        $v1 = $val[$r][$c][$rc];
-                        $cell->addText( $v1);
+
+                //------ Add Cell Style ----------
+                $style = [];
+                if(isset($val[$r]['style'][$c])){
+                    $style = $val[$r]['style'][$c];
+                }
+                // Log::debug('style : '.json_encode($style));
+                // $cell = $table2->addCell(null,$style);
+
+                //------ Add Cell Table ----------
+                // $addTable = 0;
+                // if(isset($val[$r][$c]['table'])){
+                //     $addTable = $val[$r][$c]['table'];
+                // }
+                // Log::debug('addTable : '.json_encode($addTable));
+                // if($addTable == 1){
+                //     $section->addText("");
+                //     $table3 = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct','borderColor' => '000000','borderSize' => '300']);
+                // }
+
+                if(isset($val[$r][$c])){
+                    $v = $val[$r][$c];
+                    if(is_array($v)){
+                        //--------------- Cell values Multiple Line --------------
+                        for ($rc = 0; $rc <= (count($v)-1); $rc++) {
+
+                            if($rc == 0){
+                                // Log::debug('style : '.json_encode($style));
+                                $cell = $table2->addCell(null,$style);
+                            }
+
+                            if(isset($val[$r][$c][$rc])){
+                                $v1 = $val[$r][$c][$rc];
+
+                                if(!is_array($v1)){
+                                    
+                                    $cell->addText($v1);
+                                }
+                            }
+                        }
+                    }else{
+                        $text_fontstyle = [];
+                        $text_alignstyle = [];
+                        if(isset($val[$r]['textfstyle'][$c])){
+                            $text_fontstyle = $val[$r]['textfstyle'][$c];
+                        }
+                        if(isset($val[$r]['textastyle'][$c])){
+                            $text_alignstyle = $val[$r]['textastyle'][$c];
+                        }
+                        $cell = $table2->addCell(null,$style)->addText( $val[$r][$c],$text_fontstyle,$text_alignstyle);
                     }
-                }else{
-                    $cell->addText( $val[$r][$c]);
+                }
+            }
+        }
+        $section->addText("");
+
+        //------------ FOOTER ------------------
+        $table3 = $section->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 5; $r++) {
+            $table3->addRow();
+            for ($c = 0; $c <= 3; $c++) {
+                if(in_array($r,[2,3,4])){
+                    $cell = $table3->addCell()->addText("");  
+                }
+
+                if($c == 0){
+                    $cell = $table3->addCell(3000)->addText("");  
+                }
+
+                if($r == 0 && $c == 1){
+                    $cell = $table3->addCell(200);
+                    $cell->addText("Dikeluarkan",null,['align' => 'right']);
+                    $cell->addText("Tanggal",null,['align' => 'right']);
+                }
+                if($r == 0 && $c == 2){
+                    // $table->addRow();
+                    $cell = $table3->addCell();
+                    $cell->addText(":");
+                    $cell->addText(":");
+                }
+                if($r == 0 && $c == 3){
+                    // $table->addRow();
+                    $cell = $table3->addCell();
+                    $cell->addText("Jakarta,");
+                    $cell->addText(Carbon::parse($data->tanggal)->formatLocalized('%d %B %Y'));
+                }
+
+                if($r == 1 ){
+                    if($c == 1){
+                        $cell = $table3->addCell(null);
+                    }else
+                    if($c == 2){
+                        $cell = $table3->addCell(null,['gridSpan' => 2]);
+                        $cell->addText("DIREKTORAT JENDERAL",null,['align' => 'center']);
+                        $cell->addText("BADAN PERADILAN UMUM",null,['align' => 'center']);
+                        $cell->addText("Pejabat Pembuat Komitmen (PPK)",null,['align' => 'center']);
+                    }
+                }
+                if($r == 5){
+                    if($c == 1){
+                        $cell = $table3->addCell(null);
+                    }else
+                    if($c == 2){
+                        $cell = $table3->addCell(null,['gridSpan' => 2]);
+                        $cell->addText($data->pejabat_komitmen_nama,null,['align' => 'center']);
+                        $cell->addText("NIP. ".$data->pejabat_komitmen_nip,null,['align' => 'center']);
+                    }
+                }
+            }
+        }
+
+        //----------------- TRANSPORT --------------------
+        $section2 = $phpWord->addSection(['marginLeft' => 300,'marginRight' => 300]);
+        $fontStyle = ['size' => 12];
+        $alignCenterStyle = ['align' => 'center'];
+        
+        //------------ HEADER ------------------
+        $table = $section2->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct']);
+        for ($r = 0; $r <= 0; $r++) {
+            $table->addRow();
+            for ($c = 0; $c <= 3; $c++) {
+                if($r == 0 && $c == 0){
+                    $cell = $table->addCell();
+                    $cell->addImage("./img/logo.png",array('width' => 80, 'height' => 100));  
+                }
+                if($r == 0 && $c == 1){
+                    // $table->addRow()
+                    $cell = $table->addCell();
+                    $cell->addText("MAHKAMAH AGUNG RI",array('size' => 16,'bold' => true),$alignCenterStyle);
+                    $cell->addText("DIREKTORAT JENDERAL",$fontStyle,$alignCenterStyle);
+                    $cell->addText("BADAN PERADILAN UMUM",$fontStyle,$alignCenterStyle);
+                    $cell->addText("JAKARTA",$fontStyle,$alignCenterStyle);
+                }
+                if($r == 0 && $c == 2){
+                    // $table->addRow();
+                    $cell = $table->addCell();
+                    $cell->addText("Lampiran SPD");
+                    $cell->addText("Tanggal");
+                }
+                if($r == 0 && $c == 3){
+                    // $table->addRow();
+                    $cell = $table->addCell();
+                    $cell->addText(": ".$data->nomor);
+                    $cell->addText(": ".Carbon::parse($data->tanggal)->formatLocalized('%d %B %Y'));
                 }
             }
             
         }
+        $section2->addText("");
+
+        $table->addRow();
+        $cell = $table->addCell(2000,['gridSpan' => 3]);
+        $cell->addText("RINCIAN BIAYA PERJALANAN DINAS",$fontStyle,$alignCenterStyle);
+
+        //------------ BODY ------------------
+        $no = -1;
+        $val = [];
+
+        ++$no;
+        $val[$no][0] = "No.";
+        $val[$no][1] = "Rincian Biaya";
+        $val[$no][2] = "Jumlah";
+        $val[$no][3] = "Keterangan";
+
+        ++$no;
+        $val[$no][0] = "I";
+        $val[$no][1] = "TRANSPORT";
+        $val[$no][2] = "";
+        $val[$no][3] = "";
+
+        if(isset($data->transport)){
+            foreach($data->transport as $tr){
+                ++$no;
+                $val[$no][0] = "";
+                $val[$no][1] = $tr->transport_nama." : ".$tr->kotaa_nama." ".$tr->kotat_nama;
+                $val[$no][2] = "";
+                $val[$no][3] = "";
+
+                ++$no;
+                $val[$no][0] = "";
+                $val[$no][1] = $tr->orang." x Rp. ".number_format($tr->biaya_perorang);
+                $val[$no][2] = "Rp. ".number_format($tr->jumlah_biaya);
+                $val[$no][3] = "";
+            }
+        }
+
+        ++$no;
+        $val[$no][0] = "II";
+        $val[$no][1] = "BARANG";
+        $val[$no][2] = "";
+        $val[$no][3] = "";
+
+        ++$no;
+        $val[$no][0] = "";
+        $val[$no][1] = "Pengepakan / Penggudangan";
+        $val[$no][2] = "";
+        $val[$no][3] = "";
+
+        ++$no;
+        $val[$no][0] = "";
+        $val[$no][1] = $data->pengepakan_berat." x Rp. ".number_format($data->pengepakan_tarif);
+        $val[$no][2] = "Rp. ".number_format($data->pengepakan_biaya);
+        $val[$no][3] = "";
+
+        if(isset($data->muat)){
+            foreach($data->muat as $mu){
+                ++$no;
+                $val[$no][0] = "";
+                $val[$no][1] = $mu->transport_nama." : ".$mu->kotaa_nama." ".$mu->kotat_nama;
+                $val[$no][2] = "";
+                $val[$no][3] = "";
+
+                ++$no;
+                $val[$no][0] = "";
+                $val[$no][1] = $mu->berat." x ".$mu->jarak." Rp. ".number_format($mu->tarif);
+                $val[$no][2] = "Rp. ".number_format($mu->biaya);
+                $val[$no][3] = "";
+            }
+        }
+
+        ++$no;
+        $val[$no][0] = "III";
+        $val[$no][1] = "UANG HARIAN";
+        $val[$no][2] = "";
+        $val[$no][3] = "";
+
+        ++$no;
+        $val[$no][0] = "";
+        $val[$no][1] = $data->status_perkawinan." di ".$data->kotat_nama.", ".$data->provinsit_nama;
+        $val[$no][2] = "";
+        $val[$no][3] = "";
+
+        ++$no;
+        $val[$no][0] = "";
+        $val[$no][1] = $data->uangh_jml_orang." Orang x Rp. ".number_format($data->uangh_jml_tarif)." x ".$data->uangh_jml_hari." Hari";
+        $val[$no][2] = "Rp. ".number_format($data->uangh_jml_biaya);
+        $val[$no][3] = "";
+
+        ++$no;
+        $val[$no]['style'][0] = ['gridSpan' => 2];
+        $val[$no]['textfstyle'][0] = null;
+        $val[$no]['textastyle'][0] = $alignCenterStyle;
+        $val[$no][0] = "JUMLAH";
+        $val[$no][2] = "Rp. ".number_format($data->rampung_jumlah);
+        $val[$no][3] = "";
+
+        ++$no;
+        $val[$no]['style'][0] = ['gridSpan' => 4];
+        $val[$no]['textfstyle'][0] = $fontStyle;
+        $val[$no]['textastyle'][0] = $alignCenterStyle;
+        $val[$no][0] = "Terbilang : ".$data->uangh_jml_terbilang;
+
+
+        $table2 = $section2->addTable(['cellMargin' => 80, 'width' => 5000,'unit' => 'pct','borderColor' => '000000','borderSize' => '6']);
+        $rowCount = count($val);
+
+        //------- Row / Baris -------
+        for ($r = 0; $r <= ($rowCount-1); $r++) {
+            $table2->addRow();
+
+            $cellCount = count($val[$r]);
+            //------- Cell / Kolom -------
+            for ($c = 0; $c <= ($cellCount-1); $c++) {
+
+                //------ Add Cell Style ----------
+                $style = [];
+                if(isset($val[$r]['style'][$c])){
+                    $style = $val[$r]['style'][$c];
+                }
+                
+                if(isset($val[$r][$c])){
+                    $v = $val[$r][$c];
+                    if(is_array($v)){
+                        //--------------- Cell values Multiple Line --------------
+                        for ($rc = 0; $rc <= (count($v)-1); $rc++) {
+
+                            if($rc == 0){
+                                // Log::debug('style : '.json_encode($style));
+                                $cell = $table2->addCell(null,$style);
+                            }
+
+                            if(isset($val[$r][$c][$rc])){
+                                $v1 = $val[$r][$c][$rc];
+
+                                if(!is_array($v1)){
+                                    
+                                    $cell->addText($v1);
+                                }
+                            }
+                        }
+                    }else{
+                        $text_fontstyle = [];
+                        $text_alignstyle = [];
+                        if(isset($val[$r]['textfstyle'][$c])){
+                            $text_fontstyle = $val[$r]['textfstyle'][$c];
+                        }
+                        if(isset($val[$r]['textastyle'][$c])){
+                            $text_alignstyle = $val[$r]['textastyle'][$c];
+                        }
+                        $cell = $table2->addCell(null,$style)->addText( $val[$r][$c],$text_fontstyle,$text_alignstyle);
+                    }
+                }
+            }
+        }
+        $section2->addText("");
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('Perhitungan Biaya Mutasi.docx');
