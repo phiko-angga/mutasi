@@ -10,6 +10,7 @@
     var incMuat = 0;
     var curdate = 0;
     var countPerjDinas = 0;
+    var countKelIkut = 0;
     var bendaharawan = JSON.parse($("#bendaharawan_list").val());
     var kuasaanggaran = JSON.parse($("#kuasaanggaran_list").val());
     var penerima = JSON.parse($("#penerima_list").val());
@@ -177,6 +178,9 @@
         let item = $("#item-keluarga");
         newkel = template_keluarga();
         item.append(newkel);
+
+        ++countKelIkut;
+        $("#jumlah_pengikut").val(countKelIkut);
     })
 
     $(document).on("click",".kel_delete",function(e){
@@ -185,6 +189,9 @@
         let id = $(this).data('id');
         let item = $("#item-keluarga");
         item.find('tr[id="item'+id+'"]').remove();
+        
+        --countKelIkut;
+        $("#jumlah_pengikut").val(countKelIkut);
     })
 
     $(document).on("click",".muat_delete",function(e){
@@ -253,7 +260,8 @@
 
     // ---------------------- TRANSPORT --------------------------
     $(document).on("click",".trans_add",function(){
-        let total_kel = $("#item-keluarga").children().length + 1;
+        // let total_kel = $("#item-keluarga").children().length + 1;
+        let total_kel = countPerjDinas + 1;
 
         let item = $("#item-transport");
         let newt = template_transport(false,total_kel);
@@ -400,7 +408,7 @@
 
             })
         }
-        console.log(umurFind);
+        // console.log(umurFind);
         return umurFind;
     }
 
@@ -413,8 +421,8 @@
             biaya = data.biaya;
         }
         
-        // let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
-        let jumlah_pengikut = countPerjDinas
+        let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
+        // let jumlah_pengikut = countPerjDinas
 
         // let jumBiaya = pembantu ? 0 : biaya * total_orang;
         let jumBiaya = 0;

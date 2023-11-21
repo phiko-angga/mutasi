@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/uangh', UanghController::class)->name('*','uangh');
     Route::resource('/user', UsersController::class)->name('*','user');
     Route::resource('/biaya-transport', BiayaTransportController::class)->name('*','biaya_transport');
+    Route::resource('/biaya-transport-pmk', BiayaTransportPmkController::class)->name('*','biaya_transport_pmk');
     Route::resource('/biaya-muat', BiayaMuatController::class)->name('*','biaya_muat');
     Route::resource('/biaya-pengepakan', BiayaPengepakanController::class)->name('*','biaya_pengepakan');
     Route::resource('/barang-golongan', BarangGolonganController::class)->name('*','barang_golongan');

@@ -60,7 +60,7 @@
       <div class="row">
         <div class="col-md-6 col-lg-6">
           <div class="authentication-wrapper authentication-basic container-p-y">
-            <img src="{{url('img/logo.png')}}" alt="">
+            <img style="height:350px;width:auto" src="{{url('img/logo.png')}}" alt="">
           </div>
         </div>
         <div class="col-md-6 col-lg-6">

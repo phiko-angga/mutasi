@@ -50,7 +50,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / hari</label>
                                             <div class="col-sm-8">
-                                                <input required type="text" class="form-control numeric" onchange="biayaCalculate('pembantu')" id="uangh_jml_tarif_p" name="uangh_jml_tarif_p" value="{{old('uangh_jml_tarif_p',isset($biaya) ? $biaya->uangh_jml_tarif_p : 0)}}" />
+                                                <input readonly type="text" class="form-control numeric" onchange="biayaCalculate('pembantu')" id="uangh_jml_tarif_p" name="uangh_jml_tarif_p" value="{{old('uangh_jml_tarif_p',isset($biaya) ? $biaya->uangh_jml_tarif_p : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
