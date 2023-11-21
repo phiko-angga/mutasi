@@ -10,7 +10,7 @@
             <td>{{ $row->jabatan_instansi }}</td>
             <td>{{ $row->jabatan_instansi }}</td>
             <td>{{ $row->kelompok_jabatan_nama }}</td>
-            <td>{{ number_format($row->rampung_jumlah) }}</td>
+            <td class="text-end">{{ number_format($row->rampung_jumlah) }}</td>
             <td>{{ $row->tingkat_perj_dinas }}</td>
             <td>{{ $row->jumlah_pengikut }}</td>
             <td style="width:250px">{{ substr($row->maksud_perj_dinas,0,49) }} ...</td>
@@ -56,6 +56,10 @@
             </td>
         </tr>
         @endforeach
+        <tr>
+            <td colspan="8"></td>
+            <td class="text-end font-weight-bold">{{number_format($data->sum('rampung_jumlah'))}}</td>
+        </tr>
         <tr>
             <td colspan="9">
                 <div class=" me-3">

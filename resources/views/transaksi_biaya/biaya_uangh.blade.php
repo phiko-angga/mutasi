@@ -23,7 +23,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tarif Rp. / hari</label>
                                             <div class="col-sm-8">
-                                                <input required type="text" class="form-control numeric" onchange="biayaCalculate('orang')" id="uangh_jml_tarif" name="uangh_jml_tarif" value="{{old('uangh_jml_tarif',isset($biaya) ? $biaya->uangh_jml_tarif : 0)}}" />
+                                                <input readonly type="text" class="form-control numeric" onchange="biayaCalculate('orang')" id="uangh_jml_tarif" name="uangh_jml_tarif" value="{{old('uangh_jml_tarif',isset($biaya) ? $biaya->uangh_jml_tarif : 0)}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -92,15 +92,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div style="display:none" class="col-md-4">
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Yang telah dibayar</label>
                                             <div class="col-sm-8">
-                                                <input required type="text" class="form-control numeric" id="rampung_dibayar" name="rampung_dibayar"  value="{{old('rampung_dibayar',isset($biaya) ? $biaya->rampung_dibayar : 0)}}"/>
+                                                <input type="text" class="form-control numeric" id="rampung_dibayar" name="rampung_dibayar"  value="{{old('rampung_dibayar',isset($biaya) ? $biaya->rampung_dibayar : 0)}}"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div style="display:none" class="col-md-4">
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Sisa kurang  / lebih</label>
                                             <div class="col-sm-8">
@@ -116,7 +116,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Beban MAK</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control numeric" id="rampung_beban_mak" name="rampung_beban_mak"  value="{{old('rampung_beban_mak',isset($biaya) ? $biaya->rampung_beban_mak : 0)}}"/>
+                                                <input readonly type="text" class="form-control numeric" id="rampung_beban_mak" name="rampung_beban_mak"  value="{{old('rampung_beban_mak',isset($biaya) ? $biaya->rampung_beban_mak : 0)}}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -124,11 +124,11 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Bukti Kas No.</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="rampung_buktikas" name="rampung_buktikas"  value="{{old('rampung_buktikas',isset($biaya) ? $biaya->rampung_buktikas : '')}}"/>
+                                                <input readonly type="text" class="form-control" id="rampung_buktikas" name="rampung_buktikas"  value="{{old('rampung_buktikas',isset($biaya) ? $biaya->rampung_buktikas : '')}}"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div style="display:none" class="col-md-6">
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Tanggal Pelunasan</label>
                                             <div class="col-sm-8">

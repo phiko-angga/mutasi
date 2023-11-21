@@ -75,7 +75,7 @@
                                 <th>Jabatan / Instansi</th>
                                 <th>Nama Jabatan</th>
                                 <th>Kelompok Jabatan</th>
-                                <th>Total Biaya</th>
+                                <th class="text-right">Total Biaya</th>
                                 <th>Tingkat Perjalanan Dinas</th>
                                 <th>Jumlah Ikut</th>
                                 <th style="width:250px">Maksud Perjalanan Dinas</th>

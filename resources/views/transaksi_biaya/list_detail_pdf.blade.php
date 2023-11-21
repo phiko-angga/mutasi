@@ -90,29 +90,18 @@
                     <tr>
                         <td>6</td>
                         <td>
-                            <P>a. Tempat berangkat</P>
-                            <P>b. Tempat tujuan</P>
+                            <p>a. Tempat berangkat</p>
+                            <p>b. Tempat tujuan</p>
+                            <p>c. Lama perjalanan dinas</p>
                         </td>
                         <td>
-                            <P>{{$data->kotaa_nama}}</P>
-                            <P>{{$data->kotat_nama}}</P>
+                            <p>{{$data->kotaa_nama}}</p>
+                            <p>{{$data->kotat_nama}}</p>
+                            <p>{{$data->lama_perj_dinas}}</p>
                         </td>
                     </tr>
                     <tr>
                         <td>7</td>
-                        <td>
-                            <p>a. Lama perjalanan dinas</p>
-                            <p>b. Tanggal berangkat</p>
-                            <p>b. Tanggal harus kembali/tiba di tempat baru</p>
-                        </td>
-                        <td>
-                            <p>{{$data->lama_perj_dinas}}</p>
-                            <p>{{Carbon\Carbon::parse($data->tanggal_berangkat)->formatLocalized('%d %B %Y')}}</p>
-                            <p>{{Carbon\Carbon::parse($data->tanggal_kembali)->formatLocalized('%d %B %Y')}}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
                         <td colspan="2">
                             <table style="width:100%">
                                 <tbody>
@@ -135,7 +124,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>9</td>
+                        <td>8</td>
                         <td>
                             <p>Pembebanan Anggaran</p>
                             <p>a. Instansi</p>
@@ -146,7 +135,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>10</td>
+                        <td>9</td>
                         <td>
                             Keterangan lain lain
                         </td>
@@ -287,7 +276,7 @@
                             @isset($data->muat)
                                 @foreach($data->muat as $mu)
                                     <p> </p>
-                                    <p>Rp. {{number_format($mu->biaya)}}</p>
+                                    <p>Rp. {{number_format($mu->biaya > 2000000 ? 2000000 : $mu->biaya)}}</p>
                                 @endforeach
                             @endisset
                         </td>

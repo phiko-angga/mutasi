@@ -187,32 +187,21 @@ class TransaksiBiayaController extends Controller
         $val[5][1] = [
             '0' => "a. Tempat berangkat",
             '1' => "b. Tempat tujuan",
+            '2' => "c. Lama perjalanan dinas",
         ];
         $val[5][2] = [
             '0' => $data->kotaa_nama,
             '1' => $data->kotat_nama,
+            '2' => $data->lama_perj_dinas,
         ];
         $val[5]['style'][2] = ['gridSpan' => 2];
         
         $val[6][0] = "7.";
-        $val[6][1] = [
-            '0' => "a. Lama perjalanan dinas",
-            '1' => "b. Tanggal berangkat",
-            '2' => "c. Tanggal harus kembali/tiba di tempat baru",
-        ];
-        $val[6][2] = [
-            '0' => $data->lama_perj_dinas,
-            '1' => Carbon::parse($data->tanggal_berangkat)->formatLocalized('%d %B %Y'),
-            '2' => Carbon::parse($data->tanggal_kembali)->formatLocalized('%d %B %Y'),
-        ];
-        $val[6]['style'][2] = ['gridSpan' => 2];
-        
-        $val[7][0] = "8.";
-        $val[7][1] = "pengikut : Nama";
-        $val[7][2] = "Tanggal Lahir / Umur";
-        $val[7][3] = "Keterangan";
+        $val[6][1] = "pengikut : Nama";
+        $val[6][2] = "Tanggal Lahir / Umur";
+        $val[6][3] = "Keterangan";
 
-        $no = 7;
+        $no = 6;
         $alp = "a";
         if(isset($data->keluarga)){
             foreach($data->keluarga as $kel){
@@ -228,7 +217,7 @@ class TransaksiBiayaController extends Controller
         }
         ++$no;
 
-        $val[$no][0] = "9.";
+        $val[$no][0] = "8.";
         $val[$no][1] = [
             '0' => "Pembebanan Anggaran",
             '1' => "a. Instansi",
@@ -240,7 +229,7 @@ class TransaksiBiayaController extends Controller
         $val[$no]['style'][2] = ['gridSpan' => 2];
         ++$no;
 
-        $val[$no][0] = "10.";
+        $val[$no][0] = "9.";
         $val[$no][1] = "Keterangan lain - Lain";
         $val[$no][2] = $data->ket_lain2;
         $val[$no]['style'][2] = ['gridSpan' => 2];
@@ -471,7 +460,7 @@ class TransaksiBiayaController extends Controller
                 ++$no;
                 $val[$no][0] = "";
                 $val[$no][1] = $mu->berat." x ".$mu->jarak." Rp. ".number_format($mu->tarif);
-                $val[$no][2] = "Rp. ".number_format($mu->biaya);
+                $val[$no][2] = "Rp. ".number_format($mu->biaya > 2000000 ? 2000000 : $mu->biaya);
                 $val[$no][3] = "";
             }
         }

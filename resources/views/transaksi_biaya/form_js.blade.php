@@ -1,5 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 <script>
     var stepperEl = $('.bs-stepper');
     var stepper = new Stepper($('.bs-stepper')[0]);
@@ -8,6 +9,7 @@
     var incKelTransPembantu = 0;
     var incMuat = 0;
     var curdate = 0;
+    var countPerjDinas = 0;
     var bendaharawan = JSON.parse($("#bendaharawan_list").val());
     var kuasaanggaran = JSON.parse($("#kuasaanggaran_list").val());
     var penerima = JSON.parse($("#penerima_list").val());
@@ -18,6 +20,8 @@
         $("#kota_tujuan_id").select2({width: 'resolve', placeholder:"Pilih tempat tujuan"});
         $("#pejabat_komitmen2_id").trigger('change');
         $('.numeric').maskNumber({integer: true});
+
+        $("#nip").mask("00000000 000000 0 000");
 
         // $("#rampung_bendaharawan_nip").val(bendaharawan.nip);
         // $("#rampung_kuasa_nip").val(penerima.nip);
@@ -233,6 +237,7 @@
                         '<option '+(data.keterangan == "Suami" ? 'selected' : '')+' value="Suami">Suami</option>'+
                         '<option '+(data.keterangan == "AK" ? 'selected' : '')+' value="AK">AK</option>'+
                         '<option '+(data.keterangan == "AA" ? 'selected' : '')+' value="AA">AA</option>'+
+                        '<option '+(data.keterangan == "ART" ? 'selected' : '')+' value="ART">ART</option>'+
                     '</select>'+
                 '</td>'+
                 '<td></td>'+
@@ -383,7 +388,7 @@
 
     function checkUmur(umur){
         let kelUmur = $("input[name='kel_umur_thn[]']");
-        console.log('umur',kelUmur,umur);
+        // console.log('umur',kelUmur,umur);
         let umurFind = false;
         if(kelUmur.length > 0){
             $.each(kelUmur,function(){
@@ -408,7 +413,8 @@
             biaya = data.biaya;
         }
         
-        let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
+        // let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
+        let jumlah_pengikut = countPerjDinas
 
         // let jumBiaya = pembantu ? 0 : biaya * total_orang;
         let jumBiaya = 0;
@@ -416,19 +422,19 @@
             
             $("#item-transport").find("#biaya_perorang"+id).val(addCommas(biaya));
 
-            metode = $("#trans_metode"+id).val();
-            metode = metode != "" ? metode.toLowerCase() : metode;
+            // metode = $("#trans_metode"+id).val();
+            // metode = metode != "" ? metode.toLowerCase() : metode;
 
-            // if(metode != "manual"){
+            if(data.metode != "Reg Darat"){
                 umur2thn = checkUmur(2);
                 if(umur2thn){
                     jumBiaya = biaya * (jumlah_pengikut + 0.67);
                 }else{
                     jumBiaya  = biaya * (jumlah_pengikut + 1);
                 }
-            // }else{
-            //     jumBiaya  = biaya * (jumlah_pengikut + 1);
-            // }
+            }else{
+                jumBiaya  = biaya * 1;
+            }
 
             $("#item-transport").find("#jumlah_biaya"+id).val(addCommas(jumBiaya));
             $("#item-transport").find("#trans_metode"+id).val(data.metode);
@@ -795,8 +801,9 @@
         else if(jarak > 500)
             percent = 40;
 
-        console.log(jarak,berat,tarif,percent);
+        // console.log(jarak,berat,tarif,percent);
         let biaya = (jarak * berat * tarif) * percent / 100;
+        biaya = Math.round(biaya/1000)*1000;
         
         // console.log('muatCalculateJumlahBiaya ',biaya,jarak,berat,tarif);
         $("#pengepakan_biaya"+id).val(addCommas(biaya));
@@ -1059,6 +1066,15 @@
                 el.focus();
             return false;
         }
+
+        countPerjDinas = 0;
+        let perjDinas = $("input[name='kel_perj_dinas_cb[]']");
+        $.each(perjDinas,function(i,r){
+            if($(this).is(':checked'))
+                ++countPerjDinas;
+        })
+        // console.log('countPerjDinas',countPerjDinas);
+
         stepper.next();
     }
     function validateBiayaTransport(){

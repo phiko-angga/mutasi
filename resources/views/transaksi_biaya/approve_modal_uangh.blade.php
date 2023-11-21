@@ -91,13 +91,13 @@
           {{number_format($biaya->rampung_jumlah)}}
       </div>
     </div>
-    <div class="row mb-1">
+    <div style="display:none" class="row mb-1">
       <label class="col-sm-4 col-form-label" for="nama">Yang telah dibayar</label>
       <div class="col-sm-8">
           {{number_format($biaya->rampung_dibayar)}}
       </div>
     </div>
-    <div class="row mb-1">
+    <div style="display:none" class="row mb-1">
       <label class="col-sm-4 col-form-label" for="nama">Sisa kurang  / lebih</label>
       <div class="col-sm-8">
           {{number_format($biaya->rampung_sisa)}}
@@ -122,7 +122,7 @@
           {{$biaya->rampung_buktikas}}
       </div>
     </div>
-    <div class="row mb-1">
+    <div style="display:none" class="row mb-1">
       <label class="col-sm-4 col-form-label" for="nama">Tanggal Pelunasan</label>
       <div class="col-sm-8">
         {{Carbon\Carbon::parse($biaya->rampung_tgl_pelunasan)->formatLocalized('%d %B %Y')}}

@@ -24,11 +24,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">Pejabat pembuat komitmen</label>
                                             <div class="col-sm-8">
-                                                <select class="form-select" name="pejabat_komitmen_id" id="pejabat_komitmen">
-                                                    @foreach($pejabat_komitmen as $p)
-                                                        <option {{isset($biaya) ? ($biaya->pejabat_komitmen_id == $p->id ? 'selected' : '') : ''}} value="{{$p->id}}">{{$p->nama}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" name="pejabat_komitmen" id="pejabat_komitmen" class="form-control" value="SEKRETARIAT DITJEN BADAN PERADILAN UMUM">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -42,7 +38,7 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="nama">NIP</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" id="nip" name="nip" value="{{old('nip',isset($biaya) ? $biaya->nip : '')}}" />
+                                                <input type="text" class="form-control" id="nip" name="nip" value="{{old('nip',isset($biaya) ? $biaya->nip : '')}}" />
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -125,13 +121,13 @@
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tanggal Keberangkatan</label>
                                             <div class="col-sm-8">
-                                                <input type="date" class="form-control" id="tanggal_berangkat" name="tanggal_berangkat" value="{{old('tanggal_berangkat',isset($biaya) ? $biaya->tanggal_berangkat : date('Y-m-d'))}}"/>
+                                                <input type="text" class="form-control" id="tanggal_berangkat" name="tanggal_berangkat" value="{{old('tanggal_berangkat',isset($biaya) ? $biaya->tanggal_berangkat : '')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <label class="col-sm-4 col-form-label" for="password">Tanggal Harus kembali</label>
                                             <div class="col-sm-8">
-                                                <input  type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali" value="{{old('tanggal_kembali',isset($biaya) ? $biaya->tanggal_kembali : date('Y-m-d',strtotime('+3 days')))}}"/>
+                                                <input  type="text" class="form-control" id="tanggal_kembali" name="tanggal_kembali" value="{{old('tanggal_kembali',isset($biaya) ? $biaya->tanggal_kembali : '')}}"/>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

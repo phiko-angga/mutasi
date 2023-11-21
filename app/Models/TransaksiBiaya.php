@@ -78,7 +78,6 @@ class TransaksiBiaya extends Model
         ->selectRaw("(select coalesce(fullname,'') from tb_pengguna where id = tb_transaksi_biaya.updated_by limit 1) as updated_name")
         ->selectRaw("(select coalesce(fullname,'') from tb_pengguna where id = tb_transaksi_biaya.approved_by limit 1) as approved_name")
         ->join('tb_pangkat_golongan as pg','pg.id','=','tb_transaksi_biaya.pangkat_golongan_id')
-        ->join('tb_pejabat_komitmen as pk','pk.id','=','tb_transaksi_biaya.pejabat_komitmen_id')
         ->join('tb_pejabat_komitmen as pk2','pk2.id','=','tb_transaksi_biaya.pejabat_komitmen2_id')
         ->join('tb_pejabat_komitmen as pk3','pk3.id','=','tb_transaksi_biaya.rampung_ppk_id')
         ->join('tb_tandatangan as pk4','pk4.id','=','tb_transaksi_biaya.rampung_anggaran_id')
@@ -90,7 +89,8 @@ class TransaksiBiaya extends Model
         ->join('tb_provinsi as prot','prot.id','=','kott.provinsi_id')
         ->join('tb_tandatangan as ttd','ttd.id','=','tb_transaksi_biaya.rampung_bendaharawan_id')
         ->join('tb_kelompok_jabatan as kj','kj.id','=','tb_transaksi_biaya.kelompok_jabatan_id')
-        ->join('tb_pengguna as c','c.id','=','tb_transaksi_biaya.created_by');
+        ->join('tb_pengguna as c','c.id','=','tb_transaksi_biaya.created_by')
+        ->leftJoin('tb_pejabat_komitmen as pk','pk.id','=','tb_transaksi_biaya.pejabat_komitmen_id');
         // ->leftJoin('tb_pengguna as u','u.id','=','tb_transaksi_biaya.updated_by')
         // ->leftJoin('tb_pengguna as a','a.id','=','tb_transaksi_biaya.approved_by');
         
@@ -128,7 +128,6 @@ class TransaksiBiaya extends Model
         ->with([
             'keluarga', 'transport', 'transport_pembantu', 'muat'
         ])
-        ->join('tb_pejabat_komitmen as pk','pk.id','=','tb_transaksi_biaya.pejabat_komitmen_id')
         ->join('tb_pejabat_komitmen as pk2','pk2.id','=','tb_transaksi_biaya.pejabat_komitmen2_id')
         ->join('tb_pejabat_komitmen as pk3','pk3.id','=','tb_transaksi_biaya.rampung_ppk_id')
         ->join('tb_tandatangan as pk4','pk4.id','=','tb_transaksi_biaya.rampung_anggaran_id')
@@ -142,6 +141,7 @@ class TransaksiBiaya extends Model
         ->join('tb_tandatangan as ttd','ttd.id','=','tb_transaksi_biaya.rampung_bendaharawan_id')
         ->join('tb_kelompok_jabatan as kj','kj.id','=','tb_transaksi_biaya.kelompok_jabatan_id')
         ->join('tb_pengguna as c','c.id','=','tb_transaksi_biaya.created_by')
+        ->leftJoin('tb_pejabat_komitmen as pk','pk.id','=','tb_transaksi_biaya.pejabat_komitmen_id')
         ->where('tb_transaksi_biaya.id',$id)->first();
         
         // Log::debug('id '.json_encode($id));
