@@ -20,6 +20,10 @@ function fetch_tabledata(url) {
   let search = $("#search").val();
 
   let payload = {provinsi:provinsi,kota:kota,show_per_page:show_per_page,search:search};
+  if(url == '/transaksi-biaya'){
+    let kelompok_jabatan = $("#kelompok_jabatan").val();
+    payload.kelompok_jabatan = kelompok_jabatan;
+  }
 
   let params = {};
   params.url = url;

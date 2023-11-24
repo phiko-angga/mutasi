@@ -20,8 +20,8 @@
             <td>{{ $row->kotat_nama }}</td>
             <td>{{ $row->provinsit_nama }}</td>
             <td>{{ $row->lama_perj_dinas }}</td>
-            <td>{{Carbon\Carbon::parse($row->tanggal_berangkat)->formatLocalized('%d %B %Y')}}</td>
-            <td>{{Carbon\Carbon::parse($row->tanggal_kembali)->formatLocalized('%d %B %Y')}}</td>
+            <td>{{$row->tanggal_berangkat}}</td>
+            <td>{{$row->tanggal_kembali}}</td>
             <td>{{ $row->pejabat_komitmen_nama }}</td>
             <td>{{ $row->pembebanan_anggaran }}</td>
             <td>{{ $row->mata_anggaran }}</td>

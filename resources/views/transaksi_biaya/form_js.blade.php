@@ -8,6 +8,7 @@
     var incKelTrans = 0;
     var incKelTransPembantu = 0;
     var incMuat = 0;
+    var curStep = 0;
     var curdate = 0;
     var countPerjDinas = 0;
     var countKelIkut = 0;
@@ -432,8 +433,8 @@
 
             // metode = $("#trans_metode"+id).val();
             // metode = metode != "" ? metode.toLowerCase() : metode;
-
-            if(data.metode != "Reg Darat"){
+            let tranport_selected = $("#trans_transport_id"+id).find('option:selected').html();
+            if(tranport_selected != "DARAT"){
                 umur2thn = checkUmur(2);
                 if(umur2thn){
                     jumBiaya = biaya * (jumlah_pengikut + 0.67);
@@ -1009,8 +1010,8 @@
     //---------- VALIDATE -------------
 
     $(document).on('click','.btn-stepper-next', function(e){
-        let curStep = $(this).data('step');
-        console.log('btn-stepper-next',curStep);
+        curStep = $(this).data('step');
+        // console.log('btn-stepper-next',curStep);
         if(curStep == 0){
             validateBiayaPegawai();
         }else if(curStep == 1){
@@ -1021,6 +1022,14 @@
             validateUangHarian();
         }
     })
+
+    $(document).on('keydown',function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            return false;
+            $(".btn-stepper-next").trigger('click');
+        }
+    });
 
     // $("#form-transaksi").submit(function(e){
     //     validateUangHarian(e);

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Provinsi;
 use App\Models\BiayaTransportPmk;
-use App\Exports\biayaTransportExport;
+use App\Exports\biayaTransportPmkExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class BiayaTransportPmkController extends Controller
     {
         
         $title = 'BIAYA TRANSPORT PMK';
-        $biaya = new BiayaTransport();
+        $biaya = new BiayaTransportPmk();
         $data = $biaya->get_data($request);
     	$pdf = PDF::loadview('biaya_transport_pmk.list_pdf', compact('data','title'));
     	return $pdf->stream('BIAYA TRANSPORT PMK.pdf');
@@ -47,7 +48,7 @@ class BiayaTransportPmkController extends Controller
 
     public function printExcel(Request $request)
     {
-        return \Excel::download(new biayaTransportExport($request), 'BIAYA TRANSPORT PMK.xlsx');
+        return \Excel::download(new biayaTransportPmkExport($request), 'BIAYA TRANSPORT PMK.xlsx');
     }
 
     /**
@@ -60,7 +61,8 @@ class BiayaTransportPmkController extends Controller
         $action = 'store';
         $page = 'Biaya Transport PMK';
         $title = 'Tambah baru';
-        return view('biaya_transport_pmk.form',compact('action','title','page'));
+        $provinsi = Provinsi::all();
+        return view('biaya_transport_pmk.form',compact('action','title','page','provinsi'));
     }
 
     /**
@@ -72,31 +74,33 @@ class BiayaTransportPmkController extends Controller
 
     public function store(Request $request)
     {
+        
         request()->validate([
-            'provinsi_id'   => 'required',
-            'kota_id'   => 'required',
+            'provinsi_asal_id'   => 'required',
+            'provinsi_tujuan_id'   => 'required',
+            'kota_asal_id'   => 'required',
+            'kota_tujuan_id'   => 'required',
             'biaya_transport'   => 'required',
         ]);
 
         DB::beginTransaction();
         try {
-            $data = $request->only(['provinsi_id','kota_id','biaya_transport']);
+            $data = $request->only(['provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id','biaya_transport']);
             
             $user = auth()->user();
-            $data['biaya_darat'] = str_replace(",","",$data['biaya_darat']);
-            $data['biaya_laut'] = str_replace(",","",$data['biaya_laut']);
+            $data['biaya_transport'] = str_replace(",","",$data['biaya_transport']);
             $data['created_by'] = $user->id;
             $data['updated_by'] = $user->id;
-            $biaya = BiayaTransport::create($data);
+            $biaya = BiayaTransportPmk::create($data);
 
             DB::commit();
 
-            return redirect('/biaya-transport')->with('info', 'Biaya Transport berhasil ditambahkan');
+            return redirect('/biaya-transport-pmk')->with('info', 'Biaya Transport PMK berhasil ditambahkan');
             
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e->getMessage());
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Biaya Transport gagal, silahkan coba kembali.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Tambah Biaya Transport PMK gagal, silahkan coba kembali.']);
             // something went wrong
         }
     }
@@ -121,13 +125,14 @@ class BiayaTransportPmkController extends Controller
     public function edit($id)
     {
 
-        $mdarat = new BiayaTransport();
-        $biaya = $mdarat->get_id($id);
+        $biaya = new BiayaTransportPmk();
+        $biayatranspmk = $biaya->get_id($id);
 
         $action = 'update';
-        $title = 'Biaya Transport Update';
-        $page = 'Biaya Transport';
-        return view('biaya_transport.form',compact('biaya','action','title'));
+        $title = 'Biaya Transport PMK Update';
+        $page = 'Biaya Transport PMK';
+        $provinsi = Provinsi::all();
+        return view('biaya_transport_pmk.form',compact('biayatranspmk','action','title','provinsi'));
     }
 
     /**
@@ -141,34 +146,36 @@ class BiayaTransportPmkController extends Controller
     {
         request()->validate([
             'id'   => 'required',
-            'biaya_darat'   => 'required',
-            'biaya_laut'   => 'required',
+            'provinsi_asal_id'   => 'required',
+            'provinsi_tujuan_id'   => 'required',
+            'kota_asal_id'   => 'required',
+            'kota_tujuan_id'   => 'required',
+            'biaya_transport'   => 'required',
         ]);
 
-        $biaya = BiayaTransport::find($request->id);
+        $biaya = BiayaTransportPmk::find($request->id);
         if($biaya){
 
             DB::beginTransaction();
             try {
-                $data = $request->only(['biaya_darat','biaya_laut']);
+                $data = $request->only(['provinsi_asal_id','provinsi_tujuan_id','kota_asal_id','kota_tujuan_id','biaya_transport']);
                 
                 $user = auth()->user();
-                $data['biaya_darat'] = str_replace(",","",$data['biaya_darat']);
-                $data['biaya_laut'] = str_replace(",","",$data['biaya_laut']);
+                $data['biaya_transport'] = str_replace(",","",$data['biaya_transport']);
                 $data['updated_by'] = $user->id;
-                BiayaTransport::where('id',$biaya->id)->update($data);
+                BiayaTransportPmk::where('id',$biaya->id)->update($data);
                 DB::commit();
 
-                return redirect('/biaya-transport')->with('info', 'Biaya Transport berhasil di update');
+                return redirect('/biaya-transport-pmk')->with('info', 'Biaya Transport PMK berhasil di update');
                 
             } catch (\Exception $e) {
                 DB::rollback();
                 Log::Error($e->getMessage());
-                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Biaya Transport gagal, silahkan coba kembali.']);
+                return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Update Biaya Transport PMK gagal, silahkan coba kembali.']);
                 // something went wrong
             }
         }else{
-            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Biaya Transport tidak ditemukan.']);
+            return Redirect::back()->withInput($request->input())->withErrors(['error'=> 'Data Biaya Transport PMK tidak ditemukan.']);
         }
     }
 
@@ -180,12 +187,12 @@ class BiayaTransportPmkController extends Controller
      */
     public function destroy($id)
     {
-        $biaya = BiayaTransport::find($id);
+        $biaya = BiayaTransportPmk::find($id);
         if($biaya ){
-            BiayaTransport::where('id',$biaya->id)->delete();
-            return redirect('/biaya-transport')->with('info', 'Biaya Transport berhasil di delete.');
+            BiayaTransportPmk::where('id',$biaya->id)->delete();
+            return redirect('/biaya-transport-pmk')->with('info', 'Biaya Transport PMK berhasil di delete.');
         }else{
-            return Redirect::back()->withErrors(['error'=> 'Data Biaya Transport tidak ditemukan.']);
+            return Redirect::back()->withErrors(['error'=> 'Data Biaya PMK Transport tidak ditemukan.']);
         }
     }
 

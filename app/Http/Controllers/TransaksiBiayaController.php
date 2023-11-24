@@ -38,13 +38,14 @@ class TransaksiBiayaController extends Controller
         $paginate_num = $request->get('show_per_page') != null ? $request->get('show_per_page') : 10;
         $transaksi_biaya = new TransaksiBiaya();
         $data = $transaksi_biaya->get_data($request,true,['approved' => 0]);
+        $kelompok_jabatan = KelompokJabatan::select('kelompok')->distinct()->get();
 
         $page = 'Perhitungan Biaya Mutasi';
 
         if($request->ajax()){
             return view('transaksi_biaya.list_pagination',compact('data','paginate_num'));
         }else{
-            return view('transaksi_biaya.list', compact('data','page','paginate_num'));
+            return view('transaksi_biaya.list', compact('data','page','paginate_num','kelompok_jabatan'));
         }
     }
 

@@ -15,8 +15,10 @@ class CreateTbBiayaTransport extends Migration
     {
         Schema::create('tb_biaya_transport', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('provinsi_id');
-            $table->unsignedBigInteger('kota_id');
+            $table->unsignedBigInteger('provinsi_asal_id');
+            $table->unsignedBigInteger('kota_asal_id');
+            $table->unsignedBigInteger('provinsi_tujuan_id');
+            $table->unsignedBigInteger('kota_tujuan_id');
             $table->double('biaya_transport')->default(0);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');

@@ -7,6 +7,7 @@ use App\Models\BiayaPengepakan;
 use App\Models\BarangGolongan;
 use App\Models\PangkatGolongan;
 use App\Models\BiayaTransport;
+use App\Models\BiayaTransportPmk;
 use App\Models\Sbum;
 use App\Models\Dephub;
 use App\Models\Paraf;
@@ -255,18 +256,31 @@ class GetSelectController extends Controller
         $kotaAsal = $request->kota_asal;
         $kotaTujuan = $request->kota_tujuan;
         
-        $union = Darat::select('jarak_km')->where('kota_asal_id',$kotaTujuan)->where('kota_tujuan_id',$kotaAsal);
-        $data = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
-        ->unionAll($union)
-        ->first();
+        $data = BiayaTransportPmk::select('biaya_transport')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)->first();
         $biaya = 0;
         if($data){
-            $biaya_darat = BiayaTransport::select('biaya_darat')->first();
-            $biaya = $biaya_darat->biaya_darat * $data->jarak_km;
+            $biaya = $data->biaya_transport;
         }
 
         return response()->json(["biaya" => $biaya,"metode" => "Reg Darat"], 200);
     }
+
+    // public function biayaDarat(Request $request){
+    //     $kotaAsal = $request->kota_asal;
+    //     $kotaTujuan = $request->kota_tujuan;
+        
+    //     $union = Darat::select('jarak_km')->where('kota_asal_id',$kotaTujuan)->where('kota_tujuan_id',$kotaAsal);
+    //     $data = Darat::select('jarak_km')->where('kota_asal_id',$kotaAsal)->where('kota_tujuan_id',$kotaTujuan)
+    //     ->unionAll($union)
+    //     ->first();
+    //     $biaya = 0;
+    //     if($data){
+    //         $biaya_darat = BiayaTransport::select('biaya_darat')->first();
+    //         $biaya = $biaya_darat->biaya_darat * $data->jarak_km;
+    //     }
+
+    //     return response()->json(["biaya" => $biaya,"metode" => "Reg Darat"], 200);
+    // }
 
     public function biayaUdara(Request $request){
         $kotaAsal = $request->kota_asal;

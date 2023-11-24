@@ -2,7 +2,7 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="{{url('')}}" class="app-brand-link">
-              <span class="app-brand-logo demo"><img style="margin-top: 5px;width: 60px;height: auto;" src="{{url('img/logo.png')}}" alt=""></span>
+              <span class="app-brand-logo demo"><img style="margin-top: 5px;width: auto;height: 65px;" src="{{url('img/logo.png')}}" alt=""></span>
               <div class="d-flex justify-content-center ">
                 <p style="text-align:center;font-size:12px;margin-bottom:0">MAHKAMAH AGUNG<br>REPUBLIK INDONESIA<br>DITJEN BADAN PERADILAN UMUM</p>
               </div>

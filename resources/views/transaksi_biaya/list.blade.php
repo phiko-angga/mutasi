@@ -58,7 +58,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class=" me-3 ms-auto"><input value="{{isset($search) ? $search : ''}}" type="text" id="search" name="search" class="form-control form-control-sm" placeholder="Search"  autofocus></div>
+                            <div class=" me-3 ms-auto">
+                                <select name="kelompok_jabatan" id="kelompok_jabatan" class="form-select form-select-sm">
+                                    <option value=""> Pilih Kelompok Jabatan </option>
+                                    @isset($kelompok_jabatan)
+                                        @foreach($kelompok_jabatan as $kel)
+                                            <option value="{{$kel->kelompok}}">{{$kel->kelompok}}</option>
+                                        @endforeach
+                                    @endisset
+                                </select>
+                            </div>
+                            <div class=" me-3">
+                                <input value="{{isset($search) ? $search : ''}}" type="text" id="search" name="search" class="form-control form-control-sm" placeholder="Search"  autofocus>
+                            </div>
                             
                         </div>
                     </div>
@@ -119,8 +131,8 @@
 @section('script')
 <script>
     
-    $(document).on('change','#search, #show-per-page', function(){
-        fetch_tabledata('/transaksi_biaya');
+    $(document).on('change','#search, #show-per-page, #kelompok_jabatan', function(){
+        fetch_tabledata('/transaksi-biaya');
     })
 
     

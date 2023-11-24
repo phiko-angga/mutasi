@@ -99,6 +99,11 @@ class TransaksiBiaya extends Model
                 $data = $data->where('approved',$param['approved']);
             }
         }
+        
+        $keljab = $request->get('kelompok_jabatan');
+        if($keljab != null){
+                $data = $data->where('kj.kelompok',$keljab);
+        }
 
         $search = $request->get('search');
         if(isset($search)){

@@ -11,27 +11,27 @@ class BiayaTransportPmk extends Model
     
     protected $table = "tb_biaya_transport";
     protected $fillable = [
-        'provinsi_id','kota_id','biaya_transport','created_by','updated_by'
+        'provinsi_asal_id','kota_asal_id','provinsi_tujuan_id','kota_tujuan_id','biaya_transport','created_by','updated_by'
     ];
     
     public function get_data($request, $paginate = true){
-        $data = Self::select('tb_sbum.*'
-        ,'pa.nama as provinsia_nama','pt.nama as provinsit_nama'
-        ,'ka.nama as kotaa_nama','kt.nama as kotat_nama'
+        $data = Self::select('tb_biaya_transport.*'
+        ,'pa.nama as provinsia_nama','ka.nama as kotaa_nama'
+        ,'pt.nama as provinsit_nama','kt.nama as kotat_nama'
         ,'c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
-        ->join('tb_provinsi as pa','pa.id','=','tb_sbum.provinsi_asal_id')
-        ->join('tb_provinsi as pt','pt.id','=','tb_sbum.provinsi_tujuan_id')
-        ->join('tb_kota as ka','ka.id','=','tb_sbum.kota_asal_id')
-        ->join('tb_kota as kt','kt.id','=','tb_sbum.kota_tujuan_id')
-        ->join('tb_pengguna as c','c.id','=','tb_sbum.created_by')
-        ->leftJoin('tb_pengguna as u','u.id','=','tb_sbum.updated_by');
+        ->join('tb_provinsi as pa','pa.id','=','tb_biaya_transport.provinsi_asal_id')
+        ->join('tb_kota as ka','ka.id','=','tb_biaya_transport.kota_asal_id')
+        ->join('tb_provinsi as pt','pt.id','=','tb_biaya_transport.provinsi_tujuan_id')
+        ->join('tb_kota as kt','kt.id','=','tb_biaya_transport.kota_tujuan_id')
+        ->join('tb_pengguna as c','c.id','=','tb_biaya_transport.created_by')
+        ->leftJoin('tb_pengguna as u','u.id','=','tb_biaya_transport.updated_by');
         
         $search = $request->get('search');
         if(isset($search)){
-            $data = $data->where('tb_sbum.harga_tiket', 'ilike', '%'.$search.'%')
+            $data = $data->where('tb_biaya_transport.biaya_transport', 'ilike', '%'.$search.'%')
             ->orWhere('pa.nama', 'ilike', '%'.$search.'%')
-            ->orWhere('pt.nama', 'ilike', '%'.$search.'%')
             ->orWhere('ka.nama', 'ilike', '%'.$search.'%')
+            ->orWhere('pt.nama', 'ilike', '%'.$search.'%')
             ->orWhere('kt.nama', 'ilike', '%'.$search.'%')
             ->orWhere('c.username', 'ilike', '%'.$search.'%');
         }
@@ -46,17 +46,17 @@ class BiayaTransportPmk extends Model
     }
     
     public function get_id($id){
-        $data = Self::select('tb_sbum.*'
-        ,'pa.nama as provinsia_nama','pt.nama as provinsit_nama'
-        ,'ka.nama as kotaa_nama','kt.nama as kotat_nama'
+        $data = Self::select('tb_biaya_transport.*'
+        ,'pa.nama as provinsia_nama','ka.nama as kotaa_nama'
+        ,'pt.nama as provinsit_nama','kt.nama as kotat_nama'
         ,'c.fullname as created_name')->selectRaw("coalesce(u.fullname,'') as updated_name")
-        ->join('tb_provinsi as pa','pa.id','=','tb_sbum.provinsi_asal_id')
-        ->join('tb_provinsi as pt','pt.id','=','tb_sbum.provinsi_tujuan_id')
-        ->join('tb_kota as ka','ka.id','=','tb_sbum.kota_asal_id')
-        ->join('tb_kota as kt','kt.id','=','tb_sbum.kota_tujuan_id')
-        ->join('tb_pengguna as c','c.id','=','tb_sbum.created_by')
-        ->leftJoin('tb_pengguna as u','u.id','=','tb_sbum.updated_by')
-        ->where('tb_sbum.id',$id)->first();
+        ->join('tb_provinsi as pa','pa.id','=','tb_biaya_transport.provinsi_asal_id')
+        ->join('tb_kota as ka','ka.id','=','tb_biaya_transport.kota_asal_id')
+        ->join('tb_provinsi as pt','pt.id','=','tb_biaya_transport.provinsi_tujuan_id')
+        ->join('tb_kota as kt','kt.id','=','tb_biaya_transport.kota_tujuan_id')
+        ->join('tb_pengguna as c','c.id','=','tb_biaya_transport.created_by')
+        ->leftJoin('tb_pengguna as u','u.id','=','tb_biaya_transport.updated_by')
+        ->where('tb_biaya_transport.id',$id)->first();
         
         return $data; 
     }
