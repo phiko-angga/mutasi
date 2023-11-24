@@ -543,7 +543,7 @@
                 biayaMuat += biaya;
             })
         }
-        biayaMuat = biayaMuat > 2000000 ? biayaMuat : biayaMuat; 
+        biayaMuat = biayaMuat > 2000000 ? 2000000 : biayaMuat; 
 
         let pengepakan_biaya = parseInt($("#pengepakan_biaya").val().replace(/\,/g, ''));
         let uangh_jml_biaya = parseInt($("#uangh_jml_biaya").val().replace(/\,/g, ''));
