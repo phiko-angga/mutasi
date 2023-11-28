@@ -422,8 +422,8 @@
             biaya = data.biaya;
         }
         
-        let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
-        // let jumlah_pengikut = countPerjDinas
+        // let jumlah_pengikut = parseInt($("#jumlah_pengikut").val());
+        let jumlah_pengikut = countPerjDinas
 
         // let jumBiaya = pembantu ? 0 : biaya * total_orang;
         let jumBiaya = 0;
@@ -524,6 +524,7 @@
     function biayaCalculateAll(){
 
         var biayaTransport = 0;
+        var biayaTransportPembantu = 0;
         var biayaMuat = 0;
 
         //HITUNG TOTAL BIAYA TRANSPORT
@@ -532,6 +533,15 @@
             $.each(itemTransport,function(){
                 biaya = parseInt($(this).val().replace(/\,/g, ''));
                 biayaTransport += biaya;
+            })
+        }
+ 
+        //HITUNG TOTAL BIAYA TRANSPORT PEMBANTU
+        itemTransport = $("#item-transport-pembantu").find("input[name='trans_jumlah_biaya[]']");
+        if(itemTransport.length > 0){
+            $.each(itemTransport,function(){
+                biaya = parseInt($(this).val().replace(/\,/g, ''));
+                biayaTransportPembantu += biaya;
             })
         }
 
@@ -549,7 +559,7 @@
         let uangh_jml_biaya = parseInt($("#uangh_jml_biaya").val().replace(/\,/g, ''));
         let uangh_jml_biaya_p = parseInt($("#uangh_jml_biaya_p").val().replace(/\,/g, ''));
 
-        let uangh_jml_uang = biayaTransport + biayaMuat + uangh_jml_biaya + uangh_jml_biaya_p + pengepakan_biaya;
+        let uangh_jml_uang = biayaTransport + biayaTransportPembantu + biayaMuat + uangh_jml_biaya + uangh_jml_biaya_p + pengepakan_biaya;
         $("#uangh_jml_uang").val(addCommas(uangh_jml_uang));
         $("#rampung_jumlah").val(addCommas(uangh_jml_uang));
         $("#rampung_dibayar").val(addCommas(uangh_jml_uang));
