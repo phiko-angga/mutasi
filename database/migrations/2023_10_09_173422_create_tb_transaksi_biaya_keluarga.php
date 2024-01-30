@@ -20,7 +20,7 @@ class CreateTbTransaksiBiayaKeluarga extends Migration
             $table->string('nama',50);
             $table->date('tanggal_lahir');
             $table->integer('umur');
-            $table->enum('keterangan',['Istri','Suami','AK','AA']);
+            $table->enum('keterangan',['Istri','Suami','AK','AA','ART']);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->timestamps();

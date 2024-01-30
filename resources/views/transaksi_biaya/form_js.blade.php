@@ -395,16 +395,23 @@
         transportCalculateBiayaTotal();
     })
 
-    function checkUmur(umur){
+    function checkUmur(umur, max20 = false){
         let kelUmur = $("input[name='kel_umur_thn[]']");
         // console.log('umur',kelUmur,umur);
         let umurFind = false;
         if(kelUmur.length > 0){
             $.each(kelUmur,function(){
                 getUmur = $(this).val();
-                if(getUmur <= umur){
-                    umurFind = true;
-                    return false;
+                if(!max20){
+                    if(getUmur <= umur){
+                        umurFind = true;
+                        return false;
+                    }
+                }else{
+                    if(getUmur > umur){
+                        umurFind = true;
+                        return false;
+                    }
                 }
 
             })
@@ -439,7 +446,11 @@
                 if(umur2thn){
                     jumBiaya = biaya * (jumlah_pengikut + 0.67);
                 }else{
-                    jumBiaya  = biaya * (jumlah_pengikut + 1);
+                    maxUmur20thn = checkUmur(20,true);
+                    if(!maxUmur20thn)
+                        jumBiaya  = biaya * (jumlah_pengikut + 1);
+                    else
+                        jumBiaya  = biaya * (jumlah_pengikut);
                 }
             }else{
                 jumBiaya  = biaya * 1;
