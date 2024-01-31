@@ -381,7 +381,7 @@
 
         let id = $(this).closest('tr').data('id');
         let pembantu = $(this).closest('tr').data('pembantu');
-        console.log('pembantu',pembantu);
+        // console.log('pembantu',pembantu);
         if(pembantu == true)
             item = $("#item-transport-pembantu");
         else
@@ -400,20 +400,27 @@
         // console.log('umur',kelUmur,umur);
         let umurFind = false;
         if(kelUmur.length > 0){
+            // console.log('umur',umur);
             $.each(kelUmur,function(){
                 getUmur = $(this).val();
-                if(!max20){
-                    if(getUmur <= umur){
-                        umurFind = true;
-                        return false;
-                    }
-                }else{
-                    if(getUmur > umur){
-                        umurFind = true;
-                        return false;
+                let id = $(this).closest('tr').data('id');
+                let isAnak = $("#kel_keterangan"+id).val();
+
+                if(isAnak == 'AK' || isAnak == 'AA') {
+                    if(!max20){
+                        // console.log('max20 false');
+                        if(getUmur <= umur){
+                            umurFind = true;
+                            return false;
+                        }
+                    }else{
+                        // console.log('max20 true');
+                        if(getUmur > umur){
+                            umurFind = true;
+                            return false;
+                        }
                     }
                 }
-
             })
         }
         // console.log(umurFind);
@@ -815,7 +822,7 @@
     }
     
     function muatCalculateJumlahBiaya(id){
-        console.log('pengepakan_jarak_id',$("#pengepakan_jarak"+id).val());
+        // console.log('pengepakan_jarak_id',$("#pengepakan_jarak"+id).val());
         let berat = parseInt($("#pengepakan_berat"+id).val());
         let jarak = parseInt($("#pengepakan_jarak"+id).val().replace(/\,/g, ''));
         let tarif = parseInt($("#pengepakan_tarif"+id).val().replace(/\,/g, ''));
@@ -1006,7 +1013,7 @@
 
     $(document).on("change","#rampung_bendaharawan_id",function(e){
         let data = $(this).select2('data')[0].data;
-        console.log($(this).select2('data'),data);
+        // console.log($(this).select2('data'),data);
         $("#rampung_bendaharawan_nip").val(data.nip);
     })
 
@@ -1128,9 +1135,9 @@
                 kembali = true;
                 formselect = true;
             }
-            console.log(el,el.val());
+            // console.log(el,el.val());
         }
-            console.log(kembali);
+            // console.log(kembali);
 
 
         if(kembali){
