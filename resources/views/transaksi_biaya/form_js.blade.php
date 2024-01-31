@@ -415,7 +415,7 @@
                         }
                     }else{
                         // console.log('max20 true');
-                        if(getUmur > umur){
+                        if(getUmur > 2 && getUmur <= umur){
                             umurFind = true;
                             return false;
                         }
@@ -450,11 +450,13 @@
             let tranport_selected = $("#trans_transport_id"+id).find('option:selected').html();
             if(tranport_selected != "DARAT"){
                 umur2thn = checkUmur(2);
+                console.log('umur2thn',umur2thn);
                 if(umur2thn){
                     jumBiaya = biaya * (jumlah_pengikut + 0.67);
                 }else{
                     maxUmur20thn = checkUmur(20,true);
-                    if(!maxUmur20thn)
+                    console.log('maxUmur20thn',maxUmur20thn);
+                    if(maxUmur20thn)
                         jumBiaya  = biaya * (jumlah_pengikut + 1);
                     else
                         jumBiaya  = biaya * (jumlah_pengikut);
